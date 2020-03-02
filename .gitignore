@@ -1,0 +1,4 @@
+/compiler/antlr4-generated
+/compiler/output
+/compiler/ifcc
+/tests/pld-test-output
