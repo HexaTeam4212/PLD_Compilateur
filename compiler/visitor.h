@@ -7,6 +7,7 @@
 #include "antlr4-runtime.h"
 #include "antlr4-generated/ifccVisitor.h"
 
+#include "AST.h"
 
 /**
  * This class provides an empty implementation of ifccVisitor, which can be
@@ -20,16 +21,18 @@ public:
   }
 
   virtual antlrcpp::Any visitProg(ifccParser::ProgContext *ctx) override {
+    ExprConstant* expr_constant = new ExprConstant(ctx->CONST()->getText());
+    ExprReturn* expr_return = new ExprReturn(expr_constant);
 
-     int retval = stoi(ctx->CONST()->getText());
-     std::cout<<".globl	main\n"
-           " main: \n"
-           " 	movl	$"<<retval<<", %eax\n"
-           " 	ret\n";
+    return expr_return;
 
-     return 0;
+    int retval = stoi(ctx->CONST()->getText());
+    std::cout<<".globl	main\n"
+          " main: \n"
+          " 	movl	$"<<retval<<", %eax\n"
+          " 	ret\n";
+
+    return 0;
   }
-
-
 };
 

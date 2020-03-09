@@ -1,5 +1,4 @@
-#ifndef IR_H
-#define IR_H
+#pragma once
 
 #include <vector>
 #include <map>
@@ -7,10 +6,12 @@
 #include <iostream>
 #include <initializer_list>
 
+#include "AST.h"
+
 class BasicBlock;
 class CFG;
 class DefFonction;
-
+class ExprReturn;
 
 //! The class for one 3-address instruction
 class IRInstr {
@@ -49,8 +50,6 @@ class IRInstr {
 	// if you subclass IRInstr, each IRInstr subclass has its parameters and the previous (very important) comment becomes useless: it would be a better design. 
 };
 
-
-
 /**  The class for a basic block */
 
 /* A few important comments.
@@ -60,14 +59,17 @@ class IRInstr {
 
 	 Assembly jumps are generated as follows:
 	 BasicBlock::gen_asm() first calls IRInstr::gen_asm() on all its instructions, and then 
-		    if  exit_true  is a  nullptr, 
+		if  exit_true  is a  nullptr, 
             the epilogue is generated
+
         else if exit_false is a nullptr, 
           an unconditional jmp to the exit_true branch is generated
-				else (we have two successors, hence a branch)
+
+		else (we have two successors, hence a branch)
           an instruction comparing the value of test_var_name to true is generated,
 					followed by a conditional branch to the exit_false branch,
 					followed by an unconditional branch to the exit_true branch
+
 	 The attribute test_var_name itself is defined when converting 
   the if, while, etc of the AST  to IR.
 
@@ -90,7 +92,7 @@ class BasicBlock {
 	std::string label; /**< label of the BB, also will be the label in the generated code */
 	CFG* cfg; /** < the CFG where this block belongs */
 	std::vector<IRInstr*> instrs; /** < the instructions themselves. */
-  std::string test_var_name;  /** < when generating IR code for an if(expr) or while(expr) etc,
+    std::string test_var_name;  /** < when generating IR code for an if(expr) or while(expr) etc,
 													 store here the name of the variable that holds the value of expr */
  protected:
 
@@ -111,11 +113,11 @@ class BasicBlock {
  */
 class CFG {
  public:
-	CFG(DefFonction* ast);
+	CFG(ExprReturn* ast);
 
-	DefFonction* ast; /**< The AST this CFG comes from */
+	ExprReturn* ast; /**< The AST this CFG comes from */
 	
-	void add_bb(BasicBlock* bb); 
+	void add_bb(BasicBlock* bb);
 
 	// x86 code generation: could be encapsulated in a processor class in a retargetable compiler
 	void gen_asm(std::ostream& o);
@@ -141,6 +143,3 @@ class CFG {
 	
 	std::vector <BasicBlock*> bbs; /**< all the basic blocks of this CFG*/
 };
-
-
-#endif
