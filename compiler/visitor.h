@@ -21,13 +21,22 @@ public:
 
   virtual antlrcpp::Any visitProg(ifccParser::ProgContext *ctx) override {
 
-     int retval = stoi(ctx->CONST()->getText());
-     std::cout<<".globl	main\n"
-           " main: \n"
-           " 	movl	$"<<retval<<", %eax\n"
-           " 	ret\n";
-
-     return 0;
+    int retval = stoi(ctx->CONST()->getText());
+    std::cout<<".text\n"
+    ".globl	main\n"
+    " main: \n"
+    "# prologue \n"
+    "  pushq %rbp # save %rbp on the stack \n"
+    "  movq %rsp, %rbp  # define %rbp for the current function \n"
+    
+    "# body \n"
+    "  movl	$"<<retval<<", %eax\n"
+    
+    "# epilogue \n"
+    "popq %rbp  # restore %rbp from the stack \n"
+    "ret  # return to the caller (here the shell) \n";
+    
+    return 0;
   }
 
 
