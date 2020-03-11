@@ -69,7 +69,7 @@ void CFG::gen_asm(std::ostream &o)
 
 std::string CFG::IR_reg_to_asm(std::string reg)
 {
-
+	return "";
 }
 
 void CFG::gen_asm_prologue(std::ostream &o)
@@ -89,20 +89,20 @@ void CFG::add_to_symbol_table(std::string name, IRInstr::Type t)
 
 std::string CFG::create_new_tempvar(IRInstr::Type t)
 {
-
+	return "";
 }
 
 int CFG::get_var_index(std::string name)
 {
-
+	return -1;
 }
 
 IRInstr::Type CFG::get_var_type(std::string name)
 {
-
+	return IRInstr::Type::int64;
 }
 
 std::string CFG::new_BB_name()
 {
-
+	return "";
 }
