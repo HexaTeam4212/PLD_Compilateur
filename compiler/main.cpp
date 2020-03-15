@@ -1,42 +1,35 @@
 #include <iostream>
 #include <fstream>
-#include <sstream>
-#include <cstdlib>
 
 #include "antlr4-runtime.h"
 #include "antlr4-generated/ifccLexer.h"
 #include "antlr4-generated/ifccParser.h"
+#include "antlr4-generated/ifccVisitor.h"
 #include "antlr4-generated/ifccBaseVisitor.h"
-#include "visitor.h"
-#include "AST.h"
-
-using namespace antlr4;
-using namespace std;
+#include "Program.h"
+#include "Visitor.h"
 
 int main(int argn, const char **argv) {
-  stringstream in;
-  if (argn==2) {
-     ifstream lecture(argv[1]);
-     in << lecture.rdbuf();
-  }
-  ANTLRInputStream input(in.str());
-  ifccLexer lexer(&input);
-  CommonTokenStream tokens(&lexer);
+      std::stringstream in;
+      if (argn==2) {
+            std::ifstream lecture(argv[1]);
+            in << lecture.rdbuf();
+      }
 
-  tokens.fill();
-//  for (auto token : tokens.getTokens()) {
-//    std::cout << token->toString() << std::endl;
-//  }
+      antlr4::ANTLRInputStream input(in.str());
+      ifccLexer lexer(&input);
+      antlr4::CommonTokenStream tokens(&lexer);
+      
+      tokens.fill();
+      //for(auto token : tokens.getTokens()) {
+      //      std::cout << token->toString() << std::endl;
+      //}
 
-  ifccParser parser(&tokens);
-  tree::ParseTree* tree = parser.axiom();
+      ifccParser parser(&tokens);
+      antlr4::tree::ParseTree* tree = parser.axiom();
 
-  Visitor visitor;
-  ExprReturn* ast = (ExprReturn*) visitor.visit(tree);
+      Visitor visitor;
+      Program* ast = (Program*) visitor.visit(tree);
 
-  CFG cfg(ast);
-
-  cfg.gen_asm(std::cout);
-
-  return 0;
+      return 0;
 }

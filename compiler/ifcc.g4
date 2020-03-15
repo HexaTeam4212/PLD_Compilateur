@@ -1,10 +1,17 @@
 grammar ifcc;
 
-axiom : prog       
-      ;
+axiom : definitionFunction+;
 
-prog : 'int' 'main' '(' ')' '{' RETURN CONST ';' '}' ;
+type : INTEGER # integer
+;
 
+instr : RETURN CONST ';' # return
+;
+
+definitionFunction : type NAME '(' ')' '{' (instr )* '}';
+
+INTEGER : 'int' ;
+NAME : [a-zA-Z][a-zA-Z0-9] ;
 RETURN : 'return' ;
 CONST : [0-9]+ ;
 COMMENT : '/*' .*? '*/' -> skip ;
