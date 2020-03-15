@@ -1,6 +1,8 @@
 #include <inttypes.h>
 int main() {
 	int a ;
-	a = 42;
-	return a;
+	int b;
+     a = 42;
+	b = a;
+	return b;
 }

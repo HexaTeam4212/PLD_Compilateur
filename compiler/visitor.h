@@ -66,7 +66,17 @@ public:
    std::cout<<"visite affectation"<<std::endl;
    std::string str_expr = visit(ctx->expr(1));
    std::string str_var = visit(ctx->expr(0));
-   std::cout<<"movl "<<str_expr<<", "<<str_var<<std::endl;
+   //Cas affectation variable - int
+   if (str_expr.find("$") != std::string::npos) {
+ 	std::cout<<"movl "<<str_expr<<", "<<str_var<<std::endl;
+   } else //Cas affectation variable - variable 
+   {
+	//On déplace le contenu de la var de droite dans le régistre
+	std::cout<<"movl "<<str_expr<<", %eax"<<std::endl;
+	//On place le contenu du régistre dans la variable de gauche
+	std::cout<<"movl %eax"<<", "<<str_var<<std::endl;
+    }
+   
     return 0;
   }
 
