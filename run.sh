@@ -3,7 +3,7 @@ if docker ps -a |grep -q pld-comp ; then
 else
     echo "Container not started"
     echo "Starting container..."
-    docker run --rm --name pld-comp -v $(pwd):/pld-comp -t -d -w /pld-comp eguerin/antlr4cpp
+    docker run --rm --name pld-comp -v "$(pwd)":/pld-comp -t -d -w /pld-comp eguerin/antlr4cpp
     echo "Container started"
 fi
 
