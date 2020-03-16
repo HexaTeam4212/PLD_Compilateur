@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <vector>
 
 #include "antlr4-runtime.h"
 #include "antlr4-generated/ifccLexer.h"
@@ -30,6 +31,9 @@ int main(int argn, const char **argv) {
 
       Visitor visitor;
       Program* ast = (Program*) visitor.visit(tree);
+
+      //IR generation
+      std::vector<CFG*> listeCFG;
 
       return 0;
 }
