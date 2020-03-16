@@ -1,103 +1,52 @@
-
-// Generated from ifcc.g4 by ANTLR 4.7.2
-
 #pragma once
 
+#include <vector>
 
 #include "antlr4-runtime.h"
 #include "antlr4-generated/ifccVisitor.h"
+#include "Program.h"
+#include "Function.h"
+#include "ReturnInstr.h"
 
+class Visitor : public ifccVisitor {
 
-/**
- * This class provides an empty implementation of ifccVisitor, which can be
- * extended to create a visitor which only needs to handle a subset of the available methods.
- */
-class  Visitor : public ifccVisitor {
 public:
 
-  virtual antlrcpp::Any visitAxiom(ifccParser::AxiomContext *ctx) override {
-    return visitChildren(ctx);
-  }
+      virtual antlrcpp::Any visitAxiom(ifccParser::AxiomContext *ctx) override {
+            Program* program = new Program();
+
+            //Fill program with children visit
+            for(auto i : ctx->definitionFunction()) {
+                  program->addFunction((Function*)visit(i));
+            }
+
+            return program;
+      }
+
+      virtual antlrcpp::Any visitDefinitionFunction(ifccParser::DefinitionFunctionContext *ctx) override {
+            Function* function = new Function();
+            function->setReturnType(visit(ctx->type()));
+            function->setName(ctx->NAME()->getText());
+            //to add in the future : parameters parsing
+
+            //Handle instructions of functions
+            std::vector<Instruction*> instructions;
+            for(int i = 0; i < ctx->instr().size(); i++) {
+                  instructions.push_back((Instruction*)visit(ctx->instr(i)));
+            }
+            function->setInstructions(instructions);
+
+            return function;
+      }
 
 
-  virtual antlrcpp::Any visitProg(ifccParser::ProgContext *ctx) override {
-    
-    std::cout<<".text\n"
-    ".globl	main\n"
-    " main: \n"
-    "# prologue \n"
-    "  pushq %rbp # save %rbp on the stack \n"
-    "  movq %rsp, %rbp  # define %rbp for the current function \n"
-    
-    "# body \n";
-    visit(ctx->bloc());
-    std::string retval = visit(ctx->expr());
-    std::cout<<"  movl	"<<retval<<", %eax\n"
-    
-    "# epilogue \n"
-    " popq %rbp  # restore %rbp from the stack \n"
-    " ret  # return to the caller (here the shell) \n";
-    return 0;
-  }
+      virtual antlrcpp::Any visitReturn(ifccParser::ReturnContext *ctx) override {
+            int returnValue = std::stoi(ctx->CONST()->getText());
+            return (Instruction*) new ReturnInstr(returnValue);
+      }
 
-  virtual antlrcpp::Any visitBloc(ifccParser::BlocContext *ctx) override {
-    std::cout<<"visite bloc"<<std::endl;
-    return visitChildren(ctx);
-  }
- 
- virtual antlrcpp::Any visitInstructions(ifccParser::InstructionsContext *ctx) override {
-   std::cout<<"visite instructions"<<std::endl;
-   return visitChildren(ctx);
- }
-  
-  
- virtual antlrcpp::Any visitInstruction(ifccParser::InstructionContext *ctx) override {
-    std::cout<<"visite instruction"<<std::endl;
-    return visitChildren(ctx);
-  }
-  
-  virtual antlrcpp::Any visitDeclaration(ifccParser::DeclarationContext *ctx) override {
-    std::cout<<"visite declaration"<<std::endl;  
-    //Ajout à la table de symboles ?
-    return 0;
-  }
-  
-  virtual antlrcpp::Any visitAffectation(ifccParser::AffectationContext *ctx) override {
-   std::cout<<"visite affectation"<<std::endl;
-   std::string str_expr = visit(ctx->expr(1));
-   std::string str_var = visit(ctx->expr(0));
-   //Cas affectation variable - int
-   if (str_expr.find("$") != std::string::npos) {
- 	std::cout<<"movl "<<str_expr<<", "<<str_var<<std::endl;
-   } else //Cas affectation variable - variable 
-   {
-	//On déplace le contenu de la var de droite dans le régistre
-	std::cout<<"movl "<<str_expr<<", %eax"<<std::endl;
-	//On place le contenu du régistre dans la variable de gauche
-	std::cout<<"movl %eax"<<", "<<str_var<<std::endl;
-    }
-   
-    return 0;
-  }
-
-  
-  virtual antlrcpp::Any visitVar(ifccParser::VarContext *ctx) override {
-    std::cout<<"visite var"<<std::endl;
-    //Recuperer index dans table des symboles pour avoir l'adresse memoire
-    int val = 4;
-    std::string str = "-"+std::to_string(val)+"(%rbp)";
-    return str;
-  }
-  
-  virtual antlrcpp::Any visitConst(ifccParser::ConstContext *ctx) override {
-    std::cout<<"visite const"<<std::endl;
-    int val = stoi (ctx->CONST()->getText());
-    std::string str = "$"+std::to_string(val);
-    
-    return str;
-  }
-  
-
+      virtual antlrcpp::Any visitInteger(ifccParser::IntegerContext *ctx) override {
+            return (std::string) ctx->INTEGER()->getText();
+      }
 
 };
-

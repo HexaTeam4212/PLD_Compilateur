@@ -1,38 +1,17 @@
 grammar ifcc;
 
-axiom : prog
-      ;
+axiom : definitionFunction+;
 
-prog : 'int' 'main' '(' ')' '{' bloc RETURN expr ';' '}' ;
+type : INTEGER # integer
+;
 
-bloc : instructions
-	|
-     ;
+instr : RETURN CONST ';' # return
+;
 
-instructions : instruction
-             | instruction instructions
-             ;	
+definitionFunction : type NAME '(' ')' '{' (instr )* '}';
 
-instruction : declaration
-            | affectation 
-            ;
-
-
-declaration : 'int' VAR ';'
-	    ;
-
-
-affectation : expr '=' expr ';'
-	    ;
-
-expr : CONST  #const
-     | VAR #var
-     ;
-
-
-TYPE : 'int'
-     | 'double'
-     ; 
+INTEGER : 'int' ;
+NAME : [a-zA-Z][a-zA-Z0-9] ;
 RETURN : 'return' ;
 CONST : [0-9]+ ;
 VAR : [a-zA-Z]+;

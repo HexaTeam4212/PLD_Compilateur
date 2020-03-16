@@ -2,3 +2,5 @@
 /compiler/output
 /compiler/ifcc
 /tests/pld-test-output
+/.vscode
+/compiler/.antlr
