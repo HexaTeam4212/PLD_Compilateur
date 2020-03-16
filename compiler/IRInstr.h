@@ -22,7 +22,9 @@ class IRInstr {
 		cmp_eq,
 		cmp_lt,
 		cmp_le,
-		push
+		push,
+		pop,
+		ret
 	} Operation;
 
 	/**  constructor */

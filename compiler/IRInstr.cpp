@@ -14,6 +14,14 @@ void IRInstr::gen_asm(std::ostream &o) {
       case copy:
             o << "\tmovq "+params.at(0)+", "+params.at(1)+"\n";
             break;
+
+      case pop:
+            o << "\tpopq "+params.at(0)+"\n";
+            break;
+
+      case ret:
+            o << "\tret\n";
+            break;
       
       default:
             break;
