@@ -14,6 +14,7 @@ public:
       ~Program();
 
       void addFunction(Function* functionToAdd);
+      std::vector<Function*> getAllFunctions() { return this->functions; };
 
 private:
       std::vector<Function*> functions;

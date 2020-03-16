@@ -9,6 +9,7 @@
 #include "antlr4-generated/ifccBaseVisitor.h"
 #include "Program.h"
 #include "Visitor.h"
+#include "CFG.h"
 
 int main(int argn, const char **argv) {
       std::stringstream in;
@@ -34,6 +35,13 @@ int main(int argn, const char **argv) {
 
       //IR generation
       std::vector<CFG*> listeCFG;
+
+      for(auto pFunction : ast->getAllFunctions()) {
+            CFG *newCfg = new CFG(pFunction);
+            listeCFG.push_back(newCfg);
+      }
+
+      
 
       return 0;
 }
