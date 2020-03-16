@@ -14,6 +14,8 @@ INTEGER : 'int' ;
 NAME : [a-zA-Z][a-zA-Z0-9] ;
 RETURN : 'return' ;
 CONST : [0-9]+ ;
+VAR : [a-zA-Z]+;
 COMMENT : '/*' .*? '*/' -> skip ;
 DIRECTIVE : '#' .*? '\n' -> skip ;
 WS    : [ \t\r\n] -> channel(HIDDEN);
+

@@ -27,7 +27,6 @@ public:
             Function* function = new Function();
             function->setReturnType(visit(ctx->type()));
             function->setName(ctx->NAME()->getText());
-
             //to add in the future : parameters parsing
 
             //Handle instructions of functions
@@ -39,6 +38,7 @@ public:
 
             return function;
       }
+
 
       virtual antlrcpp::Any visitReturn(ifccParser::ReturnContext *ctx) override {
             int returnValue = std::stoi(ctx->CONST()->getText());
