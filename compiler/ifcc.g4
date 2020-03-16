@@ -6,6 +6,7 @@ axiom : prog
 prog : 'int' 'main' '(' ')' '{' bloc RETURN expr ';' '}' ;
 
 bloc : instructions
+	|
      ;
 
 instructions : instruction
