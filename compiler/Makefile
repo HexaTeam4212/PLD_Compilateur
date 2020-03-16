@@ -7,7 +7,7 @@ ANTLR4_BINDIR=/usr/bin
 ANTLR4_INCDIR=/usr/include/antlr4-runtime
 ANTLR4_LIBDIR=/usr/lib/x86_64-linux-gnu
 
-SOURCES = Visitor.cpp Declaration.cpp Expression.cpp Function.cpp Instruction.cpp Program.cpp ReturnInstr.cpp
+SOURCES = BasicBlock.cpp CFG.cpp Declaration.cpp Expression.cpp Function.cpp Instruction.cpp IRInstr.cpp IRVariable.cpp Program.cpp ReturnInstr.cpp Visitor.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
 
 CC=clang++

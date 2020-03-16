@@ -14,15 +14,10 @@ public:
       CFG(Function* ast);
       ~CFG();
 
-      Function* ast;
-
-      void add_bb(BasicBlock* bb);
       std::string new_BB_name();
-      std::vector<BasicBlock*> getAllBasicBlock() { return bbs; };
       BasicBlock* gen_prologue(std::string functionName);
       BasicBlock* gen_epilogue(std::string functionName);
       BasicBlock* current_bb;
-      
       
       void gen_asm(std::ostream &o);
 
@@ -31,7 +26,8 @@ protected:
       std::map<std::string, IRVariable*> mapVariable;
       int nextFreeSymbolIndex;
       int nextBBnumber;
-private:
 
-      std::vector<BasicBlock*> bbs;
+private:
+      Function* ast;
+      BasicBlock* CFGStart;
 };

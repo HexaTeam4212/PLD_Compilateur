@@ -1,6 +1,10 @@
 #pragma once
 
-#include "BasicBlock.h"
+#include <vector>
+#include <string>
+#include <iostream>
+
+class BasicBlock;
 
 typedef enum {
       int64
