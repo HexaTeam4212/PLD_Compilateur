@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <iostream>
 
 #include "Instruction.h"
 
@@ -13,6 +14,7 @@ public:
       //getter setter
 
       std::string buildIR(CFG* cfg) override;
+      void printInstruction(std::ostream &o) override;
 
 private:
 

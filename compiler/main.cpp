@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <cstring>
 
 #include "antlr4-runtime.h"
 #include "antlr4-generated/ifccLexer.h"
@@ -14,8 +15,24 @@
 
 int main(int argn, const char **argv) {
       std::stringstream in;
-      if (argn==2) {
-            std::ifstream lecture(argv[1]);
+      bool printAST = false;
+
+      if (argn < 2) {
+            std::cout << "Error : not enough argument" << std::endl;
+            std::cout << "Syntax : ifcc [-p] <PATH_TO_FILE>" << std::endl;
+            return -3;
+      }
+      else if(argn >= 2) {
+            for(int i = 1; i < argn-1; i++) {
+                  if(strcmp("-p", argv[i]) == 0) {
+                        printAST = true;
+                  }
+                  else {
+                        std::cout << "Error : parameter \"" << argv[i] << "\" doesn't exist" << std::endl;
+                        return -2;
+                  }
+            }
+            std::ifstream lecture(argv[argn-1]);
             in << lecture.rdbuf();
       }
 
@@ -29,16 +46,15 @@ int main(int argn, const char **argv) {
       ParserErrorListener errorListener;
       parser.addErrorListener(&errorListener);
 
-      //tokens.fill();
-      //for(auto token : tokens.getTokens()) {
-      //      std::cout << token->toString() << std::endl;
-      //}
-
       try {
             antlr4::tree::ParseTree* tree = parser.axiom();
 
             Visitor visitor;
             Program* ast = (Program*) visitor.visit(tree);
+
+            if(printAST) {
+                  ast->printProgram(std::cout);
+            }
 
             //IR generation
             std::vector<CFG*> listeCFG;

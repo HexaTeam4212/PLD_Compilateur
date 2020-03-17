@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <iostream>
 
 class CFG;
 
@@ -14,4 +15,5 @@ public:
       ~Instruction();
 
       virtual std::string buildIR(CFG *cfg) = 0;
+      virtual void printInstruction(std::ostream &o) = 0;
 };

@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 
 #include "Declaration.h"
 
@@ -20,6 +21,8 @@ public:
 
       void setInstructions(std::vector<Instruction*> _vectInstr);
       std::vector<Instruction*> getInstructions() { return this->instructions; };
+
+      void printFunction(std::ostream &o);
 
 private:
       std::string name;

@@ -11,11 +11,14 @@ ReturnInstr::ReturnInstr(int returnValue)
 ReturnInstr::~ReturnInstr()
 {}
 
-std::string ReturnInstr::buildIR(CFG *cfg)
-{
+std::string ReturnInstr::buildIR(CFG *cfg) {
       std::vector<std::string> params;
       params.push_back("$"+std::to_string(returnValue));
       params.push_back("%rax");
       cfg->current_bb->add_IRInstr(IRInstr::Operation::copy, params);
       return "";
+}
+
+void ReturnInstr::printInstruction(std::ostream &o) {
+      o << "\t\tReturn instruction of value " << returnValue << std::endl;
 }
