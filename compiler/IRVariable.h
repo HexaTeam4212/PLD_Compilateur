@@ -7,10 +7,15 @@
 class IRVariable {
 
 public:
-      IRVariable();
+      IRVariable(std::string name, Type type, int offset);
       ~IRVariable();
+
+      std::string getName() { return name; };
+      Type getVarType() { return varType; };
+      int getOffset() { return offset; };
 
 private:
       std::string name;
-      Type varType;      
+      Type varType;
+      int offset;
 };

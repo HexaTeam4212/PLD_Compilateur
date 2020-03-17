@@ -11,8 +11,8 @@ public:
       Expression();
       ~Expression();
 
-      std::string buildIR(CFG* cfg) override;
-      void printInstruction(std::ostream &o) override;
+      std::string buildIR(CFG* cfg) = 0;
+      void printInstruction(std::ostream &o) = 0;
 
 private:
       std::string returnType;

@@ -7,6 +7,10 @@
 #include "Program.h"
 #include "Function.h"
 #include "ReturnInstr.h"
+#include "Expression.h"
+#include "ExprConstante.h"
+#include "ExprVariable.h"
+#include "Affectation.h"
 
 class Visitor : public ifccVisitor {
 
@@ -39,14 +43,35 @@ public:
             return function;
       }
 
-
       virtual antlrcpp::Any visitReturn(ifccParser::ReturnContext *ctx) override {
-            int returnValue = std::stoi(ctx->CONST()->getText());
-            return (Instruction*) new ReturnInstr(returnValue);
+            return (Instruction*) new ReturnInstr((Expression*)visit(ctx->expr()));
       }
 
       virtual antlrcpp::Any visitInteger(ifccParser::IntegerContext *ctx) override {
             return (std::string) ctx->INTEGER()->getText();
       }
 
+      virtual antlrcpp::Any visitConst(ifccParser::ConstContext *ctx) override {
+            return (Expression*) new ExprConstante(ctx->CONST()->getText());
+      }
+ 
+      virtual antlrcpp::Any visitVar(ifccParser::VarContext *ctx) override {
+            return (Expression*) new ExprVariable(ctx->VAR()->getText());
+      }
+
+      virtual antlrcpp::Any visitDeclaration(ifccParser::DeclarationContext *ctx) override {
+            std::vector<ExprVariable*> varsDeclared;
+            for(int i = 0; i < ctx->VAR().size(); i++) {
+                  ExprVariable* newVar = new ExprVariable(ctx->VAR().at(i)->getText());
+                  varsDeclared.push_back(newVar);
+            }
+
+            return (Instruction*) new Declaration(varsDeclared, visit(ctx->type()));
+      }
+
+      virtual antlrcpp::Any visitAffectation(ifccParser::AffectationContext *ctx) override {
+            std::string varName = ctx->VAR()->getText();
+            Expression* expr = (Expression*) visit(ctx->expr());
+            return (Instruction*) new Affectation(varName, expr);
+      }
 };

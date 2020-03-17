@@ -7,6 +7,7 @@
 #include "Function.h"
 #include "BasicBlock.h"
 #include "IRVariable.h"
+#include "Declaration.h"
 
 class CFG {
 
@@ -19,6 +20,11 @@ public:
       BasicBlock* gen_epilogue(std::string functionName);
       BasicBlock* current_bb;
       
+      int initTableVariable();
+      std::string create_new_tempvar(Type type);
+
+      IRVariable* getVariable(std::string nomVar);
+
       void gen_asm(std::ostream &o);
 
 protected:
@@ -26,8 +32,12 @@ protected:
       std::map<std::string, IRVariable*> mapVariable;
       int nextFreeSymbolIndex;
       int nextBBnumber;
+      int nextTempVarNumber;
 
 private:
+      int getOffsetBaseOnType(Type type);
+
       Function* ast;
       BasicBlock* CFGStart;
+      int sizeAllocated;
 };

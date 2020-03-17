@@ -1,1 +1,7 @@
-#include "Exceptions.h"
+#include "Expression.h"
+
+Expression::Expression()
+{}
+
+Expression::~Expression()
+{}

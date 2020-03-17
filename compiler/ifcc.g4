@@ -2,11 +2,17 @@ grammar ifcc;
 
 axiom : definitionFunction+;
 
-type : INTEGER # integer
+type : INTEGER #integer
 ;
 
-instr : 'return' CONST ';' # return
-;
+instr : 'return' expr ';'           #return
+      | type VAR (',' VAR)* ';'     #declaration
+      | VAR '=' expr ';'            #affectation
+      ;
+
+expr : CONST      #const
+     | VAR        #var
+     ;
 
 definitionFunction : type NAME '(' ')' '{' (instr )* '}';
 

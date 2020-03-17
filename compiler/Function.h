@@ -4,7 +4,7 @@
 #include <vector>
 #include <iostream>
 
-#include "Declaration.h"
+#include "Instruction.h"
 
 class Function {
 

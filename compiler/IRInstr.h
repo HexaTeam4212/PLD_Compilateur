@@ -15,20 +15,13 @@ class IRInstr {
    public:
 	/** The instructions themselves -- feel free to subclass instead */
 	typedef enum {
-		ldconst,
-		copy,
-		add,
-		sub,
-		mul,
-		rmem,
-		wmem,
-		call, 
-		cmp_eq,
-		cmp_lt,
-		cmp_le,
 		push,
 		pop,
-		ret
+		movq,
+		exit,
+		ldconst,
+		ret,
+		copy
 	} Operation;
 
 	/**  constructor */
