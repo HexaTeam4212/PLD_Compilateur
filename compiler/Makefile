@@ -7,7 +7,10 @@ ANTLR4_BINDIR=/usr/bin
 ANTLR4_INCDIR=/usr/include/antlr4-runtime
 ANTLR4_LIBDIR=/usr/lib/x86_64-linux-gnu
 
-SOURCES = Visitor.cpp Declaration.cpp Expression.cpp Function.cpp Instruction.cpp Program.cpp ReturnInstr.cpp
+AST = Affectation.cpp Declaration.cpp ExprConstante.cpp Expression.cpp ExprVariable.cpp Function.cpp Instruction.cpp Program.cpp ReturnInstr.cpp
+IR = BasicBlock.cpp CFG.cpp IRInstr.cpp IRVariable.cpp
+
+SOURCES = $(AST) $(IR) Visitor.cpp main.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
 
 CC=clang++
@@ -16,13 +19,12 @@ LDARGS=-g
 
 all: ifcc
 
-ifcc: dirs antlr $(OBJECTS) main.cpp Visitor.h
+ifcc: dirs antlr $(OBJECTS)
 	$(CC) $(CCARGS) $(GENERATED)/ifccBaseVisitor.cpp -o $(OUTPUT)/ifccBaseVisitor.o 
 	$(CC) $(CCARGS) $(GENERATED)/ifccLexer.cpp -o $(OUTPUT)/ifccLexer.o 
 	$(CC) $(CCARGS) $(GENERATED)/ifccVisitor.cpp -o $(OUTPUT)/ifccVisitor.o 
 	$(CC) $(CCARGS) $(GENERATED)/ifccParser.cpp -o $(OUTPUT)/ifccParser.o
-	$(CC) $(CCARGS) main.cpp -o $(OUTPUT)/main.o
-	$(CC) $(LDARGS) $(OUTPUT)/main.o $(OUTPUT)/ifccBaseVisitor.o $(OUTPUT)/ifccLexer.o $(OUTPUT)/ifccVisitor.o $(OUTPUT)/ifccParser.o $(addprefix $(OUTPUT)/,$(OBJECTS)) $(ANTLR4_LIBDIR)/libantlr4-runtime.a -o ifcc
+	$(CC) $(LDARGS) $(OUTPUT)/ifccBaseVisitor.o $(OUTPUT)/ifccLexer.o $(OUTPUT)/ifccVisitor.o $(OUTPUT)/ifccParser.o $(addprefix $(OUTPUT)/,$(OBJECTS)) $(ANTLR4_LIBDIR)/libantlr4-runtime.a -o ifcc
 
 %.o : %.cpp
 	$(CC) $(CCARGS) $< -o $(OUTPUT)/$@

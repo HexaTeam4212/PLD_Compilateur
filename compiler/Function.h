@@ -2,8 +2,9 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 
-#include "Declaration.h"
+#include "Instruction.h"
 
 class Function {
 
@@ -20,6 +21,8 @@ public:
 
       void setInstructions(std::vector<Instruction*> _vectInstr);
       std::vector<Instruction*> getInstructions() { return this->instructions; };
+
+      void printFunction(std::ostream &o);
 
 private:
       std::string name;

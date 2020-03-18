@@ -3,17 +3,17 @@
 #include <string>
 
 #include "Instruction.h"
+#include "Expression.h"
 
 class ReturnInstr : public Instruction {
 
 public:
-      //May change returnValue to Expression (variable, operation, etc...) 
-      //when we will have to handle more complex behaviour
-      ReturnInstr(int returnValue);
+      ReturnInstr(Expression* exprReturned);
       ~ReturnInstr();
 
       std::string buildIR(CFG *cfg) override;
+      void printInstruction(std::ostream &o) override;
 
 private:
-      int returnValue;
+      Expression* exprReturned;
 };

@@ -2,17 +2,22 @@ grammar ifcc;
 
 axiom : definitionFunction+;
 
-type : INTEGER # integer
+type : INTEGER #integer
 ;
 
-instr : RETURN CONST ';' # return
-;
+instr : 'return' expr ';'           #return
+      | type VAR (',' VAR)* ';'     #declaration
+      | VAR '=' expr ';'            #affectation
+      ;
+
+expr : CONST      #const
+     | VAR        #var
+     ;
 
 definitionFunction : type NAME '(' ')' '{' (instr )* '}';
 
 INTEGER : 'int' ;
-NAME : [a-zA-Z][a-zA-Z0-9] ;
-RETURN : 'return' ;
+NAME : [a-zA-Z]+[a-zA-Z0-9] ;
 CONST : [0-9]+ ;
 VAR : [a-zA-Z]+;
 COMMENT : '/*' .*? '*/' -> skip ;
