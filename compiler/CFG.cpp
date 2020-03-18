@@ -4,6 +4,7 @@
 #include <fstream>
 
 CFG::CFG(Function* ast)
+: ast(ast)
 {
       nextBBnumber = 0;
       nextTempVarNumber = 1;
