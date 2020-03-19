@@ -5,6 +5,7 @@ services:
 
 before_install:
   - bash run.sh
+  - bash ./tests/test_if.sh
 
 script:
   - bash ./tests/test_if.sh
