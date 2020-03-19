@@ -1,7 +1,4 @@
 language: python
 
-services:
-  - docker
-
 script:
-  - bash ./tests/test_if.sh
+  - python3 tests/pld-test.py tests/tests/Init/
