@@ -6,4 +6,5 @@ services:
 script:
   - bash run.sh
   - bash ./tests/test_if.sh
+  - exit
   - bash stop.sh
