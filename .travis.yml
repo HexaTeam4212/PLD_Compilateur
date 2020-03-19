@@ -1,3 +1,9 @@
 language: bash
+
+services:
+  - docker
+
 script:
+  - bash run.sh
   - bash ./tests/test_if.sh
+  - bash stop.sh
