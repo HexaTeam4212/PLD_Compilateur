@@ -2,6 +2,10 @@ language: python
 
 script:
   - python3 tests/pld-test.py tests/tests/Init/
-  - [[ python3 tests/pld-test.py tests/tests/Init/ =~ "TEST FAIL" ]] || exit 1;
+  - if [[ python3 tests/pld-test.py tests/tests/Init/ =~ "TEST FAIL" ]]; then
+      exit 1;
+    fi
   - python3 tests/pld-test.py tests/tests/Affectation/
-  - [[ python3 tests/pld-test.py tests/tests/Affectation/ =~ "TEST FAIL" ]] || exit 1;
+  - if [[ python3 tests/pld-test.py tests/tests/Affectation/ =~ "TEST FAIL" ]]; then
+      exit 1;
+    fi
