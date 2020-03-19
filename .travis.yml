@@ -3,7 +3,7 @@ language: python
 services:
   - docker
 
-before_install:
+before_script:
   - bash run.sh
   - bash ./tests/test_if.sh
 
