@@ -3,8 +3,8 @@ language: bash
 services:
   - docker
 
-script:
+before_install:
   - bash run.sh
+
+script:
   - bash ./tests/test_if.sh
-  - exit
-  - bash stop.sh
