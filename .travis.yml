@@ -1,7 +1,11 @@
 language: python
 
-services:
-  - docker
-
 script:
-  - bash ./tests/test_if.sh
+  - python3 tests/pld-test.py tests/tests/Init/
+  - if [[ python3 tests/pld-test.py tests/tests/Init/ =~ "TEST FAIL" ]]; then
+      exit 1;
+    fi
+  - python3 tests/pld-test.py tests/tests/Affectation/
+  - if [[ python3 tests/pld-test.py tests/tests/Affectation/ =~ "TEST FAIL" ]]; then
+      exit 1;
+    fi
