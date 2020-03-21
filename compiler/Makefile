@@ -10,7 +10,7 @@ ANTLR4_LIBDIR=/usr/lib/x86_64-linux-gnu
 AST = Affectation.cpp Declaration.cpp ExprConstante.cpp Expression.cpp ExprVariable.cpp Function.cpp Instruction.cpp Program.cpp ReturnInstr.cpp
 IR = BasicBlock.cpp CFG.cpp IRInstr.cpp IRVariable.cpp
 
-SOURCES = $(AST) $(IR) Visitor.cpp main.cpp
+SOURCES = $(AST) $(IR) visitor.cpp main.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
 
 CC=clang++
