@@ -16,4 +16,5 @@ public:
 
       virtual std::string buildIR(CFG *cfg) = 0;
       virtual void printInstruction(std::ostream &o) = 0;
+	  //virtual std::string getValue() = 0;
 };
