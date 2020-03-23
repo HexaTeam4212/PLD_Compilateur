@@ -8,11 +8,11 @@ type : INTEGER #integer
 instr : 'return' expr ';'           #return
       | type VAR (',' VAR)* ';'     #declaration
       | VAR '=' expr ';'            #affectation
-	  | VAR '=' (expr '+')* expr ';'#addition
       ;
 
-expr : CONST      #const
-     | VAR        #var
+expr : CONST         #const
+     | VAR           #var
+	 | expr '+' expr #addition
      ;
 
 

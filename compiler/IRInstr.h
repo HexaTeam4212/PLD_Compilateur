@@ -21,7 +21,8 @@ class IRInstr {
 		exit,
 		ldconst,
 		ret,
-		copy
+		copy,
+		add
 	} Operation;
 
 	/**  constructor */

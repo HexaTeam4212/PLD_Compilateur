@@ -78,13 +78,13 @@ public:
       }
 
 	  virtual antlrcpp::Any visitAddition(ifccParser::AdditionContext *ctx) override {
-		  std::string varName = ctx->VAR()->getText();
-		  std::vector<Expression*> exprAdded;
-		  for (int i = 0; i < ctx->expr().size(); i++) {
-			  Expression* oneExpr = (Expression*) visit(ctx->expr().at(i));
-			  exprAdded.push_back(oneExpr);
-		  }
-		  return (Instruction*) new Addition(varName, exprAdded);
+		  Expression* exprGAdded;
+		  Expression* exprRAdded;
+		  
+		  exprGAdded = (Expression*) visit(ctx->expr(0));
+		  exprGAdded = (Expression*) visit(ctx->expr(1));
+
+		  return (Expression*) new Addition(exprGAdded,exprRAdded);
 	  }
 
 };
