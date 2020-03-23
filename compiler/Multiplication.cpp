@@ -26,6 +26,10 @@ std::string Multiplication::buildIR(CFG* cfg) {
 }
 
 void Multiplication::printInstruction(std::ostream &o) {
-      o << "\t\tMultplication of origin into dest" << std::endl;
-      o << "\t\t\tOrigin : " << std::endl;
+	o << "\t\tMultiplication of origin into dest" << std::endl;
+	o << "\t\t\tOrigin Left & Right: ";
+	exprGMult->printInstruction(o);
+	o << "&&&&&&&&&";
+	exprRMult->printInstruction(o);
+	o << "\t\t\tDest : var Temp"<< std::endl;
 }
