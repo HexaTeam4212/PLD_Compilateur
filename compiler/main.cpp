@@ -90,7 +90,9 @@ int main(int argn, const char **argv) {
             for(auto pCFG : listeCFG) {
                   pCFG->gen_asm(std::cout);
             }
-
+			//as -o 3_add.o 3_add.s 
+			//gcc -o 3_add.o
+			//./a.out
 			//file.close(fileName);
 			//Read2->FermerFlux();
 
