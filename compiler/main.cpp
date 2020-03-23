@@ -11,7 +11,7 @@
 #include "antlr4-generated/ifccVisitor.h"
 #include "antlr4-generated/ifccBaseVisitor.h"
 #include "Program.h"
-#include "Visitor.h"
+#include "visitor.h"
 #include "CFG.h"
 #include "ParserErrorListener.h"
 #include "Lecture.h"

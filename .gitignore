@@ -7,3 +7,4 @@
 /compiler/.antlr
 /compiler/.vs
 vgcore*
+/compiler/inc
