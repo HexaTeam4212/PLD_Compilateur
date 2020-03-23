@@ -23,7 +23,7 @@ void Lecture::OuvrirFlux()
 	std::ofstream fichier(fileName.c_str());
 	bufferSortie = std::cout.rdbuf();
 	std::cout << "2prim" << std::endl;
-	std::cout.rdbuf(fichier.rdbuf()); //redirige les cout vers le fichier
+	std::cout.rdbuf(fichier.rdbuf()); // ça plante ici //redirige les cout vers le fichier
 
 	std::cout << "3" << std::endl;
 	//std::cin.rdbuf(bufferEntree);   //Revient à l'entrée standard

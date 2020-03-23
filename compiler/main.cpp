@@ -74,9 +74,10 @@ int main(int argn, const char **argv) {
 			//Read2->OuvrirFlux();
 			std::cout << "1j" << std::endl;
             //Generate Assembly code
-
-			std::ifstream fic(fileName.c_str());
-
+			
+			std::ostream file;
+			file.open(fileName);
+			/*
 			std::fstream entree("Entree.txt");
 			std::streambuf *bufferEntree = std::cin.rdbuf();
 			std::cin.rdbuf(entree.rdbuf());
@@ -85,15 +86,20 @@ int main(int argn, const char **argv) {
 			std::streambuf *bufferSortie = std::cout.rdbuf();
 			std::cout << "2prim" << std::endl;
 			std::cout.rdbuf(fichier.rdbuf());
+			*/
 
             for(auto pCFG : listeCFG) {
-                  pCFG->gen_asm(std::cout);
+                  pCFG->gen_asm(file);
             }
+
+			file.close(fileName);
 			//Read2->FermerFlux();
 
+			/*
 			std::cin.rdbuf(bufferEntree);   //Revient à l'entrée standard
 			std::cout.rdbuf(bufferSortie);
 			std::cout << "jjj" << std::endl;
+			*/
       }
       catch (std::invalid_argument e) {
             std::cout << "Error during file parsing" << std::endl;
