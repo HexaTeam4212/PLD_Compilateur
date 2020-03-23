@@ -1,11 +1,8 @@
 language: python
 
 script:
-  - python3 tests/pld-test.py tests/tests/Init/
-  - if [[ python3 tests/pld-test.py tests/tests/Init/ =~ "TEST FAIL" ]]; then
-      exit 1;
-    fi
-  - python3 tests/pld-test.py tests/tests/Affectation/
-  - if [[ python3 tests/pld-test.py tests/tests/Affectation/ =~ "TEST FAIL" ]]; then
+  - 
+  - python3 tests/pld-test.py tests/tests
+  - if [[ python3 tests/pld-test.py tests/tests =~ "TEST FAIL" ]]; then
       exit 1;
     fi
