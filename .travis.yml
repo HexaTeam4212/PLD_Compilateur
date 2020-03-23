@@ -1,11 +1,12 @@
 language: python
 
+services:
+  - docker
+
+before_install:
+  - docker run --rm --name pld-comp -v "$(pwd)":/pld-comp -t -d -w /pld-comp eguerin/antlr4cpp
+
 script:
-  - python3 tests/pld-test.py tests/tests/Init/
-  - if [[ python3 tests/pld-test.py tests/tests/Init/ =~ "TEST FAIL" ]]; then
-      exit 1;
-    fi
-  - python3 tests/pld-test.py tests/tests/Affectation/
-  - if [[ python3 tests/pld-test.py tests/tests/Affectation/ =~ "TEST FAIL" ]]; then
+  - if [[ $(docker exec pld-comp bash -c "cd compiler; make; cd ../tests; ./test_if.sh") =~ "TEST FAIL" ]]; then
       exit 1;
     fi

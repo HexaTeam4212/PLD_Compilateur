@@ -33,7 +33,7 @@ void IRInstr::gen_asm(std::ostream &o) {
 
       case copy:
             o << "\tmovq -" + params.at(0) + "(%rbp), %rax" << std::endl;
-            o << "\tmovq %eax, -" + params.at(1) + "(%rbp)" << std::endl;
+            o << "\tmovq %rax, -" + params.at(1) + "(%rbp)" << std::endl;
             break;
 
       default:

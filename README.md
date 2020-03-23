@@ -1,5 +1,7 @@
 # C compiler with antlr4/c++
 
+[![Build Status](https://travis-ci.com/HexaTeam4212/PLD_Compilateur.svg?branch=master)](https://travis-ci.com/HexaTeam4212/PLD_Compilateur)
+
 ## Instructions
 
 This minimal example shows how to build a basic C compiler using Antlr4 for C++. The only file the compiler can deal with is:
