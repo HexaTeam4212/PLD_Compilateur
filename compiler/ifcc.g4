@@ -10,9 +10,12 @@ instr : 'return' expr ';'           #return
       | VAR '=' expr ';'            #affectation
       ;
 
-expr : CONST      #const
-     | VAR        #var
+expr : CONST         #const
+     | VAR           #var
+	 | expr '+' expr #addition
      ;
+
+
 
 definitionFunction : type NAME '(' ')' '{' (instr )* '}';
 

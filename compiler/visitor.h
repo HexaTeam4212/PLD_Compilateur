@@ -11,6 +11,8 @@
 #include "ExprConstante.h"
 #include "ExprVariable.h"
 #include "Affectation.h"
+#include "Declaration.h"
+#include "Addition.h"
 
 class Visitor : public ifccVisitor {
 
@@ -74,4 +76,15 @@ public:
             Expression* expr = (Expression*) visit(ctx->expr());
             return (Instruction*) new Affectation(varName, expr);
       }
+
+	  virtual antlrcpp::Any visitAddition(ifccParser::AdditionContext *ctx) override {
+		  Expression* exprGAdded;
+		  Expression* exprRAdded;
+		  
+		  exprGAdded = (Expression*) visit(ctx->expr(0));
+		  exprRAdded = (Expression*) visit(ctx->expr(1));
+
+		  return (Expression*) new Addition(exprGAdded,exprRAdded);
+	  }
+
 };

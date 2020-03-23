@@ -1,7 +1,9 @@
 #include <iostream>
 #include <fstream>
+#include <ostream>
 #include <vector>
 #include <cstring>
+
 
 #include "antlr4-runtime.h"
 #include "antlr4-generated/ifccLexer.h"
@@ -12,6 +14,7 @@
 #include "visitor.h"
 #include "CFG.h"
 #include "ParserErrorListener.h"
+#include "Lecture.h"
 
 int main(int argn, const char **argv) {
       std::stringstream in;
@@ -64,10 +67,40 @@ int main(int argn, const char **argv) {
                   listeCFG.push_back(newCfg);
             }
 
+			//std::cout << "iiiiiiiiiiiiii" << std::endl;
+
+			std::string fileName = "assembleur.s";
+			//Lecture *Read2 = new Lecture(fileName);
+			//Read2->OuvrirFlux();
+			std::cout << "1j" << std::endl;
             //Generate Assembly code
+			
+			std::fstream fic(fileName.c_str());
+			//file.open(fileName);
+			
+			std::fstream entree("Entree.txt");
+			std::streambuf *bufferEntree = std::cin.rdbuf();
+			std::cin.rdbuf(entree.rdbuf());
+
+			std::ofstream fichier(fileName.c_str());
+			std::streambuf *bufferSortie = std::cout.rdbuf();
+			std::cout.rdbuf(fichier.rdbuf());
+			
+
             for(auto pCFG : listeCFG) {
                   pCFG->gen_asm(std::cout);
             }
+			//as -o 3_add.o 3_add.s 
+			//gcc -o 3_add.o
+			//./a.out
+			//file.close(fileName);
+			//Read2->FermerFlux();
+
+			
+			std::cin.rdbuf(bufferEntree);   //Revient à l'entrée standard
+			std::cout.rdbuf(bufferSortie);
+			//std::cout << "jjj" << std::endl;
+			
       }
       catch (std::invalid_argument e) {
             std::cout << "Error during file parsing" << std::endl;
