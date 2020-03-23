@@ -98,4 +98,14 @@ public:
 
 		return (Expression*) new Multiplication(exprGMult, exprRMult);
 	}
+
+	virtual antlrcpp::Any visitSoustraction(ifccParser::SoustractionContext *ctx) override {
+		Expression* exprGDiff;
+		Expression* exprRDiff;
+
+		exprGDiff = (Expression*)visit(ctx->expr(0));
+		exprRDiff = (Expression*)visit(ctx->expr(1));
+
+		return (Expression*) new Multiplication(exprGDiff, exprRDiff);
+	}
 };

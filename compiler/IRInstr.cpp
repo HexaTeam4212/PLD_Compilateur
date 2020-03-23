@@ -48,6 +48,12 @@ void IRInstr::gen_asm(std::ostream &o) {
 		o << "\timul %rdx, %rax" << std::endl;
 		o << "\tmovq  %rax, -" + params.at(2) + "(%rbp)" << std::endl;
 		break;
+	case diff:
+		o << "\tmovq -" + params.at(0) + "(%rbp), %rdx" << std::endl;
+		o << "\tmovq -" + params.at(1) + "(%rbp), %rax" << std::endl;
+		o << "\tsubq %rdx, %rax" << std::endl;
+		o << "\tmovq  %rax, -" + params.at(2) + "(%rbp)" << std::endl;
+		break;
       default:
             break;
       }

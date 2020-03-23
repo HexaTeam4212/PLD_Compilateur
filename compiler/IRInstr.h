@@ -23,7 +23,8 @@ class IRInstr {
 		ret,
 		copy,
 		add,
-		mult
+		mult,
+		diff
 	} Operation;
 
 	/**  constructor */
