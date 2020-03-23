@@ -1,7 +1,9 @@
 language: python
 
 script:
-  - 
+  - cd compiler/
+  - make
+  - cd ..
   - python3 tests/pld-test.py tests/tests
   - if [[ python3 tests/pld-test.py tests/tests =~ "TEST FAIL" ]]; then
       exit 1;
