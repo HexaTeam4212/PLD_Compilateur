@@ -5,7 +5,7 @@ services:
 
 before_install:
   - docker run --rm --name pld-comp -v "$(pwd)":/pld-comp -t -d -w /pld-comp eguerin/antlr4cpp
-  - docker exec -it pld-comp bash
+  - docker exec -it pld-comp bash "cd compiler/; make; cd ..;"
 
 script:
   - cd compiler/
