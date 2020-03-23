@@ -13,6 +13,7 @@
 #include "Affectation.h"
 #include "Declaration.h"
 #include "Addition.h"
+#include "Multiplication.h"
 
 class Visitor : public ifccVisitor {
 
@@ -85,5 +86,16 @@ public:
 		exprRAdded = (Expression*) visit(ctx->expr(1));
 
 		return (Expression*) new Addition(exprGAdded,exprRAdded);
+	}
+
+
+	virtual antlrcpp::Any visitMultiplication(ifccParser::MultiplicationContext *ctx) override {
+		Expression* exprGMult;
+		Expression* exprRMult;
+
+		exprGMult = (Expression*)visit(ctx->expr(0));
+		exprRMult = (Expression*)visit(ctx->expr(1));
+
+		return (Expression*) new Multiplication(exprGMult, exprRMult);
 	}
 };

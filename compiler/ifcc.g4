@@ -13,6 +13,7 @@ instr : 'return' expr ';'           #return
 expr : CONST         #const
      | VAR           #var
      | expr '+' expr #addition
+	 | expr '*' expr #multiplication
      ;
 
 

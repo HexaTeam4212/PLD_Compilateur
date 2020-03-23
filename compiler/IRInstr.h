@@ -22,7 +22,8 @@ class IRInstr {
 		ldconst,
 		ret,
 		copy,
-		add
+		add,
+		mult
 	} Operation;
 
 	/**  constructor */
