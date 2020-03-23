@@ -8,6 +8,6 @@ before_install:
 
 script:
   - docker exec pld-comp bash -c "cd compiler; make; cd ../tests; ./test_if.sh"
-  - if [[ docker exec pld-comp bash -c "cd compiler; make; cd ../tests; ./test_if.sh" =~ "TEST FAIL" ]]; then
+  - if [[ $(docker exec pld-comp bash -c "cd compiler; make; cd ../tests; ./test_if.sh") =~ "TEST FAIL" ]]; then
       exit 1;
     fi
