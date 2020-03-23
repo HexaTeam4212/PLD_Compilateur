@@ -67,7 +67,7 @@ int main(int argn, const char **argv) {
                   listeCFG.push_back(newCfg);
             }
 
-			std::cout << "iiiiiiiiiiiiii" << std::endl;
+			//std::cout << "iiiiiiiiiiiiii" << std::endl;
 
 			std::string fileName = "assembleur.s";
 			//Lecture *Read2 = new Lecture(fileName);
@@ -84,7 +84,6 @@ int main(int argn, const char **argv) {
 
 			std::ofstream fichier(fileName.c_str());
 			std::streambuf *bufferSortie = std::cout.rdbuf();
-			std::cout << "2prim" << std::endl;
 			std::cout.rdbuf(fichier.rdbuf());
 			
 
@@ -98,7 +97,7 @@ int main(int argn, const char **argv) {
 			
 			std::cin.rdbuf(bufferEntree);   //Revient à l'entrée standard
 			std::cout.rdbuf(bufferSortie);
-			std::cout << "jjj" << std::endl;
+			//std::cout << "jjj" << std::endl;
 			
       }
       catch (std::invalid_argument e) {

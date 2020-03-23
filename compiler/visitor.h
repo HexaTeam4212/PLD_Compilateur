@@ -82,7 +82,7 @@ public:
 		  Expression* exprRAdded;
 		  
 		  exprGAdded = (Expression*) visit(ctx->expr(0));
-		  exprGAdded = (Expression*) visit(ctx->expr(1));
+		  exprRAdded = (Expression*) visit(ctx->expr(1));
 
 		  return (Expression*) new Addition(exprGAdded,exprRAdded);
 	  }
