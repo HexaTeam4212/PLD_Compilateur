@@ -24,7 +24,8 @@ class IRInstr {
 		copy,
 		add,
 		mult,
-		diff
+		diff,
+		div
 	} Operation;
 
 	/**  constructor */

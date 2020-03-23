@@ -54,6 +54,13 @@ void IRInstr::gen_asm(std::ostream &o) {
 		o << "\tsubq %rdx, %rax" << std::endl;
 		o << "\tmovq  %rax, -" + params.at(2) + "(%rbp)" << std::endl;
 		break;
+	case div:
+		o << "\tmovq -" + params.at(0) + "(%rbp), %rax" << std::endl;
+		//o << "\tmovq -" + params.at(1) + "(%rbp), %rax" << std::endl;
+		o << "\tcqto" << std::endl;
+		o << "\tidivq -" + params.at(1) + "(%rbp)" << std::endl;
+		o << "\tmovq  %rax, -" + params.at(2) + "(%rbp)" << std::endl;
+		break;
       default:
             break;
       }

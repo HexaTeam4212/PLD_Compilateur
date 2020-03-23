@@ -15,6 +15,7 @@ expr : CONST         #const
      | expr '+' expr #addition
 	 | expr '*' expr #multiplication
 	 | expr '-' expr #soustraction
+	 | expr '/' expr #division
      ;
 
 

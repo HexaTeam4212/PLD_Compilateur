@@ -14,6 +14,8 @@
 #include "Declaration.h"
 #include "Addition.h"
 #include "Multiplication.h"
+#include "Soustraction.h"
+#include "Division.h"
 
 class Visitor : public ifccVisitor {
 
@@ -106,6 +108,16 @@ public:
 		exprGDiff = (Expression*)visit(ctx->expr(0));
 		exprRDiff = (Expression*)visit(ctx->expr(1));
 
-		return (Expression*) new Multiplication(exprGDiff, exprRDiff);
+		return (Expression*) new Soustraction(exprGDiff, exprRDiff);
+	}
+
+	virtual antlrcpp::Any visitDivision(ifccParser::DivisionContext *ctx) override {
+		Expression* exprGDiv;
+		Expression* exprRDiv;
+
+		exprGDiv = (Expression*)visit(ctx->expr(0));
+		exprRDiv = (Expression*)visit(ctx->expr(1));
+
+		return (Expression*) new Division(exprGDiv, exprRDiv);
 	}
 };
