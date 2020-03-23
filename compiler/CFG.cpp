@@ -102,9 +102,9 @@ int CFG::initTableVariable() {
                   Type type;
                   
                   if(dec->getType() == "int"){ type = Type::int64;}
-                  sizeAllocate += getOffsetBaseOnType(type);
 
                   for(ExprVariable* exprVar : dec->getVarsDeclared()) {
+                        sizeAllocate += getOffsetBaseOnType(type);
                         IRVariable *var = new IRVariable(exprVar->getName(), type, sizeAllocate);
                         this->mapVariable.insert(std::pair<std::string, IRVariable*>(exprVar->getName(), var));
                   }
