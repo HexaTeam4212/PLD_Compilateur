@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/HexaTeam4212/PLD_Compilateur.svg?branch=master)](https://travis-ci.com/HexaTeam4212/PLD_Compilateur)
+
 # C Compiler test framework
 
 This directory contains scripts to test your compiler along with 
