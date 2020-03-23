@@ -19,7 +19,7 @@ std::string ReturnInstr::buildIR(CFG *cfg) {
       std::vector<std::string> params;
       params.push_back(std::to_string(retVar->getOffset()));
       cfg->current_bb->add_IRInstr(IRInstr::Operation::ret, params);
-      return "";
+      return retVar->getName();
 }
 
 void ReturnInstr::printInstruction(std::ostream &o) {

@@ -77,14 +77,13 @@ public:
             return (Instruction*) new Affectation(varName, expr);
       }
 
-	  virtual antlrcpp::Any visitAddition(ifccParser::AdditionContext *ctx) override {
-		  Expression* exprGAdded;
-		  Expression* exprRAdded;
+	virtual antlrcpp::Any visitAddition(ifccParser::AdditionContext *ctx) override {
+		Expression* exprGAdded;
+		Expression* exprRAdded;
 		  
-		  exprGAdded = (Expression*) visit(ctx->expr(0));
-		  exprRAdded = (Expression*) visit(ctx->expr(1));
+		exprGAdded = (Expression*) visit(ctx->expr(0));
+		exprRAdded = (Expression*) visit(ctx->expr(1));
 
-		  return (Expression*) new Addition(exprGAdded,exprRAdded);
-	  }
-
+		return (Expression*) new Addition(exprGAdded,exprRAdded);
+	}
 };

@@ -14,21 +14,30 @@
 #include "visitor.h"
 #include "CFG.h"
 #include "ParserErrorListener.h"
-#include "Lecture.h"
 
 int main(int argn, const char **argv) {
       std::stringstream in;
       bool printAST = false;
+      std::string fileName = "";
 
       if (argn < 2) {
             std::cout << "Error : not enough argument" << std::endl;
-            std::cout << "Syntax : ifcc [-p] <PATH_TO_FILE>" << std::endl;
+            std::cout << "Syntax : ifcc [-p] [-o outfile] <PATH_TO_FILE>" << std::endl;
             return -3;
       }
       else if(argn >= 2) {
             for(int i = 1; i < argn-1; i++) {
                   if(strcmp("-p", argv[i]) == 0) {
                         printAST = true;
+                  }
+                  else if(strcmp("-o", argv[i]) == 0) {
+                        if(i < argn-2 && argv[i+1][0] != '-') {
+                              fileName = argv[++i];
+                        }
+                        else {
+                              std::cout << "Error : parameter \"" << argv[i] << "\" need the name of the output file" << std::endl;
+                              return -4;
+                        }
                   }
                   else {
                         std::cout << "Error : parameter \"" << argv[i] << "\" doesn't exist" << std::endl;
@@ -67,39 +76,22 @@ int main(int argn, const char **argv) {
                   listeCFG.push_back(newCfg);
             }
 
-			//std::cout << "iiiiiiiiiiiiii" << std::endl;
-
-			std::string fileName = "assembleur.s";
-			//Lecture *Read2 = new Lecture(fileName);
-			//Read2->OuvrirFlux();
-			std::cout << "1j" << std::endl;
-            //Generate Assembly code
-			
-			std::fstream fic(fileName.c_str());
-			//file.open(fileName);
-			
-			std::fstream entree("Entree.txt");
-			std::streambuf *bufferEntree = std::cin.rdbuf();
-			std::cin.rdbuf(entree.rdbuf());
-
-			std::ofstream fichier(fileName.c_str());
-			std::streambuf *bufferSortie = std::cout.rdbuf();
-			std::cout.rdbuf(fichier.rdbuf());
-			
-
-            for(auto pCFG : listeCFG) {
-                  pCFG->gen_asm(std::cout);
+            //Select output stream based on passed params
+            std::streambuf* buffer;
+            std::ofstream outputFile;
+            if(strcmp(fileName.c_str(), "") != 0) {
+                  outputFile.open(fileName,  std::ios::out | std::ios::trunc);
+                  buffer = outputFile.rdbuf();
             }
-			//as -o 3_add.o 3_add.s 
-			//gcc -o 3_add.o
-			//./a.out
-			//file.close(fileName);
-			//Read2->FermerFlux();
+            else {
+                  buffer = std::cout.rdbuf();
+            }
+            std::ostream out(buffer);
 
-			
-			std::cin.rdbuf(bufferEntree);   //Revient à l'entrée standard
-			std::cout.rdbuf(bufferSortie);
-			//std::cout << "jjj" << std::endl;
+            //Generate asembly in the correct output stream
+            for(auto pCFG : listeCFG) {
+                  pCFG->gen_asm(out);
+            }
 			
       }
       catch (std::invalid_argument e) {

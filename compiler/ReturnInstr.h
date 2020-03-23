@@ -13,7 +13,6 @@ public:
 
       std::string buildIR(CFG *cfg) override;
       void printInstruction(std::ostream &o) override;
-	  //std::string getValue() override = 0;
 
 private:
       Expression* exprReturned;

@@ -20,11 +20,7 @@ std::string ExprConstante::buildIR(CFG* cfg) {
 
       return varName;
 }
-/*
-std::string ExprConstante::getValue() {
 
-	return (value);
-}*/
 void ExprConstante::printInstruction(std::ostream &o) {
       o << "constant " << value << std::endl;
 }

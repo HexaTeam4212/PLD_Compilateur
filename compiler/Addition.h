@@ -17,6 +17,6 @@ public:
       void printInstruction(std::ostream &o) override;
 
 private:
-	  Expression* exprGAdded;
-	  Expression* exprRAdded;
+	Expression* exprGAdded;
+	Expression* exprRAdded;
 };
