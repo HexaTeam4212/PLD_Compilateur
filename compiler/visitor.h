@@ -13,6 +13,9 @@
 #include "Affectation.h"
 #include "Declaration.h"
 #include "Addition.h"
+#include "Multiplication.h"
+#include "Soustraction.h"
+#include "Division.h"
 
 class Visitor : public ifccVisitor {
 
@@ -58,13 +61,13 @@ public:
       }
  
       virtual antlrcpp::Any visitVar(ifccParser::VarContext *ctx) override {
-            return (Expression*) new ExprVariable(ctx->VAR()->getText());
+            return (Expression*) new ExprVariable(ctx->NAME()->getText());
       }
 
       virtual antlrcpp::Any visitDeclaration(ifccParser::DeclarationContext *ctx) override {
             std::vector<ExprVariable*> varsDeclared;
-            for(int i = 0; i < ctx->VAR().size(); i++) {
-                  ExprVariable* newVar = new ExprVariable(ctx->VAR().at(i)->getText());
+            for(int i = 0; i < ctx->NAME().size(); i++) {
+                  ExprVariable* newVar = new ExprVariable(ctx->NAME().at(i)->getText());
                   varsDeclared.push_back(newVar);
             }
 
@@ -72,7 +75,7 @@ public:
       }
 
       virtual antlrcpp::Any visitAffectation(ifccParser::AffectationContext *ctx) override {
-            std::string varName = ctx->VAR()->getText();
+            std::string varName = ctx->NAME()->getText();
             Expression* expr = (Expression*) visit(ctx->expr());
             return (Instruction*) new Affectation(varName, expr);
       }
@@ -86,4 +89,43 @@ public:
 
 		return (Expression*) new Addition(exprGAdded,exprRAdded);
 	}
+
+
+	virtual antlrcpp::Any visitMultiplication(ifccParser::MultiplicationContext *ctx) override {
+		Expression* exprGMult;
+		Expression* exprRMult;
+
+		exprGMult = (Expression*)visit(ctx->exprLvl2(0));
+		exprRMult = (Expression*)visit(ctx->exprLvl2(1));
+
+		return (Expression*) new Multiplication(exprGMult, exprRMult);
+	}
+
+	virtual antlrcpp::Any visitSoustraction(ifccParser::SoustractionContext *ctx) override {
+		Expression* exprGDiff;
+		Expression* exprRDiff;
+
+		exprGDiff = (Expression*)visit(ctx->expr(0));
+		exprRDiff = (Expression*)visit(ctx->expr(1));
+
+		return (Expression*) new Soustraction(exprGDiff, exprRDiff);
+	}
+
+	virtual antlrcpp::Any visitDivision(ifccParser::DivisionContext *ctx) override {
+		Expression* exprGDiv;
+		Expression* exprRDiv;
+
+		exprGDiv = (Expression*)visit(ctx->exprLvl2(0));
+		exprRDiv = (Expression*)visit(ctx->exprLvl2(1));
+
+		return (Expression*) new Division(exprGDiv, exprRDiv);
+	}
+
+      virtual antlrcpp::Any visitCasStandardLvl2(ifccParser::CasStandardLvl2Context *ctx) override {
+            return (Expression*)visit(ctx->exprLvl2());
+      }
+
+      virtual antlrcpp::Any visitParenthese(ifccParser::ParentheseContext *ctx) override {
+            return (Expression*)visit(ctx->expr());
+      }
 };

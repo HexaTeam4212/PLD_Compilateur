@@ -1,34 +1,33 @@
-#include "Addition.h"
+#include "Division.h"
 
-Addition::Addition(Expression* exprGAdded, Expression* exprRAdded)
-:exprGAdded(exprGAdded), exprRAdded(exprRAdded)
+Division::Division(Expression* exprGDiv, Expression* exprRDiv)
+:exprGDiv(exprGDiv), exprRDiv(exprRDiv)
 {}
 
-Addition::~Addition()
+Division::~Division()
 {}
 
-std::string Addition::buildIR(CFG* cfg) {
+std::string Division::buildIR(CFG* cfg) {
 	std::string returnName = cfg->create_new_tempvar(Type::int64);
 	IRVariable* varReturnName = cfg->getVariable(returnName);
-	std::string exprG = exprGAdded->buildIR(cfg);
+	std::string exprG = exprGDiv->buildIR(cfg);
       IRVariable* varG = cfg->getVariable(exprG);
-	std::string exprR = exprRAdded->buildIR(cfg);
+	std::string exprR = exprRDiv->buildIR(cfg);
       IRVariable* varR = cfg->getVariable(exprR);
 
       std::vector<std::string> params;
 	params.push_back(std::to_string(varG->getOffset()));
       params.push_back(std::to_string(varR->getOffset()));
 	params.push_back(std::to_string(varReturnName->getOffset()));
-      cfg->current_bb->add_IRInstr(IRInstr::Operation::add, params);
+      cfg->current_bb->add_IRInstr(IRInstr::Operation::div, params);
       
       return varReturnName->getName();
 }
 
-void Addition::printInstruction(std::ostream &o) {
-      o << "Addition of two expression" << std::endl;
+void Division::printInstruction(std::ostream &o) {
+      o << "Division of two expression" << std::endl;
 	o << "\t\t\t\tExpr 1 : ";
-	exprGAdded->printInstruction(o);
+	exprGDiv->printInstruction(o);
 	o << "\t\t\t\tExpr 2 : ";
-	exprRAdded->printInstruction(o);
-
+	exprRDiv->printInstruction(o);
 }
