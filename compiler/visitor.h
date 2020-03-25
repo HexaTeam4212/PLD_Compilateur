@@ -124,4 +124,8 @@ public:
       virtual antlrcpp::Any visitCasStandardLvl2(ifccParser::CasStandardLvl2Context *ctx) override {
             return (Expression*)visit(ctx->exprLvl2());
       }
+
+      virtual antlrcpp::Any visitParenthese(ifccParser::ParentheseContext *ctx) override {
+            return (Expression*)visit(ctx->expr());
+      }
 };

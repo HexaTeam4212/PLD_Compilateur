@@ -22,6 +22,7 @@ exprLvl2 :
 | exprLvl2 '/' exprLvl2 #division
 | CONST                 #const
 | NAME                  #var
+| '(' expr ')'          #parenthese
 ;
 
 definitionFunction : type NAME '(' ')' '{' (instr )* '}';

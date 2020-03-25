@@ -25,10 +25,10 @@ std::string Addition::buildIR(CFG* cfg) {
 }
 
 void Addition::printInstruction(std::ostream &o) {
-      o << "\t\tAddition of origin into dest" << std::endl;
-	  o << "\t\t\tOrigin Left & Right: ";
-	  exprGAdded->printInstruction(o);
-	  o << "&&&&&&&";
-	  exprRAdded->printInstruction(o);
-	  o << "\t\t\tDest : var temp " << std::endl;
+      o << "Addition of two expression" << std::endl;
+	o << "\t\t\t\tExpr 1 : ";
+	exprGAdded->printInstruction(o);
+	o << "\t\t\t\tExpr 2 : ";
+	exprRAdded->printInstruction(o);
+
 }
