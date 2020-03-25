@@ -25,6 +25,9 @@ std::string Soustraction::buildIR(CFG* cfg) {
 }
 
 void Soustraction::printInstruction(std::ostream &o) {
-      o << "\t\tSoustraction of origin into dest" << std::endl;
-      o << "\t\t\tOrigin : " << std::endl;
+      o << "Soustraction of two expression" << std::endl;
+	o << "\t\t\t\tExpr 1 : ";
+	exprGDiff->printInstruction(o);
+	o << "\t\t\t\tExpr 2 : ";
+	exprRDiff->printInstruction(o);
 }

@@ -10,7 +10,7 @@
 class Division : public Expression {
 
 public:
-	  Division(Expression* exprGDiv,Expression* exprRDiv);
+	Division(Expression* exprGDiv,Expression* exprRDiv);
       ~Division();
       
       std::string buildIR(CFG* cfg) override;

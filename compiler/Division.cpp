@@ -25,6 +25,9 @@ std::string Division::buildIR(CFG* cfg) {
 }
 
 void Division::printInstruction(std::ostream &o) {
-      o << "\t\tDivision of origin into dest" << std::endl;
-      o << "\t\t\tOrigin : " << std::endl;
+      o << "Division of two expression" << std::endl;
+	o << "\t\t\t\tExpr 1 : ";
+	exprGDiv->printInstruction(o);
+	o << "\t\t\t\tExpr 2 : ";
+	exprRDiv->printInstruction(o);
 }
