@@ -27,7 +27,7 @@ exprLvl2 :
 definitionFunction : type NAME '(' ')' '{' (instr )* '}';
 
 INTEGER : 'int' ;
-NAME : [a-zA-Z]+[a-zA-Z0-9]+ ;
+NAME : [a-zA-Z]+[a-zA-Z0-9]* ;
 CONST : [0-9]+ ;
 COMMENT : '/*' .*? '*/' -> skip ;
 DIRECTIVE : '#' .*? '\n' -> skip ;

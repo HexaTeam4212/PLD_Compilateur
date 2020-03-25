@@ -61,13 +61,13 @@ public:
       }
  
       virtual antlrcpp::Any visitVar(ifccParser::VarContext *ctx) override {
-            return (Expression*) new ExprVariable(ctx->VAR()->getText());
+            return (Expression*) new ExprVariable(ctx->NAME()->getText());
       }
 
       virtual antlrcpp::Any visitDeclaration(ifccParser::DeclarationContext *ctx) override {
             std::vector<ExprVariable*> varsDeclared;
-            for(int i = 0; i < ctx->VAR().size(); i++) {
-                  ExprVariable* newVar = new ExprVariable(ctx->VAR().at(i)->getText());
+            for(int i = 0; i < ctx->NAME().size(); i++) {
+                  ExprVariable* newVar = new ExprVariable(ctx->NAME().at(i)->getText());
                   varsDeclared.push_back(newVar);
             }
 
@@ -75,7 +75,7 @@ public:
       }
 
       virtual antlrcpp::Any visitAffectation(ifccParser::AffectationContext *ctx) override {
-            std::string varName = ctx->VAR()->getText();
+            std::string varName = ctx->NAME()->getText();
             Expression* expr = (Expression*) visit(ctx->expr());
             return (Instruction*) new Affectation(varName, expr);
       }
