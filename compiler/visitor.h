@@ -95,8 +95,8 @@ public:
 		Expression* exprGMult;
 		Expression* exprRMult;
 
-		exprGMult = (Expression*)visit(ctx->expr(0));
-		exprRMult = (Expression*)visit(ctx->expr(1));
+		exprGMult = (Expression*)visit(ctx->exprLvl2(0));
+		exprRMult = (Expression*)visit(ctx->exprLvl2(1));
 
 		return (Expression*) new Multiplication(exprGMult, exprRMult);
 	}
@@ -115,9 +115,13 @@ public:
 		Expression* exprGDiv;
 		Expression* exprRDiv;
 
-		exprGDiv = (Expression*)visit(ctx->expr(0));
-		exprRDiv = (Expression*)visit(ctx->expr(1));
+		exprGDiv = (Expression*)visit(ctx->exprLvl2(0));
+		exprRDiv = (Expression*)visit(ctx->exprLvl2(1));
 
 		return (Expression*) new Division(exprGDiv, exprRDiv);
 	}
+
+      virtual antlrcpp::Any visitCasStandardLvl2(ifccParser::CasStandardLvl2Context *ctx) override {
+            return (Expression*)visit(ctx->exprLvl2());
+      }
 };

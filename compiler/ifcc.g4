@@ -5,27 +5,30 @@ axiom : definitionFunction+;
 type : INTEGER #integer
 ;
 
-instr : 'return' expr ';'           #return
-      | type VAR (',' VAR)* ';'     #declaration
-      | VAR '=' expr ';'            #affectation
-      ;
+instr : 
+  'return' expr ';'           #return
+| type NAME (',' NAME)* ';'   #declaration
+| NAME '=' expr ';'           #affectation
+;
 
-expr : CONST         #const
-     | VAR           #var
-     | expr '+' expr #addition
-	 | expr '*' expr #multiplication
-	 | expr '-' expr #soustraction
-	 | expr '/' expr #division
-     ;
+expr : 
+  expr '+' expr #addition
+| expr '-' expr #soustraction
+| exprLvl2      #casStandardLvl2
+;
 
-
+exprLvl2 :
+  exprLvl2 '*' exprLvl2 #multiplication
+| exprLvl2 '/' exprLvl2 #division
+| CONST                 #const
+| NAME                  #var
+;
 
 definitionFunction : type NAME '(' ')' '{' (instr )* '}';
 
 INTEGER : 'int' ;
-NAME : [a-zA-Z]+[a-zA-Z0-9] ;
+NAME : [a-zA-Z]+[a-zA-Z0-9]+ ;
 CONST : [0-9]+ ;
-VAR : [a-zA-Z]+;
 COMMENT : '/*' .*? '*/' -> skip ;
 DIRECTIVE : '#' .*? '\n' -> skip ;
 WS    : [ \t\r\n] -> channel(HIDDEN);
