@@ -4,6 +4,6 @@ int main() {
       b = 3;
       c = 4;
       d = 5;
-	  e = 200/a/b/c;
+	e = 200/a/b/c;
       return e ;
 }

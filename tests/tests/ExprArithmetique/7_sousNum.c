@@ -4,6 +4,6 @@ int main() {
       b = 3;
       c = 4;
       d = 5;
-	  e = 57-a-b-c-d;
+	e = 57-a-b-c-d;
       return e ;
 }
