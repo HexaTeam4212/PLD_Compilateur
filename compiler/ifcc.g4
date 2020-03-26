@@ -12,9 +12,13 @@ instr :
 ;
 
 expr : 
-  expr '+' expr #addition
-| expr '-' expr #soustraction
-| exprLvl2      #casStandardLvl2
+ expr '+' expr #addition
+| exprLvl1     #casStandardLvl1
+;
+
+exprLvl1 :
+ exprLvl1'-' exprLvl1 #soustraction
+|exprLvl2 #casStandardLvl2
 ;
 
 exprLvl2 :

@@ -105,8 +105,8 @@ public:
 		Expression* exprGDiff;
 		Expression* exprRDiff;
 
-		exprGDiff = (Expression*)visit(ctx->expr(0));
-		exprRDiff = (Expression*)visit(ctx->expr(1));
+		exprGDiff = (Expression*)visit(ctx->exprLvl1(0));
+		exprRDiff = (Expression*)visit(ctx->exprLvl1(1));
 
 		return (Expression*) new Soustraction(exprGDiff, exprRDiff);
 	}
@@ -120,7 +120,9 @@ public:
 
 		return (Expression*) new Division(exprGDiv, exprRDiv);
 	}
-
+	virtual antlrcpp::Any visitCasStandardLvl1(ifccParser::CasStandardLvl1Context *ctx) override {
+		return (Expression*)visit(ctx->exprLvl1());
+	}
       virtual antlrcpp::Any visitCasStandardLvl2(ifccParser::CasStandardLvl2Context *ctx) override {
             return (Expression*)visit(ctx->exprLvl2());
       }
