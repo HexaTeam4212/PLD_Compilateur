@@ -1,0 +1,23 @@
+
+
+Exécuter la commande ./run.sh, cela mettra en marche le conteneur et donnera accès à un shell pour naviguer dans le conteneur. 
+Faire la commande make dans le dossier nommé compiler afin de générer l'exécutable ifcc, notre compilateur.
+Ensuite exécuter une commande ./ifcc [paramètres] <fichier.c> 
+
+Exemple de commande quand on se situe dans le dossier compilateur:
+	./ifcc -p -o 2_mult.s ../tests/tests/ExprArithmetique/2_mult.c
+	./ifcc -p -o 14_exprComplexe.s ../tests/tests/ExprArithmetique/14_exprComplexe.c
+
+Remarque :
+En  cas de doute sur l'utilisation de la commande, vous pouvez l’exécuter sans arguments et un message vous donnera les instructions d’exécution.
+Deux paramètres sont actuellement disponibles :
+-p : Permet d’afficher dans la sortie standard la représentation de l’AST
+-o <file_name> : Permet de choisir le fichier de sortie. Par défaut, sans cette option, l’affichage du code assembleur se fait dans la sortie standard du terminal.
+
+Pour effectuer des test :
+Faire ../tests/test_if.sh pour exécuter le programme de test automatique.
+Pour tester un fichier de sortie manuellement :
+	./ifcc -p -o nom_fichier.s nom_fichier.c
+	as -o nom_fichier.o nom_fichier.s
+	gcc -o nom_executable nom_fichier.o
+	./nom executable
