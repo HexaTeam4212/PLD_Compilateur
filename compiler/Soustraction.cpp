@@ -13,8 +13,10 @@ Soustraction::Soustraction(Expression* exprGDiff, Expression* exprRDiff)
 :exprGDiff(exprGDiff), exprRDiff(exprRDiff)
 {}
 
-Soustraction::~Soustraction()
-{}
+Soustraction::~Soustraction() {
+	delete exprGDiff;
+	delete exprRDiff;
+}
 
 std::string Soustraction::buildIR(CFG* cfg) {
 	std::string returnName = cfg->create_new_tempvar(Type::int64);

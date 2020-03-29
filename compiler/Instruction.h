@@ -24,7 +24,7 @@ public:
       // Constructor
       Instruction();
       // Destructor
-      ~Instruction();
+      virtual ~Instruction();
 
       /**
        * Abstract method that build an IR (Intermediate Representation)

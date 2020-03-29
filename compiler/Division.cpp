@@ -13,8 +13,10 @@ Division::Division(Expression* exprGDiv, Expression* exprRDiv)
 :exprGDiv(exprGDiv), exprRDiv(exprRDiv)
 {}
 
-Division::~Division()
-{}
+Division::~Division() {
+	delete exprGDiv;
+	delete exprRDiv;
+}
 
 std::string Division::buildIR(CFG* cfg) {
 	std::string returnName = cfg->create_new_tempvar(Type::int64);

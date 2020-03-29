@@ -14,8 +14,11 @@ Declaration::Declaration(std::vector<ExprVariable*> varsDeclared, std::string ty
 : varsDeclared(varsDeclared), type(type)
 {}
 
-Declaration::~Declaration()
-{}
+Declaration::~Declaration() {
+      for (ExprVariable* varPTR : varsDeclared) {
+            delete varPTR;
+      }
+}
 
 std::string Declaration::buildIR(CFG* cfg) {
       return "";

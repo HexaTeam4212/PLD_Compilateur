@@ -13,8 +13,10 @@ Addition::Addition(Expression* exprGAdded, Expression* exprRAdded)
 :exprGAdded(exprGAdded), exprRAdded(exprRAdded)
 {}
 
-Addition::~Addition()
-{}
+Addition::~Addition() {
+	delete exprGAdded;
+	delete exprRAdded;
+}
 
 std::string Addition::buildIR(CFG* cfg) {
 	std::string returnName = cfg->create_new_tempvar(Type::int64);

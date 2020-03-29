@@ -13,8 +13,9 @@ Affectation::Affectation(std::string varName, Expression* expr)
 : varName(varName), expr(expr)
 {}
 
-Affectation::~Affectation()
-{}
+Affectation::~Affectation() {
+      delete expr;
+}
 
 std::string Affectation::buildIR(CFG* cfg) {
       IRVariable* varDest = cfg->getVariable(varName);

@@ -17,8 +17,9 @@ ReturnInstr::ReturnInstr(Expression* exprReturned)
 : exprReturned(exprReturned)
 {}
 
-ReturnInstr::~ReturnInstr()
-{}
+ReturnInstr::~ReturnInstr() {
+      delete exprReturned;
+}
 
 std::string ReturnInstr::buildIR(CFG *cfg) {
       std::string retVarName = exprReturned->buildIR(cfg);

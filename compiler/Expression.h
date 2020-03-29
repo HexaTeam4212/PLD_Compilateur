@@ -24,7 +24,7 @@ public:
       // Constructor
       Expression();
       // Destructor
-      ~Expression();
+      virtual ~Expression();
 
       /**
        * Abstract method that build an IR (Intermediate Representation)

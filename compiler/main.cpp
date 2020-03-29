@@ -101,7 +101,11 @@ int main(int argn, const char **argv) {
             for(auto pCFG : listeCFG) {
                   pCFG->gen_asm(out);
             }
-			
+		
+            delete ast;
+            for(auto pCFG : listeCFG) {
+                  delete pCFG;
+            }
       }
       catch (std::invalid_argument e) {
             std::cout << "Error during file parsing" << std::endl;

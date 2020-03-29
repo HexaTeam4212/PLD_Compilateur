@@ -31,6 +31,15 @@ CFG::CFG(Function* ast)
       }
 }
 
+CFG::~CFG() {
+      delete ast;
+      delete CFGStart;
+      std::map<std::string, IRVariable*>::iterator it;
+      for(it = mapVariable.begin(); it != mapVariable.end(); it++) {
+            delete it->second;
+      }
+}
+
 std::string CFG::new_BB_name() {
       std::string name("BB"+ std::to_string(nextBBnumber));
       ++nextBBnumber;

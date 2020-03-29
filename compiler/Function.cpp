@@ -12,8 +12,11 @@
 Function::Function()
 {}
 
-Function::~Function()
-{}
+Function::~Function() {
+      for (Instruction* instrPTR : instructions) {
+            delete instrPTR;
+      }
+}
 
 void Function::setName(std::string _name) {
       this->name = _name;

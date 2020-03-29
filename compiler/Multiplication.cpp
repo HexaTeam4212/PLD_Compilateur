@@ -13,8 +13,10 @@ Multiplication::Multiplication(Expression* exprGMult, Expression* exprRMult)
 :exprGMult(exprGMult), exprRMult(exprRMult)
 {}
 
-Multiplication::~Multiplication()
-{}
+Multiplication::~Multiplication() {
+	delete exprGMult;
+	delete exprRMult;
+}
 
 std::string Multiplication::buildIR(CFG* cfg) {
 	std::string returnName = cfg->create_new_tempvar(Type::int64);
