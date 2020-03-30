@@ -12,6 +12,7 @@
 // Interfaces used
 #include <string>
 #include <iostream>
+#include <vector>
 
 class CFG;
 
@@ -33,4 +34,6 @@ public:
       virtual std::string buildIR(CFG *cfg) = 0;
       // Abstract method that print the instruction
       virtual void printInstruction(std::ostream &o) = 0;
+
+      virtual void checkVariableUsage(std::vector<std::string>* vectorVariableNames) = 0;
 };

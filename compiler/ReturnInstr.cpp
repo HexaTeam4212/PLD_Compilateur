@@ -31,6 +31,10 @@ std::string ReturnInstr::buildIR(CFG *cfg) {
       return retVar->getName();
 }
 
+void ReturnInstr::checkVariableUsage(std::vector<std::string>* vectorVariableNames) {
+      exprReturned->checkVariableUsage(vectorVariableNames);
+}
+
 void ReturnInstr::printInstruction(std::ostream &o) {
       o << "\t\tReturn instruction" << std::endl << "\t\tValue returned : ";
       exprReturned->printInstruction(o);

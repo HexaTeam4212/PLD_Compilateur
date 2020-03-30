@@ -10,10 +10,18 @@
 #include "Program.h"
 
 Program::Program() 
-{}
+{
+      vectorVariableNames = new std::vector<std::string>();
+}
 
 Program::~Program() 
 {}
+
+void Program::checkFunctions() {
+      for(Function* fPTR : functions) {
+            fPTR->checkVariables(vectorVariableNames);
+      }
+}
 
 void Program::addFunction(Function* functionToAdd) {
       functions.push_back(functionToAdd);

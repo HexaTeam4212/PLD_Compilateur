@@ -36,6 +36,8 @@ public:
       // Method that print the instruction
       void printInstruction(std::ostream &o) override;
 
+      virtual void checkVariableUsage(std::vector<std::string>* vectorVariableNames) override;
+
 private:
 	Expression* exprGDiff;
 	Expression* exprRDiff;

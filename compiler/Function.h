@@ -40,6 +40,8 @@ public:
       // Print the function
       void printFunction(std::ostream &o);
 
+      void checkVariables(std::vector<std::string>* vectorVariableNames);
+
 private:
       std::string name;
       std::string returnType;

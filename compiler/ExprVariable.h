@@ -10,6 +10,8 @@
 #pragma once
 
 // Interfaces used
+#include <algorithm>
+
 #include "Expression.h"
 
 /**
@@ -32,6 +34,8 @@ public:
       std::string buildIR(CFG* cfg) override;
       // Method that print the instruction
       void printInstruction(std::ostream &o) override;
+
+      virtual void checkVariableUsage(std::vector<std::string>* vectorVariableNames) override;
 
 private:
       std::string name;

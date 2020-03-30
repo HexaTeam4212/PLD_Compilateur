@@ -35,6 +35,11 @@ std::string Addition::buildIR(CFG* cfg) {
 	return varReturnName->getName();
 }
 
+void Addition::checkVariableUsage(std::vector<std::string>* vectorVariableNames) {
+	exprGAdded->checkVariableUsage(vectorVariableNames);
+	exprRAdded->checkVariableUsage(vectorVariableNames);
+}
+
 void Addition::printInstruction(std::ostream &o) {
 	o << "Addition of two expression" << std::endl;
 	o << "\t\t\t\tExpr 1 : ";

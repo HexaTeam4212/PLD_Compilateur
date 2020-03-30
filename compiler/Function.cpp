@@ -38,3 +38,9 @@ void Function::printFunction(std::ostream &o) {
             instructions.at(i)->printInstruction(o);
       }
 }
+
+void Function::checkVariables(std::vector<std::string>* vectorVariableNames) {
+      for(int i = 0; i < instructions.size(); i++) {
+            instructions.at(i)->checkVariableUsage(vectorVariableNames);
+      }
+}

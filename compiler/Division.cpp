@@ -35,6 +35,11 @@ std::string Division::buildIR(CFG* cfg) {
 	return varReturnName->getName();
 }
 
+void Division::checkVariableUsage(std::vector<std::string>* vectorVariableNames) {
+	exprGDiv->checkVariableUsage(vectorVariableNames);
+	exprRDiv->checkVariableUsage(vectorVariableNames);
+}
+
 void Division::printInstruction(std::ostream &o) {
 	o << "Division of two expression" << std::endl;
 	o << "\t\t\t\tExpr 1 : ";
