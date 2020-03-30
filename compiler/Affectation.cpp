@@ -30,6 +30,10 @@ std::string Affectation::buildIR(CFG* cfg) {
       return varDest->getName();
 }
 
+void Affectation::checkVariableUsage(std::map<std::string, int>* mapVariableNames) {
+      expr->checkVariableUsage(mapVariableNames);
+}
+
 void Affectation::printInstruction(std::ostream &o) {
       o << "\t\tAffectation of origin into dest" << std::endl;
       o << "\t\t\tOrigin : ";

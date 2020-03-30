@@ -36,6 +36,8 @@ public:
       // Method that print the instruction
       void printInstruction(std::ostream &o) override;
 
+      void checkVariableUsage(std::map<std::string, int>* mapVariableNames) override;
+
 private:
 	Expression* exprGAdded;
 	Expression* exprRAdded;

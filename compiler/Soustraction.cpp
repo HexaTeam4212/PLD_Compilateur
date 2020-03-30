@@ -35,6 +35,11 @@ std::string Soustraction::buildIR(CFG* cfg) {
 	return varReturnName->getName();
 }
 
+void Soustraction::checkVariableUsage(std::map<std::string, int>* mapVariableNames) {
+	exprGDiff->checkVariableUsage(mapVariableNames);
+	exprRDiff->checkVariableUsage(mapVariableNames);
+}
+
 void Soustraction::printInstruction(std::ostream &o) {
 	o << "Soustraction of two expression" << std::endl;
 	o << "\t\t\t\tExpr 1 : ";

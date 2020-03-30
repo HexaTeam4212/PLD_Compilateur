@@ -73,6 +73,8 @@ int main(int argn, const char **argv) {
             Visitor visitor;
             Program* ast = (Program*) visitor.visit(tree);
 
+            ast->checkFunctions();
+
             if(printAST) {
                   ast->printProgram(std::cout);
             }

@@ -35,6 +35,11 @@ std::string Multiplication::buildIR(CFG* cfg) {
 	return varReturnName->getName();
 }
 
+void Multiplication::checkVariableUsage(std::map<std::string, int>* mapVariableNames) {
+	exprGMult->checkVariableUsage(mapVariableNames);
+	exprRMult->checkVariableUsage(mapVariableNames);
+}
+
 void Multiplication::printInstruction(std::ostream &o) {
 	o << "Multiplication of two expression" << std::endl;
 	o << "\t\t\t\tExpr 1 : ";

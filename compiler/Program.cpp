@@ -10,10 +10,25 @@
 #include "Program.h"
 
 Program::Program() 
-{}
+{
+      mapVariableNames = new std::map<std::string, int>();
+}
 
 Program::~Program() 
 {}
+
+void Program::checkFunctions() {
+      for(Function* fPTR : functions) {
+            fPTR->checkVariables(mapVariableNames);
+      }
+
+      std::map<std::string, int>::iterator it;
+      for(it = mapVariableNames->begin(); it != mapVariableNames->end(); it++) {
+            if(it->second == 0) {
+                  std::cerr << "Warning : variable \"" + it->first + "\" is not used" << std::endl;
+            }
+      }
+}
 
 void Program::addFunction(Function* functionToAdd) {
       functions.push_back(functionToAdd);
