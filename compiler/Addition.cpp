@@ -35,9 +35,9 @@ std::string Addition::buildIR(CFG* cfg) {
 	return varReturnName->getName();
 }
 
-void Addition::checkVariableUsage(std::vector<std::string>* vectorVariableNames) {
-	exprGAdded->checkVariableUsage(vectorVariableNames);
-	exprRAdded->checkVariableUsage(vectorVariableNames);
+void Addition::checkVariableUsage(std::map<std::string, int>* mapVariableNames) {
+	exprGAdded->checkVariableUsage(mapVariableNames);
+	exprRAdded->checkVariableUsage(mapVariableNames);
 }
 
 void Addition::printInstruction(std::ostream &o) {

@@ -30,7 +30,7 @@ std::string ExprConstante::buildIR(CFG* cfg) {
       return varName;
 }
 
-void ExprConstante::checkVariableUsage(std::vector<std::string>* vectorVariableNames) {}
+void ExprConstante::checkVariableUsage(std::map<std::string, int>* mapVariableNames) {}
 
 void ExprConstante::printInstruction(std::ostream &o) {
       o << "constant " << value << std::endl;

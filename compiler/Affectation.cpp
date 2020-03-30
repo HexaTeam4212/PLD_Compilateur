@@ -30,8 +30,8 @@ std::string Affectation::buildIR(CFG* cfg) {
       return varDest->getName();
 }
 
-void Affectation::checkVariableUsage(std::vector<std::string>* vectorVariableNames) {
-      expr->checkVariableUsage(vectorVariableNames);
+void Affectation::checkVariableUsage(std::map<std::string, int>* mapVariableNames) {
+      expr->checkVariableUsage(mapVariableNames);
 }
 
 void Affectation::printInstruction(std::ostream &o) {

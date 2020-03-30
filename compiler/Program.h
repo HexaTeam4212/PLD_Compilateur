@@ -41,5 +41,5 @@ public:
 
 private:
       std::vector<Function*> functions;
-      std::vector<std::string>* vectorVariableNames;
+      std::map<std::string, int>* mapVariableNames;
 };

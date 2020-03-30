@@ -11,7 +11,7 @@
 
 Program::Program() 
 {
-      vectorVariableNames = new std::vector<std::string>();
+      mapVariableNames = new std::map<std::string, int>();
 }
 
 Program::~Program() 
@@ -19,7 +19,14 @@ Program::~Program()
 
 void Program::checkFunctions() {
       for(Function* fPTR : functions) {
-            fPTR->checkVariables(vectorVariableNames);
+            fPTR->checkVariables(mapVariableNames);
+      }
+
+      std::map<std::string, int>::iterator it;
+      for(it = mapVariableNames->begin(); it != mapVariableNames->end(); it++) {
+            if(it->second == 0) {
+                  std::cerr << "Warning : variable \"" + it->first + "\" is not used" << std::endl;
+            }
       }
 }
 

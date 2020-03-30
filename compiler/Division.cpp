@@ -35,9 +35,9 @@ std::string Division::buildIR(CFG* cfg) {
 	return varReturnName->getName();
 }
 
-void Division::checkVariableUsage(std::vector<std::string>* vectorVariableNames) {
-	exprGDiv->checkVariableUsage(vectorVariableNames);
-	exprRDiv->checkVariableUsage(vectorVariableNames);
+void Division::checkVariableUsage(std::map<std::string, int>* mapVariableNames) {
+	exprGDiv->checkVariableUsage(mapVariableNames);
+	exprRDiv->checkVariableUsage(mapVariableNames);
 }
 
 void Division::printInstruction(std::ostream &o) {

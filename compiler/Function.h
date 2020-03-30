@@ -12,6 +12,7 @@
 // Interfaces used
 #include <string>
 #include <vector>
+#include <map>
 #include <iostream>
 
 #include "Instruction.h"
@@ -40,7 +41,7 @@ public:
       // Print the function
       void printFunction(std::ostream &o);
 
-      void checkVariables(std::vector<std::string>* vectorVariableNames);
+      void checkVariables(std::map<std::string, int>* mapVariableNames);
 
 private:
       std::string name;

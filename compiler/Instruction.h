@@ -12,7 +12,7 @@
 // Interfaces used
 #include <string>
 #include <iostream>
-#include <vector>
+#include <map>
 
 class CFG;
 
@@ -35,5 +35,5 @@ public:
       // Abstract method that print the instruction
       virtual void printInstruction(std::ostream &o) = 0;
 
-      virtual void checkVariableUsage(std::vector<std::string>* vectorVariableNames) = 0;
+      virtual void checkVariableUsage(std::map<std::string, int>* mapVariableNames) = 0;
 };

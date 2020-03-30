@@ -39,8 +39,8 @@ void Function::printFunction(std::ostream &o) {
       }
 }
 
-void Function::checkVariables(std::vector<std::string>* vectorVariableNames) {
+void Function::checkVariables(std::map<std::string, int>* mapVariableNames) {
       for(int i = 0; i < instructions.size(); i++) {
-            instructions.at(i)->checkVariableUsage(vectorVariableNames);
+            instructions.at(i)->checkVariableUsage(mapVariableNames);
       }
 }

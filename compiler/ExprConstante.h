@@ -34,7 +34,7 @@ public:
       // Method that print the instruction
       void printInstruction(std::ostream &o) override;
 
-      virtual void checkVariableUsage(std::vector<std::string>* vectorVariableNames) override;
+      virtual void checkVariableUsage(std::map<std::string, int>* mapVariableNames) override;
 
 private:
       std::string value;
