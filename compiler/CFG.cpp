@@ -127,12 +127,6 @@ int CFG::initSymbolTable() {
                         this->symbolTable.insert(std::pair<std::string, IRVariable*>(exprVar->getName(), var));
                   }
             }
-            else if (dynamic_cast<Affectation*>(instr)) {
-                  //bloqué par le manque d'accès aux variables à droite si y en a
-                  //distinguer affectation constante et entre variables
-                  Affectation* affect = (Affectation*) instr;
-                  
-            }
             else {
                   break; //all declaration are put before any other instructions
             }
