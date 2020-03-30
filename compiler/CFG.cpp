@@ -17,7 +17,7 @@ CFG::CFG(Function* ast)
 {
       nextBBnumber = 0;
       nextTempVarNumber = 1;
-      initTableVariable();
+      initSymbolTable();
       BasicBlock* prologue = gen_prologue(ast->getName());
       BasicBlock* base = new BasicBlock(this, new_BB_name());
       BasicBlock* epilogue = gen_epilogue(ast->getName());
@@ -35,7 +35,7 @@ CFG::~CFG() {
       delete ast;
       delete CFGStart;
       std::map<std::string, IRVariable*>::iterator it;
-      for(it = mapVariable.begin(); it != mapVariable.end(); it++) {
+      for(it = symbolTable.begin(); it != symbolTable.end(); it++) {
             delete it->second;
       }
 }
@@ -96,7 +96,7 @@ void CFG::gen_asm(std::ostream &o) {
 }
 
 IRVariable* CFG::getVariable(std::string nomVar) {
-      return mapVariable.at(nomVar);
+      return symbolTable.at(nomVar);
 }
 
 /**
@@ -108,7 +108,7 @@ IRVariable* CFG::getVariable(std::string nomVar) {
  * As with parameters, local variables will be located at known offsets from the base pointer.
  */
 // Here we used 64 bits integer so offset is 8 bytes instead of 4
-int CFG::initTableVariable() {
+int CFG::initSymbolTable() {
       int sizeAllocate = 0;
 
       std::vector<Instruction*> instructions = ast->getInstructions();
@@ -124,8 +124,14 @@ int CFG::initTableVariable() {
                   for(ExprVariable* exprVar : dec->getVarsDeclared()) {
                         sizeAllocate += getOffsetBaseOnType(type);
                         IRVariable *var = new IRVariable(exprVar->getName(), type, sizeAllocate);
-                        this->mapVariable.insert(std::pair<std::string, IRVariable*>(exprVar->getName(), var));
+                        this->symbolTable.insert(std::pair<std::string, IRVariable*>(exprVar->getName(), var));
                   }
+            }
+            else if (dynamic_cast<Affectation*>(instr)) {
+                  //bloqué par le manque d'accès aux variables à droite si y en a
+                  //distinguer affectation constante et entre variables
+                  Affectation* affect = (Affectation*) instr;
+                  
             }
             else {
                   break; //all declaration are put before any other instructions
@@ -155,7 +161,7 @@ int CFG::getOffsetBaseOnType(Type type) {
 std::string CFG::create_new_tempvar(Type type) {
       std::string varName = "!tmp" + std::to_string(nextTempVarNumber);
       this->sizeAllocated += getOffsetBaseOnType(type);
-      mapVariable.insert(std::pair<std::string, IRVariable*>(varName, new IRVariable(varName, type, this->sizeAllocated)));
+      symbolTable.insert(std::pair<std::string, IRVariable*>(varName, new IRVariable(varName, type, this->sizeAllocated)));
       nextTempVarNumber++;
 
       return varName;

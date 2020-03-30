@@ -18,6 +18,7 @@
 #include "BasicBlock.h"
 #include "IRVariable.h"
 #include "Declaration.h"
+#include "Affectation.h"
 
 /**
  * Class that represent Control flow graph
@@ -38,7 +39,7 @@ public:
       BasicBlock* gen_epilogue(std::string functionName);
       BasicBlock* current_bb;
       
-      int initTableVariable();
+      int initSymbolTable();
       std::string create_new_tempvar(Type type);
 
       IRVariable* getVariable(std::string nomVar);
@@ -46,7 +47,7 @@ public:
       void gen_asm(std::ostream &o);
 
 protected:
-      std::map<std::string, IRVariable*> mapVariable;
+      std::map<std::string, IRVariable*> symbolTable;
       int nextFreeSymbolIndex;
       int nextBBnumber;
       int nextTempVarNumber;
