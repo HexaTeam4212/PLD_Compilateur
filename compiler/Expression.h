@@ -34,7 +34,7 @@ public:
       // Abstract method that print the instruction
       void printInstruction(std::ostream &o) = 0;
 
-      virtual void checkVariableUsage(std::map<std::string, int>* mapVariableNames) = 0;
+      virtual void checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) = 0;
 
 private:
       std::string returnType;

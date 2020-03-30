@@ -24,12 +24,12 @@ std::string Declaration::buildIR(CFG* cfg) {
       return "";
 }
 
-void Declaration::checkVariableUsage(std::map<std::string, int>* mapVariableNames) {
+void Declaration::checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) {
       for(ExprVariable* varPTR : varsDeclared) {
-            std::string currentVarName = varPTR->getName();
+            std::string currentVarName = functionName + "!" + varPTR->getName();
             if(mapVariableNames->find(currentVarName) != mapVariableNames->end()) {
                   //Error var declared twice
-                  std::cerr << "Error : variable \"" + currentVarName +"\" is declared twice !" << std::endl;
+                  std::cerr << "Error : variable \"" + varPTR->getName() +"\" is declared twice in "+ functionName +" !" << std::endl;
                   exit(7); 
             }
             else {

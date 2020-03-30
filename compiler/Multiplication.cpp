@@ -35,9 +35,9 @@ std::string Multiplication::buildIR(CFG* cfg) {
 	return varReturnName->getName();
 }
 
-void Multiplication::checkVariableUsage(std::map<std::string, int>* mapVariableNames) {
-	exprGMult->checkVariableUsage(mapVariableNames);
-	exprRMult->checkVariableUsage(mapVariableNames);
+void Multiplication::checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) {
+	exprGMult->checkVariableUsage(mapVariableNames, functionName);
+	exprRMult->checkVariableUsage(mapVariableNames, functionName);
 }
 
 void Multiplication::printInstruction(std::ostream &o) {
