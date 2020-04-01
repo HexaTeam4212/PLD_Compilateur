@@ -7,7 +7,11 @@ ElseInstr::~ElseInstr()
 {}
 
 std::string ElseInstr::buildIR(CFG *cfg) {
-      return "";
+	for(Instruction* instr : vectorInstruction) {
+            instr->buildIR(cfg);
+      }
+	  
+    return "";
 }
 
 void ElseInstr::printInstruction(std::ostream &o) {}

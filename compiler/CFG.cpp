@@ -86,8 +86,7 @@ void CFG::gen_asm(std::ostream &o) {
 
             if(current_bb->exit_true != nullptr && current_bb->exit_false != nullptr) {
                   //conditionnal jump
-                  std::cout << "Conditional jump not handle" << std::endl;
-                  current_bb = nullptr;
+                  o << "\tje " + current_bb->exit_false->label <<std::endl;
             }
             else {
                   current_bb = current_bb->exit_true;

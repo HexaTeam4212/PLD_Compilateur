@@ -72,6 +72,10 @@ void IRInstr::gen_asm(std::ostream &o) {
 		o << "\tidivq -" + params.at(1) + "(%rbp)" << std::endl;
 		o << "\tmovq  %rax, -" + params.at(2) + "(%rbp)" << std::endl;
 		break;
+      
+      case compare:
+            o << "\tcmpl " + params.at(0) + ", -" + params.at(1) + "(%rbp)" << std::endl;
+            break;
             
       default:
             break;

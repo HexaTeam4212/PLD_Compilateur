@@ -11,6 +11,12 @@ std::string IfInstr::buildIR(CFG *cfg) {
       std::string conditionVarName = condition->buildIR(cfg);
       BasicBlock* testBB = cfg->current_bb;
       testBB->test_var_name = conditionVarName;
+      IRVariable * var = cfg->getVariable(conditionVarName);
+      std::vector<std::string> params;
+      params.push_back("$0");
+      params.push_back(std::to_string(var->getOffset()));
+      cfg->current_bb->add_IRInstr(IRInstr::Operation::compare, params);
+
       std::string thenBBName = cfg->new_BB_name();
       BasicBlock* thenBB = new BasicBlock(cfg, thenBBName);
       std::string afterIfBBName = cfg->new_BB_name();
