@@ -58,7 +58,11 @@ std::string IfInstr::buildIR(CFG *cfg) {
 
 void IfInstr::printInstruction(std::ostream &o) {}
 
-void IfInstr::checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) {}
+void IfInstr::checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) {
+      for(Instruction* instrPTR : vectorInstructionIf) {
+            instrPTR->checkVariableUsage(mapVariableNames, functionName);
+      }
+}
 
 void IfInstr::addInstructionIf(Instruction* newInstruction) {
       vectorInstructionIf.push_back(newInstruction);
