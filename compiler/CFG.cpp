@@ -12,10 +12,12 @@
 #include <iostream>
 #include <fstream>
 
+int CFG::nextBBnumber = 0;
+
 CFG::CFG(Function* ast)
 : ast(ast)
 {
-      nextBBnumber = 0;
+      
       nextTempVarNumber = 1;
       initTableVariable();
       BasicBlock* prologue = gen_prologue(ast->getName());

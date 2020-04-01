@@ -31,7 +31,7 @@ public:
       ~CFG();
 
       // Method to generate a new name for basic block
-      std::string new_BB_name();
+      static std::string new_BB_name();
       // Method to generate a prologue
       BasicBlock* gen_prologue(std::string functionName);
       // Method to generate an epilogue
@@ -48,7 +48,7 @@ public:
 protected:
       std::map<std::string, IRVariable*> mapVariable;
       int nextFreeSymbolIndex;
-      int nextBBnumber;
+      static int nextBBnumber;
       int nextTempVarNumber;
 
 private:
