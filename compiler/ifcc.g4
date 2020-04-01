@@ -9,7 +9,10 @@ instr :
   'return' expr ';'           #return
 | type NAME (',' NAME)* ';'   #declaration
 | NAME '=' expr ';'           #affectation
+| 'if' '(' expr ')' '{' (instr )* '}' (elseStatement )? #ifstatement
 ;
+
+elseStatement : 'else' '{' (instr )* '}';
 
 expr : 
  expr '+' expr #addition

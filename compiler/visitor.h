@@ -25,6 +25,7 @@
 #include "Multiplication.h"
 #include "Soustraction.h"
 #include "Division.h"
+#include "IfInstr.h"
 
 class Visitor : public ifccVisitor {
 
@@ -138,5 +139,33 @@ public:
 
       virtual antlrcpp::Any visitParenthese(ifccParser::ParentheseContext *ctx) override {
             return (Expression*)visit(ctx->expr());
+      }
+
+      virtual antlrcpp::Any visitIfstatement(ifccParser::IfstatementContext *ctx) override {
+            IfInstr* ifInstruction = new IfInstr();
+
+            ifInstruction->setCondition(visit(ctx->expr()));
+            for(int i = 0; i < ctx->instr().size(); i++) {
+                  Instruction* newInstr = visit(ctx->instr(i));
+                  ifInstruction->addInstructionIf(newInstr);
+            }
+
+            if(ctx->elseStatement()) {
+                  ElseInstr* elseInstruction = visit(ctx->elseStatement());
+                  ifInstruction->setElseInstrution(elseInstruction);
+            }
+
+            return (Instruction*) ifInstruction;
+      }
+
+      virtual antlrcpp::Any visitElseStatement(ifccParser::ElseStatementContext *ctx) override {
+            ElseInstr* elseInstruction = new ElseInstr();
+
+            for(int i = 0; i < ctx->instr().size(); i++) {
+                  Instruction* newInstr = visit(ctx->instr(i));
+                  elseInstruction->addInstruction(newInstr);
+            }
+
+            return elseInstruction;
       }
 };
