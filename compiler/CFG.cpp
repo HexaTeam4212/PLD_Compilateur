@@ -22,6 +22,7 @@ CFG::CFG(Function* ast)
       BasicBlock* base = new BasicBlock(this, new_BB_name());
       BasicBlock* epilogue = gen_epilogue(ast->getName());
       prologue->exit_true = base;
+	  
       base->exit_true = epilogue;
       current_bb = base;
 	  CFGStart = prologue;
@@ -33,6 +34,8 @@ CFG::CFG(Function* ast)
 	  std::vector<std::string> params;
 	  params.push_back(std::to_string(sizeAllocated));
 	  prologue->add_IRInstr(IRInstr::Operation::jpdeb, params);
+	  epilogue= gen_epilogue(ast->getName());
+	  base->exit_true = epilogue;
 }
 
 CFG::~CFG() {
@@ -66,6 +69,11 @@ BasicBlock* CFG::gen_prologue(std::string functionName) {
 
 BasicBlock* CFG::gen_epilogue(std::string functionName) {
       BasicBlock* epilogue = new BasicBlock(this, "end"+functionName);
+
+	  
+	  std::vector<std::string> params;
+	  params.push_back(std::to_string(sizeAllocated));
+	  epilogue->add_IRInstr(IRInstr::Operation::jpfin, params);
 
       std::vector<std::string> paramsPopRbp;
       paramsPopRbp.push_back("%rbp");
