@@ -14,12 +14,6 @@ BasicBlock::BasicBlock(CFG* cfg, std::string entry_label)
 {}
 
 BasicBlock::~BasicBlock() {
-      if(exit_true != nullptr) {
-            delete exit_true;
-      }
-      if(exit_false != nullptr) {
-            delete exit_false;
-      }
       for (IRInstr* elPTR : instrs) {
             delete elPTR;
       }
@@ -34,5 +28,12 @@ void BasicBlock::gen_asm(std::ostream &o) {
       o << label + ":\n";
       for(IRInstr* instr : instrs) {
             instr->gen_asm(o);
+      }
+
+      if(exit_true != nullptr) {
+            if(exit_false != nullptr) {
+                  o << "\tje " + exit_false->label << std::endl;
+            }
+            o << "\tjmp " + exit_true->label << std::endl;
       }
 }

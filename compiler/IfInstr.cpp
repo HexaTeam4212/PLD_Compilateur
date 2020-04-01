@@ -12,6 +12,7 @@ std::string IfInstr::buildIR(CFG *cfg) {
       BasicBlock* testBB = cfg->current_bb;
       testBB->test_var_name = conditionVarName;
       IRVariable * var = cfg->getVariable(conditionVarName);
+      
       std::vector<std::string> params;
       params.push_back("$0");
       params.push_back(std::to_string(var->getOffset()));
@@ -19,8 +20,11 @@ std::string IfInstr::buildIR(CFG *cfg) {
 
       std::string thenBBName = cfg->new_BB_name();
       BasicBlock* thenBB = new BasicBlock(cfg, thenBBName);
+      cfg->add_basicblock(thenBB);
+
       std::string afterIfBBName = cfg->new_BB_name();
       BasicBlock* afterIfBB = new BasicBlock(cfg, afterIfBBName);
+      cfg->add_basicblock(afterIfBB);
       
       afterIfBB->exit_true = testBB->exit_true;
       afterIfBB->exit_false = testBB->exit_false;
@@ -39,6 +43,8 @@ std::string IfInstr::buildIR(CFG *cfg) {
       if(elseIntruction != nullptr) {
             std::string elseBBName = cfg->new_BB_name();
             BasicBlock* elseBB = new BasicBlock(cfg, elseBBName);
+            cfg->add_basicblock(elseBB);
+
             testBB->exit_false = elseBB;
             elseBB->exit_true = afterIfBB;
             cfg->current_bb = elseBB;

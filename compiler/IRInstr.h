@@ -39,8 +39,7 @@ class IRInstr {
 		mult,
 		diff,
 		div,
-		compare,
-		jump
+		compare
 	} Operation;
 
 	//  Constructors
