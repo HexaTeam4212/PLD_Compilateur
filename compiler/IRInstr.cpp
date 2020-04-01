@@ -73,7 +73,7 @@ void IRInstr::gen_asm(std::ostream &o) {
 		o << "\tmovq  %rax, -" + params.at(2) + "(%rbp)" << std::endl;
 		break;
 	case jpdeb:
-		o << "\tsubq  "+ params.at(0) + "(%rbp), %rsp" << std::endl;
+		o << "\tsubq  $"+ params.at(0) +", %rsp" << std::endl;
 		break;
             
       default:

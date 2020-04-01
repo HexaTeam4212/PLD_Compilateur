@@ -25,14 +25,14 @@ CFG::CFG(Function* ast)
       base->exit_true = epilogue;
       current_bb = base;
 	  CFGStart = prologue;
-	  std::cout << " val next tamp Var Number fi :" << nextTempVarNumber << std::endl;
-	  std::cout << " val next sizeAllocated fi :" << sizeAllocated << std::endl;
+
       for(auto instr : ast->getInstructions()) {
             instr->buildIR(this);
       }
-	  prologue = gen_prologue(ast->getName());
-	  std::cout << " val next tamp Var Number fin :" << nextTempVarNumber << std::endl;
-	  std::cout << " val next sizeAllocated fin :" << sizeAllocated << std::endl;
+	  
+	  std::vector<std::string> params;
+	  params.push_back(std::to_string(sizeAllocated));
+	  prologue->add_IRInstr(IRInstr::Operation::jpdeb, params);
 }
 
 CFG::~CFG() {
@@ -61,14 +61,6 @@ BasicBlock* CFG::gen_prologue(std::string functionName) {
       paramsMovRbpRsp.push_back("%rsp");
       paramsMovRbpRsp.push_back("%rbp");
       prologue->add_IRInstr(IRInstr::Operation::movq, paramsMovRbpRsp);
-	  std::vector<std::string> params;
-	  std::cout << "j'écris now" << std::endl;
-	  std::cout << " val next sizeAllocateduuuu :" << sizeAllocated << std::endl;
-	  params.push_back(std::to_string(sizeAllocated));
-	  prologue->add_IRInstr(IRInstr::Operation::jpdeb, params);
-
-	  std::cout << " val next tamp Var Number :" << nextTempVarNumber << std::endl;
-	  std::cout << " val next sizeAllocated :" << sizeAllocated << std::endl;
       return prologue;
 }
 
@@ -87,9 +79,6 @@ BasicBlock* CFG::gen_epilogue(std::string functionName) {
 
 void CFG::gen_asm(std::ostream &o) {
 
-	std::cout << " val next tamp Var Numberav :" << nextTempVarNumber << std::endl;
-	std::cout << " val next sizeAllocated av:" << sizeAllocated << std::endl;
-
       current_bb = CFGStart;
 
       o << ".text\n";
@@ -107,8 +96,6 @@ void CFG::gen_asm(std::ostream &o) {
                   current_bb = current_bb->exit_true;
             }
       }
-	  std::cout << " val next tamp Var Numberap :" << nextTempVarNumber << std::endl;
-	  std::cout << " val next sizeAllocatedap:" << sizeAllocated << std::endl;
 }
 
 IRVariable* CFG::getVariable(std::string nomVar) {
@@ -173,8 +160,6 @@ std::string CFG::create_new_tempvar(Type type) {
       this->sizeAllocated += getOffsetBaseOnType(type);
       mapVariable.insert(std::pair<std::string, IRVariable*>(varName, new IRVariable(varName, type, this->sizeAllocated)));
       nextTempVarNumber++;
-	  std::cout << " val next tamp Var Numberx :" << nextTempVarNumber << std::endl;
-	  std::cout << " val next sizeAllocated x:" << sizeAllocated << std::endl;
 
       return varName;
 }
