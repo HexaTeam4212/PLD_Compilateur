@@ -9,6 +9,7 @@ instr :
   'return' expr ';'           #return
 | type NAME (',' NAME)* ';'   #declaration
 | NAME '=' expr ';'           #affectation
+| NAME '=' NAME '(' ')' ';'	  #calling
 ;
 
 expr : 
