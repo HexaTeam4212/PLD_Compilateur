@@ -39,6 +39,7 @@ public:
       BasicBlock* gen_epilogue(std::string functionName);
       void add_basicblock(BasicBlock* newBB);
       BasicBlock* current_bb;
+      BasicBlock* CFGEnd;
       
       int initSymbolTable();
       std::string create_new_tempvar(Type type);
@@ -56,7 +57,6 @@ private:
       int getOffsetBaseOnType(Type type);
 
       Function* ast;
-      BasicBlock* CFGStart;
       int sizeAllocated;
       std::vector<BasicBlock*> allBBs;
 };

@@ -26,7 +26,7 @@ CFG::CFG(Function* ast)
       prologue->exit_true = base;
       base->exit_true = epilogue;
       current_bb = base;
-      CFGStart = prologue;
+      CFGEnd = epilogue;
 
       for(auto instr : ast->getInstructions()) {
             instr->buildIR(this);
@@ -81,9 +81,6 @@ BasicBlock* CFG::gen_epilogue(std::string functionName) {
 }
 
 void CFG::gen_asm(std::ostream &o) {
-
-      current_bb = CFGStart;
-
       o << ".text\n";
       o << ".global main\n";
 
