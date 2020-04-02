@@ -26,6 +26,7 @@
 #include "Soustraction.h"
 #include "Division.h"
 #include "IfInstr.h"
+#include "Egalite.h"
 
 class Visitor : public ifccVisitor {
 
@@ -168,4 +169,26 @@ public:
 
             return elseInstruction;
       }
+
+      virtual antlrcpp::Any visitEgalite(ifccParser::EgaliteContext *ctx) override {
+		Expression* exprGMember;
+		Expression* exprRMember;
+		  
+		exprGMember = (Expression*) visit(ctx->expr(0));
+		exprRMember = (Expression*) visit(ctx->expr(1));
+
+		return (Expression*) new Egalite(exprGMember,exprRMember);
+	}
+
+      virtual antlrcpp::Any visitSuperiorite(ifccParser::SuperioriteContext *ctx) override {
+		return nullptr;
+	}
+
+      virtual antlrcpp::Any visitInferiorite(ifccParser::InferioriteContext *ctx) override {
+	      return nullptr;
+	}
+
+      virtual antlrcpp::Any visitDifference(ifccParser::DifferenceContext *ctx) override {
+		return nullptr;
+	}
 };

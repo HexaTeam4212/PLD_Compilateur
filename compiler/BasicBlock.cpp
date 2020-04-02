@@ -10,7 +10,7 @@
 #include "BasicBlock.h"
 
 BasicBlock::BasicBlock(CFG* cfg, std::string entry_label)
-: cfg(cfg), label(entry_label), exit_true(nullptr), exit_false(nullptr)
+: cfg(cfg), label(entry_label), exit_true(nullptr), exit_false(nullptr), jumpType(BasicBlock::JumpType::JE)
 {}
 
 BasicBlock::~BasicBlock() {
@@ -32,7 +32,19 @@ void BasicBlock::gen_asm(std::ostream &o) {
 
       if(exit_true != nullptr) {
             if(exit_false != nullptr) {
-                  o << "\tje " + exit_false->label << std::endl;
+                  switch (jumpType){
+                        case JE:
+                              o << "\tje " + exit_false->label << std::endl;
+                              break;
+                        case JNE:
+                              o << "\tjne " + exit_false->label << std::endl;
+                              break;
+                        default:
+                              std::cerr << "Error : jump not handled !" << std::endl;
+                              exit(9);
+                              break;
+                  }
+                  
             }
             o << "\tjmp " + exit_true->label << std::endl;
       }

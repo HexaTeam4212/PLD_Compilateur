@@ -50,6 +50,15 @@ public:
 	// the CFG where this block belongs
 	CFG* cfg;
 	std::string test_var_name;
+	
+	typedef enum { JE, JNE, JG, JL } JumpType;
+	/** JE : jump if equal
+	 *  JNE : jump if not equal
+	 *  JG : jump if greater
+	 *  JL : jump if lesser
+	 */
+
+	JumpType jumpType;
 
 private:
 	// the instructions themselves.

@@ -17,6 +17,10 @@ elseStatement : 'else' '{' (instr )* '}';
 expr : 
  expr '+' expr #addition
 | exprLvl1     #casStandardLvl1
+| expr '==' expr #egalite
+| expr '>' expr #superiorite
+| expr '<' expr #inferiorite
+| expr '!=' expr #difference
 ;
 
 exprLvl1 :

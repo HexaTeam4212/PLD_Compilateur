@@ -10,6 +10,7 @@
 #pragma once
 
 #include <vector>
+#include <cstring>
 
 #include "Instruction.h"
 #include "Expression.h"

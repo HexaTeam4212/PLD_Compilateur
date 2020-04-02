@@ -36,6 +36,8 @@ public:
 
       virtual void checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) = 0;
 
-private:
-      std::string returnType;
+      bool getIsBooleanExpr() { return isBooleanExpr; }
+
+protected:
+      bool isBooleanExpr;
 };

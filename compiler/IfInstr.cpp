@@ -10,13 +10,30 @@ IfInstr::~IfInstr()
 std::string IfInstr::buildIR(CFG *cfg) {
       std::string conditionVarName = condition->buildIR(cfg);
       BasicBlock* testBB = cfg->current_bb;
-      testBB->test_var_name = conditionVarName;
-      IRVariable * var = cfg->getVariable(conditionVarName);
-      
-      std::vector<std::string> params;
-      params.push_back("$0");
-      params.push_back(std::to_string(var->getOffset()));
-      cfg->current_bb->add_IRInstr(IRInstr::Operation::compare, params);
+
+      if (!condition->getIsBooleanExpr()){
+            testBB->test_var_name = conditionVarName;
+            IRVariable * var = cfg->getVariable(conditionVarName);
+
+            std::string var_tmp_name = cfg->create_new_tempvar(Type::int64);
+            IRVariable* var_tmp = cfg->getVariable(var_tmp_name);
+
+            std::vector<std::string> params_tmp;
+            params_tmp.push_back("0");
+            params_tmp.push_back(std::to_string(var_tmp->getOffset()));
+            cfg->current_bb->add_IRInstr(IRInstr::Operation::ldconst, params_tmp);
+            
+            std::vector<std::string> params;
+            params.push_back(std::to_string(var_tmp->getOffset()));
+            params.push_back(std::to_string(var->getOffset()));
+            cfg->current_bb->add_IRInstr(IRInstr::Operation::compare, params);
+      }
+      else {
+            if (strcmp(conditionVarName.c_str(), "jne") == 0) {
+                  cfg->current_bb->jumpType = BasicBlock::JumpType::JNE;
+            }
+            // les autres comparaisons
+      }
 
       std::string thenBBName = cfg->new_BB_name();
       BasicBlock* thenBB = new BasicBlock(cfg, thenBBName);
