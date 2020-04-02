@@ -31,6 +31,7 @@
 #include "Inferiorite.h"
 #include "SupOuEgalite.h"
 #include "InfOuEgalite.h"
+#include "Difference.h"
 
 class Visitor : public ifccVisitor {
 
@@ -225,6 +226,12 @@ public:
 	}
 
       virtual antlrcpp::Any visitDifference(ifccParser::DifferenceContext *ctx) override {
-		return nullptr;
+		Expression* exprGMember;
+		Expression* exprRMember;
+		  
+		exprGMember = (Expression*) visit(ctx->expr(0));
+		exprRMember = (Expression*) visit(ctx->expr(1));
+
+		return (Expression*) new Difference(exprGMember,exprRMember);
 	}
 };

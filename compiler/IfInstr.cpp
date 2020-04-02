@@ -44,6 +44,9 @@ std::string IfInstr::buildIR(CFG *cfg) {
             else if (strcmp(conditionVarName.c_str(), "jl") == 0) {
                   cfg->current_bb->jumpType = BasicBlock::JumpType::JL;
             }
+            else if (strcmp(conditionVarName.c_str(), "je") == 0) {
+                  cfg->current_bb->jumpType = BasicBlock::JumpType::JE;
+            }
             // les autres comparaisons
       }
 
