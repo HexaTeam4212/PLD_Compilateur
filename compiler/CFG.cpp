@@ -13,6 +13,7 @@
 #include <fstream>
 
 int CFG::nextBBnumber = 0;
+std::map<std::string, Function*> CFG::mapFunction = {};
 
 CFG::CFG(Function* ast)
 : ast(ast)
@@ -112,6 +113,10 @@ IRVariable* CFG::getVariable(std::string nomVar) {
       return mapVariable.at(nomVar);
 }
 
+Function* CFG::getFunction(std::string nomFunction) {
+	return mapFunction.at(nomFunction);
+}
+
 /**
  * Next, allocate local variables by making space on the stack. Recall, the stack grows down, 
  * so to make space on the top of the stack, the stack pointer should be decremented. 
@@ -122,28 +127,29 @@ IRVariable* CFG::getVariable(std::string nomVar) {
  */
 // Here we used 64 bits integer so offset is 8 bytes instead of 4
 int CFG::initTableVariable() {
-      int sizeAllocate = 0;
+	int sizeAllocate = 0;
 
-      std::vector<Instruction*> instructions = ast->getInstructions();
-      for(Instruction* instr : instructions) {
+	std::vector<Instruction*> instructions = ast->getInstructions();
+	for (Instruction* instr : instructions) {
 
-            //check if current instruction is a declaration
-            if(dynamic_cast<Declaration*>(instr)) {
-                  Declaration* dec = (Declaration*)instr;
-                  Type type;
-                  
-                  if(dec->getType() == "int"){ type = Type::int64;}
+		//check if current instruction is a declaration
+		if (dynamic_cast<Declaration*>(instr)) {
+			Declaration* dec = (Declaration*)instr;
+			Type type;
 
-                  for(ExprVariable* exprVar : dec->getVarsDeclared()) {
-                        sizeAllocate += getOffsetBaseOnType(type);
-                        IRVariable *var = new IRVariable(exprVar->getName(), type, sizeAllocate);
-                        this->mapVariable.insert(std::pair<std::string, IRVariable*>(exprVar->getName(), var));
-                  }
-            }
-            else {
-                  break; //all declaration are put before any other instructions
-            }
-      }
+			if (dec->getType() == "int") { type = Type::int64; }
+
+			for (ExprVariable* exprVar : dec->getVarsDeclared()) {
+				sizeAllocate += getOffsetBaseOnType(type);
+				IRVariable *var = new IRVariable(exprVar->getName(), type, sizeAllocate);
+				this->mapVariable.insert(std::pair<std::string, IRVariable*>(exprVar->getName(), var));
+			}
+		}
+		else
+		{
+			break; //all declaration are put before any other instructions
+		}
+	}
 
       this->sizeAllocated = sizeAllocate;
 
@@ -172,4 +178,9 @@ std::string CFG::create_new_tempvar(Type type) {
       nextTempVarNumber++;
 
       return varName;
+}
+
+std::string CFG::add_Function(Function* function) {
+	mapFunction.insert(std::pair<std::string, Function*>(function->getName(), function));
+	return function->getName();
 }

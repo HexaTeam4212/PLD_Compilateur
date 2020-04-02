@@ -40,7 +40,8 @@ class IRInstr {
 		diff,
 		div,
 		jpdeb,
-		jpfin
+		jpfin,
+		call
 	} Operation;
 
 	//  Constructors

@@ -19,7 +19,7 @@
 /**
  * Class that represent a function
  */
-class Function {
+class Function : public Instruction {
 
 public:
       // Constructor
@@ -39,6 +39,10 @@ public:
 
       // Print the function
       void printFunction(std::ostream &o);
+
+	  std::string buildIR(CFG *cfg);
+
+	  void printInstruction(std::ostream &o);
 
 private:
       std::string name;

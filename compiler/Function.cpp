@@ -8,6 +8,7 @@
 //
 
 #include "Function.h"
+#include "CFG.h"
 
 Function::Function()
 {}
@@ -29,7 +30,16 @@ void Function::setReturnType(std::string _returnType) {
 void Function::setInstructions(std::vector<Instruction*> _vectInstr) {
       this->instructions = _vectInstr;
 }
+std::string Function::buildIR(CFG *cfg) {
+	cfg->add_Function(this);
+	return "";
+}
+void Function::printInstruction(std::ostream &o) {
+	o << "\tFunction " << name << std::endl;
+	o << "\tprint Instructions :" << std::endl;
+	
 
+}
 void Function::printFunction(std::ostream &o) {
       o << "\tFunction " << name << std::endl;
       o << "\tReturn : " << returnType << std::endl;

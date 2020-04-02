@@ -25,6 +25,7 @@
 #include "Multiplication.h"
 #include "Soustraction.h"
 #include "Division.h"
+#include "Appel.h"
 
 class Visitor : public ifccVisitor {
 
@@ -58,11 +59,10 @@ public:
       }
 	  
 	  virtual antlrcpp::Any visitCalling(ifccParser::CallingContext *ctx) override {
-		  std::string varName = ctx->NAME(0)->getText();
-		  std::string functionName = ctx->NAME(1)->getText();
-		  //Expression* expr = (Expression*)visit(ctx->function());
-		 // return (Instruction*) new Affectation(varName, expr);
-		  return varName;
+		  std::string functionName = ctx->NAME(0)->getText();
+		  std::string varName = ctx->NAME(1)->getText();
+		  return (Instruction*) new Appel(varName, functionName);
+
 	  }
 
       virtual antlrcpp::Any visitReturn(ifccParser::ReturnContext *ctx) override {

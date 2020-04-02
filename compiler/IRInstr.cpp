@@ -78,7 +78,10 @@ void IRInstr::gen_asm(std::ostream &o) {
 	case jpfin:
 		o << "\taddq  $" + params.at(0) + ", %rsp" << std::endl;
 		break;
-            
+	case call:
+		o << "\tcall  " + params.at(0) + "" << std::endl;
+		break;
+
       default:
             break;
       }
