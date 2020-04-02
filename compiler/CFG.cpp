@@ -88,18 +88,6 @@ void CFG::gen_asm(std::ostream &o) {
             bbPTR->gen_asm(o);
       }
 
-      /*
-      while(current_bb != nullptr) {
-            current_bb->gen_asm(o);
-
-            if(current_bb->exit_true != nullptr && current_bb->exit_false != nullptr) {
-                  //conditionnal jump
-                  o << "\tje " + current_bb->exit_false->label <<std::endl;
-            }
-            else {
-                  current_bb = current_bb->exit_true;
-            }
-      }*/
 }
 
 IRVariable* CFG::getVariable(std::string nomVar) {

@@ -32,6 +32,18 @@ std::string IfInstr::buildIR(CFG *cfg) {
             if (strcmp(conditionVarName.c_str(), "jne") == 0) {
                   cfg->current_bb->jumpType = BasicBlock::JumpType::JNE;
             }
+            else if (strcmp(conditionVarName.c_str(), "jle") == 0) {
+                  cfg->current_bb->jumpType = BasicBlock::JumpType::JLE;
+            }
+            else if (strcmp(conditionVarName.c_str(), "jge") == 0) {
+                  cfg->current_bb->jumpType = BasicBlock::JumpType::JGE;
+            }
+            else if (strcmp(conditionVarName.c_str(), "jg") == 0) {
+                  cfg->current_bb->jumpType = BasicBlock::JumpType::JG;
+            }
+            else if (strcmp(conditionVarName.c_str(), "jl") == 0) {
+                  cfg->current_bb->jumpType = BasicBlock::JumpType::JL;
+            }
             // les autres comparaisons
       }
 

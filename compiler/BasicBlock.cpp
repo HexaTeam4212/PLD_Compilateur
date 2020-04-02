@@ -39,6 +39,18 @@ void BasicBlock::gen_asm(std::ostream &o) {
                         case JNE:
                               o << "\tjne " + exit_false->label << std::endl;
                               break;
+                        case JLE :
+                              o << "\tjle " + exit_false->label << std::endl;
+                              break;
+                        case JGE :
+                              o << "\tjge " + exit_false->label << std::endl;
+                              break;
+                        case JG :
+                              o << "\tjg " + exit_false->label << std::endl;
+                              break;
+                        case JL :
+                              o << "\tjl " + exit_false->label << std::endl;
+                              break;
                         default:
                               std::cerr << "Error : jump not handled !" << std::endl;
                               exit(9);

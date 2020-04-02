@@ -21,6 +21,8 @@ expr :
 | expr '>' expr #superiorite
 | expr '<' expr #inferiorite
 | expr '!=' expr #difference
+| expr '>=' expr #supOuEgalite
+| expr '<=' expr #infOuEgalite
 ;
 
 exprLvl1 :
