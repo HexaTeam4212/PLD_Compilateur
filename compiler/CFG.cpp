@@ -19,7 +19,7 @@ std::vector<std::string> CFG::registres = {"%edi","%esi","%edx","%ecx","%r8d","r
 CFG::CFG(Function* ast)
 : ast(ast)
 {
-      
+	add_Function(ast);
       nextTempVarNumber = 1;
       initTableVariable();
       BasicBlock* prologue = gen_prologue(ast->getName());
@@ -59,7 +59,6 @@ std::string CFG::new_BB_name() {
 
 BasicBlock* CFG::gen_prologue(std::string functionName) {
       BasicBlock* prologue = new BasicBlock(this, functionName);
-      std::cout << "gen prologue" << std::endl;
       std::vector<std::string> paramsPushRbp;
       paramsPushRbp.push_back("%rbp");
       prologue->add_IRInstr(IRInstr::Operation::push, paramsPushRbp);
@@ -70,25 +69,26 @@ BasicBlock* CFG::gen_prologue(std::string functionName) {
       prologue->add_IRInstr(IRInstr::Operation::movq, paramsMovRbpRsp);
 
 	  // ajout des argument
-	  std::cout << "je suis ici" << std::endl;
 	  std::cout << functionName << std::endl;
-	  /*Function* function = getFunction(functionName);
+	  Function* function = getFunction(functionName);
 	  
 	  std::vector<ExprVariable*> argumentFonction=function->getArguments();
 	  
 	  std::cout << "ivi" << std::endl;
 
-	  for (int i = 1; i < argumentFonction.size(); i++) {
-		  
+	  for (int i = 0; i < argumentFonction.size(); i++) {
+		  std::cout << "i" <<i<< std::endl;
 		  std::vector<std::string> paramsfonction;
-		  paramsfonction.push_back(registres.at(i));
+		  paramsfonction.push_back(std::string(registres.at(i)));
 		  std::string argName=argumentFonction.at(i)->getName();
+		  std::cout << "arg Name" <<argName << std::endl;
 		  IRVariable* varArgumenti = getVariable(argName);
+		  std::cout << "la1e" << argName << std::endl;
 		  paramsfonction.push_back(std::to_string(varArgumenti->getOffset()));
+		  std::cout << "la2f" << argName << std::endl;
 	      prologue->add_IRInstr(IRInstr::Operation::movq, paramsfonction);
-	  }*/
-	  
-	  std::cout << "fin gen prologue" << std::endl;
+		  std::cout << "i fin" << argName << std::endl;
+	  }
       return prologue;
 }
 
@@ -136,12 +136,6 @@ IRVariable* CFG::getVariable(std::string nomVar) {
 }
 
 Function* CFG::getFunction(std::string nomFunction) {
-	std::cout << "getFunction" << std::endl;
-	//deque<Function*>::iterator it;
-	for (std::map<std::string, Function*>::iterator it = mapFunction.begin(); it != mapFunction.end(); ++it)
-	{
-		std::cout << it->first << std::endl;   
-	}
 	return mapFunction.at(nomFunction);
 }
 
@@ -162,7 +156,6 @@ int CFG::initTableVariable() {
 
 		//check if current instruction is a declaration
 		if (dynamic_cast<Declaration*>(instr)) {
-			std::cout << "tiiiiiiiiiiiiiiiii" << std::endl;
 			Declaration* dec = (Declaration*)instr;
 			Type type;
 
@@ -173,11 +166,6 @@ int CFG::initTableVariable() {
 				IRVariable *var = new IRVariable(exprVar->getName(), type, sizeAllocate);
 				this->mapVariable.insert(std::pair<std::string, IRVariable*>(exprVar->getName(), var));
 			}
-		}
-		else if (dynamic_cast<Function*>(instr)) {
-			Function* function = (Function*)instr;
-			std::cout << "tututuututu" << function->getName() << std::endl;
-
 		}
 		else
 		{

@@ -32,8 +32,6 @@ void Function::setInstructions(std::vector<Instruction*> _vectInstr) {
       this->instructions = _vectInstr;
 }
 std::string Function::buildIR(CFG *cfg) {
-	std::cout << "buil IR de fonction -_-_-_-_-_-_-_88888" << std::endl;
-	cfg->add_Function(this);
 	return "";
 }
 void Function::printInstruction(std::ostream &o) {

@@ -85,7 +85,7 @@ int main(int argn, const char **argv) {
                   listeCFG.push_back(newCfg);
             }
 
-            //Select output stream based on passed params
+            //Select output stream based son passed params
             std::streambuf* buffer;
             std::ofstream outputFile;
             if(strcmp(fileName.c_str(), "") != 0) {
