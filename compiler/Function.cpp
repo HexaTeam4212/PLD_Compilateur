@@ -10,7 +10,8 @@
 #include "Function.h"
 #include "CFG.h"
 
-Function::Function()
+Function::Function(std::string returnType, std::string name, std::vector<ExprVariable*> arguments):
+returnType(returnType), name(name), arguments(arguments)
 {}
 
 Function::~Function() {

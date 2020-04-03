@@ -10,8 +10,8 @@
 #include "Appel.h"
 #include "CFG.h"
 
-Appel::Appel(std::string nomFunction, std::string nomVar) : 
-	nomFunction(nomFunction),nomVar(nomVar)
+Appel::Appel(std::string nomFunction, std::string nomVar, std::vector<ExprVariable*> argumentsAppel) :
+	nomFunction(nomFunction),nomVar(nomVar), argumentsAppel(argumentsAppel)
 {}
 
 Appel::~Appel() {

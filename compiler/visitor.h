@@ -43,25 +43,36 @@ public:
       }
 
       virtual antlrcpp::Any visitDefinitionFunction(ifccParser::DefinitionFunctionContext *ctx) override {
-            Function* function = new Function();
-            function->setReturnType(visit(ctx->type()));
-            function->setName(ctx->NAME()->getText());
-            //to add in the future : parameters parsing
-
-            //Handle instructions of functions
-            std::vector<Instruction*> instructions;
-            for(int i = 0; i < ctx->instr().size(); i++) {
-                  instructions.push_back((Instruction*)visit(ctx->instr(i)));
-            }
-            function->setInstructions(instructions);
+		  std::string returnType = visit(ctx->type(0));
+		  std::string functionName =ctx->NAME(0)->getText();
+		  //parameters parsing
+		  std::vector<ExprVariable*> varArgument;
+		  for (int i = 1; i < ctx->NAME().size(); i++) {
+			  ExprVariable* newArgument = new ExprVariable(ctx->NAME().at(i)->getText());
+			  varArgument.push_back(newArgument);
+		  }
+		  //Handle instructions of functions
+		  Function* function = new Function(returnType, functionName, varArgument);
+		  std::vector<Instruction*> instructions;
+		  for (int i = 0; i < ctx->instr().size(); i++) {
+			  instructions.push_back((Instruction*)visit(ctx->instr(i)));
+		  }
+		  function->setInstructions(instructions); 
 
             return function;
       }
 	  
 	  virtual antlrcpp::Any visitCalling(ifccParser::CallingContext *ctx) override {
 		  std::string functionName = ctx->NAME(0)->getText();
-		  std::string varName = ctx->NAME(1)->getText();
-		  return (Instruction*) new Appel(varName, functionName);
+		  std::string varName =  ctx->NAME(1)->getText();
+
+		  std::vector<ExprVariable*> varArgumentAppel;
+		  for (int i = 1; i < ctx->NAME().size(); i++) {
+			  ExprVariable* newArgument = new ExprVariable(ctx->NAME().at(i)->getText());
+			  varArgumentAppel.push_back(newArgument);
+		  }
+
+		  return (Instruction*) new Appel(varName, functionName, varArgumentAppel);
 
 	  }
 

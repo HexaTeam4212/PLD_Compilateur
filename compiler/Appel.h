@@ -24,7 +24,7 @@ class Appel : public Instruction {
 
 public:
       // Constructor
-      Appel(std::string nomFunction, std::string nomVar);
+      Appel(std::string nomFunction, std::string nomVar, std::vector<ExprVariable*> argumentsAppel);
       // Destructor
       ~Appel();
 
@@ -43,4 +43,5 @@ public:
 private:
 	std::string nomFunction;
 	std::string nomVar;
+	std::vector<ExprVariable*> argumentsAppel;
 };
