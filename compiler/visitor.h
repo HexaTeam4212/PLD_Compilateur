@@ -47,6 +47,7 @@ public:
 		  std::string functionName =ctx->NAME(0)->getText();
 		  //parameters parsing
 		  std::vector<ExprVariable*> varArgument;
+		  std::cout << "def function" << std::endl;
 		  for (int i = 1; i < ctx->NAME().size(); i++) {
 			  ExprVariable* newArgument = new ExprVariable(ctx->NAME().at(i)->getText());
 			  varArgument.push_back(newArgument);
@@ -58,20 +59,20 @@ public:
 			  instructions.push_back((Instruction*)visit(ctx->instr(i)));
 		  }
 		  function->setInstructions(instructions); 
-
+		  std::cout << "fin def function" << std::endl;
             return function;
       }
 	  
 	  virtual antlrcpp::Any visitCalling(ifccParser::CallingContext *ctx) override {
 		  std::string functionName = ctx->NAME(0)->getText();
 		  std::string varName =  ctx->NAME(1)->getText();
-
+		  std::cout << "Calling" << std::endl;
 		  std::vector<ExprVariable*> varArgumentAppel;
 		  for (int i = 1; i < ctx->NAME().size(); i++) {
 			  ExprVariable* newArgument = new ExprVariable(ctx->NAME().at(i)->getText());
 			  varArgumentAppel.push_back(newArgument);
 		  }
-
+		  std::cout << "fin Calling" << std::endl;
 		  return (Instruction*) new Appel(varName, functionName, varArgumentAppel);
 
 	  }

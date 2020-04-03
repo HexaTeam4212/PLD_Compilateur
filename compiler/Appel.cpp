@@ -18,11 +18,13 @@ Appel::~Appel() {
 }
 
 std::string Appel::buildIR(CFG* cfg) {
+	std::cout << "appel" << std::endl;
 	IRVariable* laVar = cfg->getVariable(nomVar);
 	std::vector<std::string> params;
 	params.push_back(nomFunction);
 	params.push_back(std::to_string(laVar->getOffset()));
 	cfg->current_bb->add_IRInstr(IRInstr::Operation::call, params);
+	std::cout << "fin appel" << std::endl;
 	return "";
 }
 

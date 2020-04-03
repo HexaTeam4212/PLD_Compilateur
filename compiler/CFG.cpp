@@ -59,7 +59,7 @@ std::string CFG::new_BB_name() {
 
 BasicBlock* CFG::gen_prologue(std::string functionName) {
       BasicBlock* prologue = new BasicBlock(this, functionName);
-      
+      std::cout << "gen prologue" << std::endl;
       std::vector<std::string> paramsPushRbp;
       paramsPushRbp.push_back("%rbp");
       prologue->add_IRInstr(IRInstr::Operation::push, paramsPushRbp);
@@ -70,18 +70,25 @@ BasicBlock* CFG::gen_prologue(std::string functionName) {
       prologue->add_IRInstr(IRInstr::Operation::movq, paramsMovRbpRsp);
 
 	  // ajout des argument
-	  Function* function = getFunction(functionName);
-	  std::vector<ExprVariable*> argumentFonction=function->getArguments();
-	  for (int i = 1; i < argumentFonction.size(); i++) {
-		  std::string functionName=argumentFonction.at(i)->getName();
-	
-		  std::vector<std::string> paramsfonction;
-
-
-	      prologue->add_IRInstr(IRInstr::Operation::movq, paramsfonction);
-	  }
+	  std::cout << "je suis ici" << std::endl;
+	  std::cout << functionName << std::endl;
+	  /*Function* function = getFunction(functionName);
 	  
+	  std::vector<ExprVariable*> argumentFonction=function->getArguments();
+	  
+	  std::cout << "ivi" << std::endl;
 
+	  for (int i = 1; i < argumentFonction.size(); i++) {
+		  
+		  std::vector<std::string> paramsfonction;
+		  paramsfonction.push_back(registres.at(i));
+		  std::string argName=argumentFonction.at(i)->getName();
+		  IRVariable* varArgumenti = getVariable(argName);
+		  paramsfonction.push_back(std::to_string(varArgumenti->getOffset()));
+	      prologue->add_IRInstr(IRInstr::Operation::movq, paramsfonction);
+	  }*/
+	  
+	  std::cout << "fin gen prologue" << std::endl;
       return prologue;
 }
 
@@ -129,6 +136,12 @@ IRVariable* CFG::getVariable(std::string nomVar) {
 }
 
 Function* CFG::getFunction(std::string nomFunction) {
+	std::cout << "getFunction" << std::endl;
+	//deque<Function*>::iterator it;
+	for (std::map<std::string, Function*>::iterator it = mapFunction.begin(); it != mapFunction.end(); ++it)
+	{
+		std::cout << it->first << std::endl;   
+	}
 	return mapFunction.at(nomFunction);
 }
 
@@ -149,6 +162,7 @@ int CFG::initTableVariable() {
 
 		//check if current instruction is a declaration
 		if (dynamic_cast<Declaration*>(instr)) {
+			std::cout << "tiiiiiiiiiiiiiiiii" << std::endl;
 			Declaration* dec = (Declaration*)instr;
 			Type type;
 
@@ -159,6 +173,11 @@ int CFG::initTableVariable() {
 				IRVariable *var = new IRVariable(exprVar->getName(), type, sizeAllocate);
 				this->mapVariable.insert(std::pair<std::string, IRVariable*>(exprVar->getName(), var));
 			}
+		}
+		else if (dynamic_cast<Function*>(instr)) {
+			Function* function = (Function*)instr;
+			std::cout << "tututuututu" << function->getName() << std::endl;
+
 		}
 		else
 		{
@@ -196,6 +215,8 @@ std::string CFG::create_new_tempvar(Type type) {
 }
 
 std::string CFG::add_Function(Function* function) {
+	std::cout << "add Function _-_-_-_-_-_ 55555" << std::endl;
+	std::cout << function->getName() << std::endl;
 	mapFunction.insert(std::pair<std::string, Function*>(function->getName(), function));
 	return function->getName();
 }
