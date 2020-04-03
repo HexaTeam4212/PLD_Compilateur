@@ -14,6 +14,7 @@
 
 int CFG::nextBBnumber = 0;
 std::map<std::string, Function*> CFG::mapFunction = {};
+std::vector<std::string> CFG::registres = {"%edi","%esi","%edx","%ecx","%r8d","r9d" };
 
 CFG::CFG(Function* ast)
 : ast(ast)
@@ -67,6 +68,20 @@ BasicBlock* CFG::gen_prologue(std::string functionName) {
       paramsMovRbpRsp.push_back("%rsp");
       paramsMovRbpRsp.push_back("%rbp");
       prologue->add_IRInstr(IRInstr::Operation::movq, paramsMovRbpRsp);
+
+	  // ajout des argument
+	  Function* function = getFunction(functionName);
+	  std::vector<ExprVariable*> argumentFonction=function->getArguments();
+	  for (int i = 1; i < argumentFonction.size(); i++) {
+		  std::string functionName=argumentFonction.at(i)->getName();
+	
+		  std::vector<std::string> paramsfonction;
+
+
+	      prologue->add_IRInstr(IRInstr::Operation::movq, paramsfonction);
+	  }
+	  
+
       return prologue;
 }
 
