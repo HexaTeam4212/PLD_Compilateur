@@ -14,7 +14,7 @@
 
 int CFG::nextBBnumber = 0;
 std::map<std::string, Function*> CFG::mapFunction = {};
-std::vector<std::string> CFG::registres = {"%edi","%esi","%edx","%ecx","%r8d","r9d" };
+//std::vector<std::string> CFG::registres = {"%edi","%esi","%edx","%ecx","%r8d","r9d" };
 
 CFG::CFG(Function* ast)
 : ast(ast)
@@ -75,7 +75,7 @@ BasicBlock* CFG::gen_prologue(std::string functionName) {
 	  std::vector<ExprVariable*> argumentFonction=function->getArguments();
 	  
 	  std::cout << "ivi" << std::endl;
-
+	  /*
 	  for (int i = 0; i < argumentFonction.size(); i++) {
 		  std::cout << "i" <<i<< std::endl;
 		  std::vector<std::string> paramsfonction;
@@ -88,7 +88,9 @@ BasicBlock* CFG::gen_prologue(std::string functionName) {
 		  std::cout << "la2f" << argName << std::endl;
 	      prologue->add_IRInstr(IRInstr::Operation::movq, paramsfonction);
 		  std::cout << "i fin" << argName << std::endl;
-	  }
+	  } */
+
+	  std::cout << "gen prologue" << std::endl;
       return prologue;
 }
 
@@ -162,6 +164,23 @@ int CFG::initTableVariable() {
 			if (dec->getType() == "int") { type = Type::int64; }
 
 			for (ExprVariable* exprVar : dec->getVarsDeclared()) {
+				sizeAllocate += getOffsetBaseOnType(type);
+				IRVariable *var = new IRVariable(exprVar->getName(), type, sizeAllocate);
+				this->mapVariable.insert(std::pair<std::string, IRVariable*>(exprVar->getName(), var));
+			}
+		}
+		else if (dynamic_cast<DeclarationArg*>(instr)) {
+
+			std::cout << "je suis iciiiiiiiiiiii yes " << std::endl;
+			DeclarationArg* decArg = (DeclarationArg*)instr;
+			Type type;
+
+			std::vector<std::string> varsType;
+			
+			type = Type::int64;
+			//std::vector<std::string>::iterator it = registres.begin();
+			for (ExprVariable* exprVar : decArg->getVarsDeclared()) {
+				//if (dec->getType() == "int") { type = Type::int64; }
 				sizeAllocate += getOffsetBaseOnType(type);
 				IRVariable *var = new IRVariable(exprVar->getName(), type, sizeAllocate);
 				this->mapVariable.insert(std::pair<std::string, IRVariable*>(exprVar->getName(), var));

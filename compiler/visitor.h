@@ -47,14 +47,21 @@ public:
 		  std::string functionName =ctx->NAME(0)->getText();
 		  //parameters parsing
 		  std::vector<ExprVariable*> varArgument;
+		  std::vector<std::string> varType;
 		  std::cout << "def function" << std::endl;
 		  for (int i = 1; i < ctx->NAME().size(); i++) {
 			  ExprVariable* newArgument = new ExprVariable(ctx->NAME().at(i)->getText());
+			  std::string type = visit(ctx->type().at(i));
 			  varArgument.push_back(newArgument);
+			  varType.push_back(type);
 		  }
 		  //Handle instructions of functions
 		  Function* function = new Function(returnType, functionName, varArgument);
 		  std::vector<Instruction*> instructions;
+		  Instruction* argInstr = (Instruction*) new DeclarationArg(varArgument, varType);
+
+		  instructions.push_back(argInstr);
+
 		  for (int i = 0; i < ctx->instr().size(); i++) {
 			  instructions.push_back((Instruction*)visit(ctx->instr(i)));
 		  }

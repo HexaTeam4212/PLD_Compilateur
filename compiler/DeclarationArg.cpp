@@ -1,0 +1,47 @@
+//
+//  Declaration.cpp
+//  PLD-COMP
+//
+//  Created by H4212 on 16/03/2020.
+//  Copyright © 2020 Andrea Croc, Baptiste Lotigier, Emmy Lerandy, Fatoumata Wade,
+//                   Louis Ung, Lucie Bovo, Shuyao Shen. All rights reserved.
+//
+
+#include "DeclarationArg.h"
+#include "CFG.h"
+
+std::vector<std::string> DeclarationArg::registres = { "%edi","%esi","%edx","%ecx","%r8d","r9d" };
+
+DeclarationArg::DeclarationArg(std::vector<ExprVariable*> varsDeclared, std::vector<std::string> varsType)
+: varsDeclared(varsDeclared), varsType(varsType)
+{}
+
+DeclarationArg::~DeclarationArg() {
+      for (ExprVariable* varPTR : varsDeclared) {
+            delete varPTR;
+      }
+}
+
+std::string DeclarationArg::buildIR(CFG* cfg) {
+
+	std::vector<std::string>::iterator it = registres.begin();
+	for (ExprVariable* exprVar : varsDeclared) {
+		//if (dec->getType() == "int") { type = Type::int64; }
+		std::string expr = exprVar->buildIR(cfg);
+		IRVariable* var = cfg->getVariable(expr);
+		std::vector<std::string> paramsArg;
+		paramsArg.push_back(std::to_string(var->getOffset()));
+		paramsArg.push_back(*it);
+		++it;
+		cfg->current_bb->add_IRInstr(IRInstr::Operation::movq, paramsArg);
+	}
+      return "";
+}
+
+void DeclarationArg::printInstruction(std::ostream &o) {
+      o << "\t\tDeclaration of " << varsDeclared.size() << " variables" << std::endl;
+      for(int i = 0; i < varsDeclared.size(); i++) {
+            o << "\t\t\t";
+            varsDeclared.at(i)->printInstruction(o);
+      }
+}

@@ -18,6 +18,7 @@
 #include "BasicBlock.h"
 #include "IRVariable.h"
 #include "Declaration.h"
+#include "DeclarationArg.h"
 #include "Appel.h"
 
 /**
@@ -56,7 +57,7 @@ protected:
 	  static std::map<std::string, Function*> mapFunction;
       static int nextBBnumber;
       int nextTempVarNumber;
-	  static std::vector<std::string> registres;
+	  //static std::vector<std::string> registres;
 
 private:
       int getOffsetBaseOnType(Type type);
