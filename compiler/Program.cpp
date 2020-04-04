@@ -41,7 +41,7 @@ void Program::printProgram(std::ostream &o) {
       o << "#####################################" << std::endl;
       o << "Program" << std::endl << "Functions :" << std::endl;
       for(int i = 0; i < functions.size(); i++) {
-            functions.at(i)->printFunction(o);
+            functions.at(i)->printFunction(o, 1);
       }
       o << "#####################################" << std::endl;
 }

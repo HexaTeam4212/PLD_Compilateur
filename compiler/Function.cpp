@@ -30,12 +30,12 @@ void Function::setInstructions(std::vector<Instruction*> _vectInstr) {
       this->instructions = _vectInstr;
 }
 
-void Function::printFunction(std::ostream &o) {
-      o << "\tFunction " << name << std::endl;
-      o << "\tReturn : " << returnType << std::endl;
-      o << "\tInstructions :" << std::endl;
+void Function::printFunction(std::ostream &o, int shift) {
+      o << std::string(shift, '\t') + "Function " << name << std::endl;
+      o << std::string(shift, '\t') + "Return : " << returnType << std::endl;
+      o << std::string(shift, '\t') + "Instructions :" << std::endl;
       for(int i = 0; i < instructions.size(); i++) {
-            instructions.at(i)->printInstruction(o);
+            instructions.at(i)->printInstruction(o, shift+1);
       }
 }
 

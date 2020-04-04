@@ -32,7 +32,7 @@ public:
        */
       std::string buildIR(CFG* cfg) = 0;
       // Abstract method that print the instruction
-      void printInstruction(std::ostream &o) = 0;
+      void printInstruction(std::ostream &o, int shift) = 0;
 
       virtual void checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) = 0;
 

@@ -32,10 +32,10 @@ void Superiorite::checkVariableUsage(std::map<std::string, int>* mapVariableName
     exprGMember->checkVariableUsage(mapVariableNames, functionName);
 }
 
-void Superiorite::printInstruction(std::ostream &o) {
+void Superiorite::printInstruction(std::ostream &o, int shift) {
 	o << "Superiority between two expressions" << std::endl;
-	o << "\t\t\t\tExpr 1 : ";
-	exprGMember->printInstruction(o);
-	o << "\t\t\t\tExpr 2 : ";
-	exprRMember->printInstruction(o);
+	o << std::string(shift+1, '\t') + "Expr 1 : ";
+	exprGMember->printInstruction(o, shift+1);
+	o << std::string(shift+1, '\t') + "Expr 2 : ";
+	exprRMember->printInstruction(o, shift+1);
 }

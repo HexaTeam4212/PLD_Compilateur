@@ -88,7 +88,18 @@ std::string IfInstr::buildIR(CFG *cfg) {
       return "";
 }
 
-void IfInstr::printInstruction(std::ostream &o) {}
+void IfInstr::printInstruction(std::ostream &o, int shift) {
+      o << std::string(shift, '\t') + "If statement" << std::endl;
+      o << std::string(shift, '\t') + "Condition : ";
+      condition->printInstruction(o, shift+1);
+      o << std::string(shift, '\t') + "Instructions : " << std::endl;
+      for(Instruction* instr : vectorInstructionIf) {
+            instr->printInstruction(o, shift+1);
+      }
+      if(elseIntruction != nullptr) {
+            elseIntruction->printInstruction(o, shift);
+      }
+}
 
 void IfInstr::checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) {
       for(Instruction* instrPTR : vectorInstructionIf) {

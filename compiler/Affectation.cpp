@@ -34,9 +34,9 @@ void Affectation::checkVariableUsage(std::map<std::string, int>* mapVariableName
       expr->checkVariableUsage(mapVariableNames, functionName);
 }
 
-void Affectation::printInstruction(std::ostream &o) {
-      o << "\t\tAffectation of origin into dest" << std::endl;
-      o << "\t\t\tOrigin : ";
-      expr->printInstruction(o);
-      o << "\t\t\tDest : " << varName << std::endl;
+void Affectation::printInstruction(std::ostream &o, int shift) {
+      o << std::string(shift, '\t') + "Affectation of origin into dest" << std::endl;
+      o << std::string(shift+1, '\t') + "Origin : ";
+      expr->printInstruction(o, shift+2);
+      o << std::string(shift+1, '\t') + "Dest : " << varName << std::endl;
 }

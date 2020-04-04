@@ -32,10 +32,10 @@ void Inferiorite::checkVariableUsage(std::map<std::string, int>* mapVariableName
     exprGMember->checkVariableUsage(mapVariableNames, functionName);
 }
 
-void Inferiorite::printInstruction(std::ostream &o) {
+void Inferiorite::printInstruction(std::ostream &o, int shift) {
 	o << "Inferiority between two expressions" << std::endl;
-	o << "\t\t\t\tExpr 1 : ";
-	exprGMember->printInstruction(o);
-	o << "\t\t\t\tExpr 2 : ";
-	exprRMember->printInstruction(o);
+	o << std::string(shift+1, '\t') + "Expr 1 : ";
+	exprGMember->printInstruction(o, shift+1);
+	o << std::string(shift+1, '\t') + "Expr 2 : ";
+	exprRMember->printInstruction(o, shift+1);
 }

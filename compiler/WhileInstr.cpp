@@ -84,8 +84,14 @@ std::string WhileInstr::buildIR(CFG *cfg) {
       return "";
 }
 
-void WhileInstr::printInstruction(std::ostream &o) {
-
+void WhileInstr::printInstruction(std::ostream &o, int shift) {
+      o << std::string(shift, '\t') + "While statement" << std::endl;
+      o << std::string(shift, '\t') + "Condition : ";
+      condition->printInstruction(o, shift+1);
+      o << std::string(shift, '\t') + "Instructions : " << std::endl;
+      for(Instruction* instr : vectorInstruction) {
+            instr->printInstruction(o, shift+1);
+      }
 }
 
 void WhileInstr::checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) {
