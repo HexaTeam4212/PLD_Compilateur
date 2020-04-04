@@ -73,7 +73,7 @@ public:
 		  std::string functionName = ctx->NAME(0)->getText();
 		  std::string varName =  ctx->NAME(1)->getText();
 		  std::vector<ExprVariable*> varArgumentAppel;
-		  for (int i = 1; i < ctx->NAME().size(); i++) {
+		  for (int i = 2; i < ctx->NAME().size(); i++) {
 			  ExprVariable* newArgument = new ExprVariable(ctx->NAME().at(i)->getText());
 			  varArgumentAppel.push_back(newArgument);
 		  }
@@ -92,7 +92,7 @@ public:
       virtual antlrcpp::Any visitConst(ifccParser::ConstContext *ctx) override {
             return (Expression*) new ExprConstante(ctx->CONST()->getText());
       }
- 
+	
       virtual antlrcpp::Any visitVar(ifccParser::VarContext *ctx) override {
             return (Expression*) new ExprVariable(ctx->NAME()->getText());
       }

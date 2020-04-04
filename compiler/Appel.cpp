@@ -21,28 +21,29 @@ Appel::~Appel() {
 
 std::string Appel::buildIR(CFG* cfg) {
 
-	std::cout << "APPEL -_-_-_-__-_-_-" << std::endl;
+
 	IRVariable* laVar = cfg->getVariable(nomVar);
 	
 
-	//cas ou 0 arguments
+
 	if (argumentsAppel.size()!=0)
 	{
 		std::vector<std::string>::iterator it = registres.begin();
+
 		for (ExprVariable* exprVar : argumentsAppel) {
-			/*std::string expr = exprVar->buildIR(cfg);
+			std::string expr = exprVar->buildIR(cfg);
 			IRVariable* var = cfg->getVariable(expr);
-			
 			std::vector<std::string> params;
-			params.push_back(*it);
 			params.push_back("-"+std::to_string(var->getOffset())+"(%rbp)");
+			params.push_back(*it);
 			cfg->current_bb->add_IRInstr(IRInstr::Operation::movq, params);
 
-			++it;*/
+			if (it != registres.end())
+			{
+				++it;
+			}
 		}
 
-
-		   
 	}
 	
 		std::vector<std::string> params1;
@@ -55,7 +56,6 @@ std::string Appel::buildIR(CFG* cfg) {
 		params2.push_back("%rax");
 		params2.push_back("-" + std::to_string(laVar->getOffset()) + "(%rbp)");
 		cfg->current_bb->add_IRInstr(IRInstr::Operation::movq, params2);
-		std::cout << "FIn APPEL -_-_-_-__-_-_-" << std::endl;
 
 	return "";
 }
