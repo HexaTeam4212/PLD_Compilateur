@@ -46,7 +46,6 @@ public:
       IRVariable* getVariable(std::string nomVar);
 
 	  static Function* getFunction(std::string nomFunction);
-	  //std::string create_new_tempvar(Type type);
 
       void gen_asm(std::ostream &o);
 	  std::string add_Function(Function* Function);
@@ -57,7 +56,6 @@ protected:
 	  static std::map<std::string, Function*> mapFunction;
       static int nextBBnumber;
       int nextTempVarNumber;
-	  //static std::vector<std::string> registres;
 
 private:
       int getOffsetBaseOnType(Type type);

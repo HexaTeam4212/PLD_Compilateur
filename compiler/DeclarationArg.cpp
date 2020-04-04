@@ -24,6 +24,7 @@ DeclarationArg::~DeclarationArg() {
 
 std::string DeclarationArg::buildIR(CFG* cfg) {
 
+
 	std::vector<std::string>::iterator it = registres.begin();
 	for (ExprVariable* exprVar : varsDeclared) {
 		//if (dec->getType() == "int") { type = Type::int64; }
@@ -36,6 +37,7 @@ std::string DeclarationArg::buildIR(CFG* cfg) {
 		++it;
 		cfg->current_bb->add_IRInstr(IRInstr::Operation::movq, paramsArg);
 	}
+
       return "";
 }
 

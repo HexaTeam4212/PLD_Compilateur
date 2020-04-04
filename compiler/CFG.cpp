@@ -14,7 +14,6 @@
 
 int CFG::nextBBnumber = 0;
 std::map<std::string, Function*> CFG::mapFunction = {};
-//std::vector<std::string> CFG::registres = {"%edi","%esi","%edx","%ecx","%r8d","r9d" };
 
 CFG::CFG(Function* ast)
 : ast(ast)
@@ -58,7 +57,8 @@ std::string CFG::new_BB_name() {
 }
 
 BasicBlock* CFG::gen_prologue(std::string functionName) {
-      BasicBlock* prologue = new BasicBlock(this, functionName);
+
+	BasicBlock* prologue = new BasicBlock(this, functionName);
       std::vector<std::string> paramsPushRbp;
       paramsPushRbp.push_back("%rbp");
       prologue->add_IRInstr(IRInstr::Operation::push, paramsPushRbp);
@@ -68,29 +68,6 @@ BasicBlock* CFG::gen_prologue(std::string functionName) {
       paramsMovRbpRsp.push_back("%rbp");
       prologue->add_IRInstr(IRInstr::Operation::movq, paramsMovRbpRsp);
 
-	  // ajout des argument
-	  std::cout << functionName << std::endl;
-	  Function* function = getFunction(functionName);
-	  
-	  std::vector<ExprVariable*> argumentFonction=function->getArguments();
-	  
-	  std::cout << "ivi" << std::endl;
-	  /*
-	  for (int i = 0; i < argumentFonction.size(); i++) {
-		  std::cout << "i" <<i<< std::endl;
-		  std::vector<std::string> paramsfonction;
-		  paramsfonction.push_back(std::string(registres.at(i)));
-		  std::string argName=argumentFonction.at(i)->getName();
-		  std::cout << "arg Name" <<argName << std::endl;
-		  IRVariable* varArgumenti = getVariable(argName);
-		  std::cout << "la1e" << argName << std::endl;
-		  paramsfonction.push_back(std::to_string(varArgumenti->getOffset()));
-		  std::cout << "la2f" << argName << std::endl;
-	      prologue->add_IRInstr(IRInstr::Operation::movq, paramsfonction);
-		  std::cout << "i fin" << argName << std::endl;
-	  } */
-
-	  std::cout << "gen prologue" << std::endl;
       return prologue;
 }
 
@@ -171,16 +148,13 @@ int CFG::initTableVariable() {
 		}
 		else if (dynamic_cast<DeclarationArg*>(instr)) {
 
-			std::cout << "je suis iciiiiiiiiiiii yes " << std::endl;
 			DeclarationArg* decArg = (DeclarationArg*)instr;
 			Type type;
 
 			std::vector<std::string> varsType;
 			
 			type = Type::int64;
-			//std::vector<std::string>::iterator it = registres.begin();
 			for (ExprVariable* exprVar : decArg->getVarsDeclared()) {
-				//if (dec->getType() == "int") { type = Type::int64; }
 				sizeAllocate += getOffsetBaseOnType(type);
 				IRVariable *var = new IRVariable(exprVar->getName(), type, sizeAllocate);
 				this->mapVariable.insert(std::pair<std::string, IRVariable*>(exprVar->getName(), var));
@@ -222,8 +196,6 @@ std::string CFG::create_new_tempvar(Type type) {
 }
 
 std::string CFG::add_Function(Function* function) {
-	std::cout << "add Function _-_-_-_-_-_ 55555" << std::endl;
-	std::cout << function->getName() << std::endl;
 	mapFunction.insert(std::pair<std::string, Function*>(function->getName(), function));
 	return function->getName();
 }

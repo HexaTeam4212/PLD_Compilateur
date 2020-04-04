@@ -44,4 +44,5 @@ private:
 	std::string nomFunction;
 	std::string nomVar;
 	std::vector<ExprVariable*> argumentsAppel;
+	static std::vector<std::string> registres;
 };
