@@ -27,12 +27,13 @@ class IRInstr {
  
    public:
 	/** The instructions themselves -- feel free to subclass instead */
-	typedef enum {
-		push,
-		pop,
-		movq,
-		exit,
-		ldconst,
+	   typedef enum {
+		   push,
+		   pop,
+		   movq,
+		   exit,
+		   ldconst,
+		   ldconstrax,
 		ret,
 		copy,
 		add,

@@ -19,6 +19,10 @@ void IRInstr::gen_asm(std::ostream &o) {
       case ldconst:
             o << "\tmovq $" + params.at(0) + ", -" + params.at(1) + "(%rbp)" << std::endl;
             break;
+
+	  case ldconstrax:
+		  o << "\tmovq $" + params.at(0) + ", %rax" << std::endl;
+		  break;
             
       case push:
             o << "\tpushq "+ params.at(0) << std::endl;
@@ -79,9 +83,7 @@ void IRInstr::gen_asm(std::ostream &o) {
 		o << "\taddq  $" + params.at(0) + ", %rsp" << std::endl;
 		break;
 	case call:
-		o << "\tmovq $0, %rax" << std::endl;
 		o << "\tcall  " + params.at(0) + "" << std::endl;
-		o << "\tmovq  %rax, -" + params.at(1) + "(%rbp)" << std::endl;
 		break;
 
       default:

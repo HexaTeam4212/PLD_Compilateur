@@ -18,12 +18,23 @@ Appel::~Appel() {
 }
 
 std::string Appel::buildIR(CFG* cfg) {
+	//différencier cas 0 arguments et cas avec arguments
+
 	std::cout << "appel" << std::endl;
 	IRVariable* laVar = cfg->getVariable(nomVar);
+	
+
+	//cas ou 0 arguments
+	std::vector<std::string> params1;
+	params1.push_back("0");
+	cfg->current_bb->add_IRInstr(IRInstr::Operation::ldconstrax, params1);
 	std::vector<std::string> params;
 	params.push_back(nomFunction);
-	params.push_back(std::to_string(laVar->getOffset()));
 	cfg->current_bb->add_IRInstr(IRInstr::Operation::call, params);
+	std::vector<std::string> params2;
+	params2.push_back("%rax");
+	params2.push_back(std::to_string(laVar->getOffset()) + "(%rbp)");
+	cfg->current_bb->add_IRInstr(IRInstr::Operation::movq, params2);
 	std::cout << "fin appel" << std::endl;
 	return "";
 }

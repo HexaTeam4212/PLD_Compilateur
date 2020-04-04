@@ -10,7 +10,7 @@
 #include "DeclarationArg.h"
 #include "CFG.h"
 
-std::vector<std::string> DeclarationArg::registres = { "%edi","%esi","%edx","%ecx","%r8d","r9d" };
+std::vector<std::string> DeclarationArg::registres = { "%rdi","%rsi","%rdx","%rcx","%r8d","r9d" };
 
 DeclarationArg::DeclarationArg(std::vector<ExprVariable*> varsDeclared, std::vector<std::string> varsType)
 : varsDeclared(varsDeclared), varsType(varsType)
@@ -30,8 +30,9 @@ std::string DeclarationArg::buildIR(CFG* cfg) {
 		std::string expr = exprVar->buildIR(cfg);
 		IRVariable* var = cfg->getVariable(expr);
 		std::vector<std::string> paramsArg;
-		paramsArg.push_back(std::to_string(var->getOffset()));
 		paramsArg.push_back(*it);
+		paramsArg.push_back("-" + std::to_string(var->getOffset()) + "(%rbp)");
+		
 		++it;
 		cfg->current_bb->add_IRInstr(IRInstr::Operation::movq, paramsArg);
 	}
