@@ -32,6 +32,7 @@
 #include "SupOuEgalite.h"
 #include "InfOuEgalite.h"
 #include "Difference.h"
+#include "WhileInstr.h"
 
 class Visitor : public ifccVisitor {
 
@@ -234,4 +235,16 @@ public:
 
 		return (Expression*) new Difference(exprGMember,exprRMember);
 	}
+
+      virtual antlrcpp::Any visitWhilestatement(ifccParser::WhilestatementContext *ctx) override {
+            WhileInstr* whileInstr = new WhileInstr();
+
+            whileInstr->setCondition(visit(ctx->expr()));
+            for(int i = 0; i < ctx->instr().size(); i++) {
+                  Instruction* newInstr = visit(ctx->instr(i));
+                  whileInstr->addInstruction(newInstr);
+            }
+
+            return (Instruction*) whileInstr;
+      }
 };
