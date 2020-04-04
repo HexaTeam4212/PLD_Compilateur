@@ -28,6 +28,9 @@ std::string ReturnInstr::buildIR(CFG *cfg) {
       std::vector<std::string> params;
       params.push_back(std::to_string(retVar->getOffset()));
       cfg->current_bb->add_IRInstr(IRInstr::Operation::ret, params);
+
+      cfg->current_bb->exit_true = cfg->CFGEnd;
+
       return retVar->getName();
 }
 

@@ -25,6 +25,13 @@
 #include "Multiplication.h"
 #include "Soustraction.h"
 #include "Division.h"
+#include "IfInstr.h"
+#include "Egalite.h"
+#include "Superiorite.h"
+#include "Inferiorite.h"
+#include "SupOuEgalite.h"
+#include "InfOuEgalite.h"
+#include "Difference.h"
 
 class Visitor : public ifccVisitor {
 
@@ -139,4 +146,92 @@ public:
       virtual antlrcpp::Any visitParenthese(ifccParser::ParentheseContext *ctx) override {
             return (Expression*)visit(ctx->expr());
       }
+
+      virtual antlrcpp::Any visitIfstatement(ifccParser::IfstatementContext *ctx) override {
+            IfInstr* ifInstruction = new IfInstr();
+
+            ifInstruction->setCondition(visit(ctx->expr()));
+            for(int i = 0; i < ctx->instr().size(); i++) {
+                  Instruction* newInstr = visit(ctx->instr(i));
+                  ifInstruction->addInstructionIf(newInstr);
+            }
+
+            if(ctx->elseStatement()) {
+                  ElseInstr* elseInstruction = visit(ctx->elseStatement());
+                  ifInstruction->setElseInstrution(elseInstruction);
+            }
+
+            return (Instruction*) ifInstruction;
+      }
+
+      virtual antlrcpp::Any visitElseStatement(ifccParser::ElseStatementContext *ctx) override {
+            ElseInstr* elseInstruction = new ElseInstr();
+
+            for(int i = 0; i < ctx->instr().size(); i++) {
+                  Instruction* newInstr = visit(ctx->instr(i));
+                  elseInstruction->addInstruction(newInstr);
+            }
+
+            return elseInstruction;
+      }
+
+      virtual antlrcpp::Any visitEgalite(ifccParser::EgaliteContext *ctx) override {
+		Expression* exprGMember;
+		Expression* exprRMember;
+		  
+		exprGMember = (Expression*) visit(ctx->expr(0));
+		exprRMember = (Expression*) visit(ctx->expr(1));
+
+		return (Expression*) new Egalite(exprGMember,exprRMember);
+	}
+
+      virtual antlrcpp::Any visitSuperiorite(ifccParser::SuperioriteContext *ctx) override {
+		Expression* exprGMember;
+		Expression* exprRMember;
+		  
+		exprGMember = (Expression*) visit(ctx->expr(0));
+		exprRMember = (Expression*) visit(ctx->expr(1));
+
+		return (Expression*) new Superiorite(exprGMember,exprRMember);
+	}
+
+      virtual antlrcpp::Any visitInferiorite(ifccParser::InferioriteContext *ctx) override {
+	      Expression* exprGMember;
+		Expression* exprRMember;
+		  
+		exprGMember = (Expression*) visit(ctx->expr(0));
+		exprRMember = (Expression*) visit(ctx->expr(1));
+
+		return (Expression*) new Inferiorite(exprGMember,exprRMember);
+	}
+
+      virtual antlrcpp::Any visitSupOuEgalite(ifccParser::SupOuEgaliteContext *ctx) override {
+		Expression* exprGMember;
+		Expression* exprRMember;
+		  
+		exprGMember = (Expression*) visit(ctx->expr(0));
+		exprRMember = (Expression*) visit(ctx->expr(1));
+
+		return (Expression*) new SupOuEgalite(exprGMember,exprRMember);
+	}
+
+      virtual antlrcpp::Any visitInfOuEgalite(ifccParser::InfOuEgaliteContext *ctx) override {
+	      Expression* exprGMember;
+		Expression* exprRMember;
+		  
+		exprGMember = (Expression*) visit(ctx->expr(0));
+		exprRMember = (Expression*) visit(ctx->expr(1));
+
+		return (Expression*) new InfOuEgalite(exprGMember,exprRMember);
+	}
+
+      virtual antlrcpp::Any visitDifference(ifccParser::DifferenceContext *ctx) override {
+		Expression* exprGMember;
+		Expression* exprRMember;
+		  
+		exprGMember = (Expression*) visit(ctx->expr(0));
+		exprRMember = (Expression*) visit(ctx->expr(1));
+
+		return (Expression*) new Difference(exprGMember,exprRMember);
+	}
 };

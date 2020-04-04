@@ -37,11 +37,12 @@ public:
       BasicBlock* gen_prologue(std::string functionName);
       // Method to generate an epilogue
       BasicBlock* gen_epilogue(std::string functionName);
+      void add_basicblock(BasicBlock* newBB);
       BasicBlock* current_bb;
+      BasicBlock* CFGEnd;
       
       int initSymbolTable();
       std::string create_new_tempvar(Type type);
-
       IRVariable* getVariable(std::string nomVar);
 
       void gen_asm(std::ostream &o);
@@ -56,6 +57,6 @@ private:
       int getOffsetBaseOnType(Type type);
 
       Function* ast;
-      BasicBlock* CFGStart;
       int sizeAllocated;
+      std::vector<BasicBlock*> allBBs;
 };

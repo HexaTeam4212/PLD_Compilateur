@@ -19,21 +19,27 @@ CFG::CFG(Function* ast)
       nextTempVarNumber = 1;
       initSymbolTable();
       BasicBlock* prologue = gen_prologue(ast->getName());
+      add_basicblock(prologue);
       BasicBlock* base = new BasicBlock(this, new_BB_name());
+      add_basicblock(base);
       BasicBlock* epilogue = gen_epilogue(ast->getName());
       prologue->exit_true = base;
       base->exit_true = epilogue;
       current_bb = base;
-      CFGStart = prologue;
+      CFGEnd = epilogue;
 
       for(auto instr : ast->getInstructions()) {
             instr->buildIR(this);
       }
+
+      add_basicblock(epilogue);
 }
 
 CFG::~CFG() {
       delete ast;
-      delete CFGStart;
+      for(BasicBlock* bbPTR : allBBs) {
+            delete bbPTR;
+      }
       std::map<std::string, IRVariable*>::iterator it;
       for(it = symbolTable.begin(); it != symbolTable.end(); it++) {
             delete it->second;
@@ -75,24 +81,13 @@ BasicBlock* CFG::gen_epilogue(std::string functionName) {
 }
 
 void CFG::gen_asm(std::ostream &o) {
-
-      current_bb = CFGStart;
-
       o << ".text\n";
       o << ".global main\n";
 
-      while(current_bb != nullptr) {
-            current_bb->gen_asm(o);
-
-            if(current_bb->exit_true != nullptr && current_bb->exit_false != nullptr) {
-                  //conditionnal jump
-                  std::cout << "Conditional jump not handle" << std::endl;
-                  current_bb = nullptr;
-            }
-            else {
-                  current_bb = current_bb->exit_true;
-            }
+      for(BasicBlock* bbPTR : allBBs) {
+            bbPTR->gen_asm(o);
       }
+
 }
 
 IRVariable* CFG::getVariable(std::string nomVar) {
@@ -159,4 +154,8 @@ std::string CFG::create_new_tempvar(Type type) {
       nextTempVarNumber++;
 
       return varName;
+}
+
+void CFG::add_basicblock(BasicBlock* newBB) {
+      allBBs.push_back(newBB);
 }

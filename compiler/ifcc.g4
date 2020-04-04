@@ -9,11 +9,20 @@ instr :
   'return' expr ';'           #return
 | type NAME (',' NAME)* ';'   #declaration
 | NAME '=' expr ';'           #affectation
+| 'if' '(' expr ')' '{' (instr )* '}' (elseStatement )? #ifstatement
 ;
+
+elseStatement : 'else' '{' (instr )* '}';
 
 expr : 
  expr '+' expr #addition
 | exprLvl1     #casStandardLvl1
+| expr '==' expr #egalite
+| expr '>' expr #superiorite
+| expr '<' expr #inferiorite
+| expr '!=' expr #difference
+| expr '>=' expr #supOuEgalite
+| expr '<=' expr #infOuEgalite
 ;
 
 exprLvl1 :
