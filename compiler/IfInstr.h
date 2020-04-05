@@ -33,6 +33,7 @@ public:
       void setCondition(Expression* c) { condition = c; };
       void setElseInstrution(ElseInstr* ei) { elseIntruction = ei; };
 
+
 private:
       std::vector<Instruction*> vectorInstructionIf;
       ElseInstr* elseIntruction;
