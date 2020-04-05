@@ -102,6 +102,7 @@ void IfInstr::printInstruction(std::ostream &o, int shift) {
 }
 
 void IfInstr::checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) {
+      condition->checkVariableUsage(mapVariableNames, functionName);
       for(Instruction* instrPTR : vectorInstructionIf) {
             instrPTR->checkVariableUsage(mapVariableNames, functionName);
       }

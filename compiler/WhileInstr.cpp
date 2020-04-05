@@ -95,6 +95,7 @@ void WhileInstr::printInstruction(std::ostream &o, int shift) {
 }
 
 void WhileInstr::checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) {
+      condition->checkVariableUsage(mapVariableNames, functionName);
       for(Instruction* instrPTR : vectorInstruction) {
             instrPTR->checkVariableUsage(mapVariableNames, functionName);
       }
