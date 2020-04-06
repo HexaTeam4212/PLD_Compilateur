@@ -42,7 +42,13 @@ class IRInstr {
 		div,
 		jpdeb,
 		jpfin,
-		call
+		call,
+		compare,
+		non,
+		invert,
+		andbit,
+		xorbit,
+		orbit
 	} Operation;
 
 	//  Constructors

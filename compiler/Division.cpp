@@ -35,10 +35,15 @@ std::string Division::buildIR(CFG* cfg) {
 	return varReturnName->getName();
 }
 
-void Division::printInstruction(std::ostream &o) {
+void Division::checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) {
+	exprGDiv->checkVariableUsage(mapVariableNames, functionName);
+	exprRDiv->checkVariableUsage(mapVariableNames, functionName);
+}
+
+void Division::printInstruction(std::ostream &o, int shift) {
 	o << "Division of two expression" << std::endl;
-	o << "\t\t\t\tExpr 1 : ";
-	exprGDiv->printInstruction(o);
-	o << "\t\t\t\tExpr 2 : ";
-	exprRDiv->printInstruction(o);
+	o << std::string(shift+1, '\t') + "Expr 1 : ";
+	exprGDiv->printInstruction(o, shift+1);
+	o << std::string(shift+1, '\t') + "Expr 2 : ";
+	exprRDiv->printInstruction(o, shift+1);
 }

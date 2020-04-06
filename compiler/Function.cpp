@@ -34,17 +34,18 @@ void Function::setInstructions(std::vector<Instruction*> _vectInstr) {
 std::string Function::buildIR(CFG *cfg) {
 	return "";
 }
-void Function::printInstruction(std::ostream &o) {
-	o << "\tFunction " << name << std::endl;
-	o << "\tprint Instructions :" << std::endl;
-	
 
-}
-void Function::printFunction(std::ostream &o) {
-      o << "\tFunction " << name << std::endl;
-      o << "\tReturn : " << returnType << std::endl;
-      o << "\tInstructions :" << std::endl;
+void Function::printFunction(std::ostream &o, int shift) {
+      o << std::string(shift, '\t') + "Function " << name << std::endl;
+      o << std::string(shift, '\t') + "Return : " << returnType << std::endl;
+      o << std::string(shift, '\t') + "Instructions :" << std::endl;
       for(int i = 0; i < instructions.size(); i++) {
-            instructions.at(i)->printInstruction(o);
+            instructions.at(i)->printInstruction(o, shift+1);
+      }
+}
+
+void Function::checkVariables(std::map<std::string, int>* mapVariableNames) {
+      for(int i = 0; i < instructions.size(); i++) {
+            instructions.at(i)->checkVariableUsage(mapVariableNames, this->name);
       }
 }

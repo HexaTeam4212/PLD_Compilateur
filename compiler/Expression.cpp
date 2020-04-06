@@ -9,7 +9,7 @@
 
 #include "Expression.h"
 
-Expression::Expression()
+Expression::Expression():isBooleanExpr(false)
 {}
 
 Expression::~Expression()

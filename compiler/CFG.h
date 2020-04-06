@@ -20,6 +20,7 @@
 #include "Declaration.h"
 #include "DeclarationArg.h"
 #include "Appel.h"
+#include "Affectation.h"
 
 /**
  * Class that represent Control flow graph
@@ -38,11 +39,12 @@ public:
       BasicBlock* gen_prologue(std::string functionName);
       // Method to generate an epilogue
       BasicBlock* gen_epilogue(std::string functionName);
+      void add_basicblock(BasicBlock* newBB);
       BasicBlock* current_bb;
+      BasicBlock* CFGEnd;
       
-      int initTableVariable();
+      int initSymbolTable();
       std::string create_new_tempvar(Type type);
-
       IRVariable* getVariable(std::string nomVar);
 
 	  static Function* getFunction(std::string nomFunction);
@@ -53,7 +55,7 @@ public:
 protected:
       std::map<std::string, IRVariable*> mapVariable;
       int nextFreeSymbolIndex; 
-	  static std::map<std::string, Function*> mapFunction;
+	    static std::map<std::string, Function*> mapFunction;
       static int nextBBnumber;
       int nextTempVarNumber;
 
@@ -61,6 +63,6 @@ private:
       int getOffsetBaseOnType(Type type);
 
       Function* ast;
-      BasicBlock* CFGStart;
       int sizeAllocated;
+      std::vector<BasicBlock*> allBBs;
 };
