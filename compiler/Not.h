@@ -11,10 +11,12 @@
 
 // Interfaces used
 #include <string>
+#include <cstring>
 
 #include "Expression.h"
 #include "CFG.h"
 #include "Instruction.h"
+#include "ExprConstante.h"
 
 /**
  * Subclass of the class Expression which represents superiority test

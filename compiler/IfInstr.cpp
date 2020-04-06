@@ -29,22 +29,22 @@ std::string IfInstr::buildIR(CFG *cfg) {
             cfg->current_bb->add_IRInstr(IRInstr::Operation::compare, params);
       }
       else {
-            if (strcmp(conditionVarName.c_str(), "jne") == 0) {
+            if (strcmp(conditionVarName.c_str(), "?jne") == 0) {
                   cfg->current_bb->jumpType = BasicBlock::JumpType::JNE;
             }
-            else if (strcmp(conditionVarName.c_str(), "jle") == 0) {
+            else if (strcmp(conditionVarName.c_str(), "?jle") == 0) {
                   cfg->current_bb->jumpType = BasicBlock::JumpType::JLE;
             }
-            else if (strcmp(conditionVarName.c_str(), "jge") == 0) {
+            else if (strcmp(conditionVarName.c_str(), "?jge") == 0) {
                   cfg->current_bb->jumpType = BasicBlock::JumpType::JGE;
             }
-            else if (strcmp(conditionVarName.c_str(), "jg") == 0) {
+            else if (strcmp(conditionVarName.c_str(), "?jg") == 0) {
                   cfg->current_bb->jumpType = BasicBlock::JumpType::JG;
             }
-            else if (strcmp(conditionVarName.c_str(), "jl") == 0) {
+            else if (strcmp(conditionVarName.c_str(), "?jl") == 0) {
                   cfg->current_bb->jumpType = BasicBlock::JumpType::JL;
             }
-            else if (strcmp(conditionVarName.c_str(), "je") == 0) {
+            else if (strcmp(conditionVarName.c_str(), "?je") == 0) {
                   cfg->current_bb->jumpType = BasicBlock::JumpType::JE;
             }
             // les autres comparaisons

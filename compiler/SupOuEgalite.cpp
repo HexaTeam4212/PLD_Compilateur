@@ -22,7 +22,7 @@ std::string SupOuEgalite::buildIR(CFG* cfg) {
 	params.push_back(std::to_string(varR->getOffset()));
 	cfg->current_bb->add_IRInstr(IRInstr::Operation::compare, params);
 
-    const std::string jumpCmd = "jl";
+    const std::string jumpCmd = "?jl";
 
 	return jumpCmd;
 }
