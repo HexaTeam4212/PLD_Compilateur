@@ -38,7 +38,9 @@ public:
        */
       std::string buildIR(CFG* cfg) override;
       // Method that print the instruction
-      void printInstruction(std::ostream &o) override;
+      void printInstruction(std::ostream &o, int shift) override;
+
+      virtual void checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) override;
 
 private:
       std::vector<ExprVariable*> varsDeclared;

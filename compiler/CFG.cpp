@@ -20,7 +20,7 @@ CFG::CFG(Function* ast)
 {
 	add_Function(ast);
       nextTempVarNumber = 1;
-      initSymbolTable();
+      initTableVariable();
       BasicBlock* prologue = gen_prologue(ast->getName());
       add_basicblock(prologue);
       BasicBlock* base = new BasicBlock(this, new_BB_name());
@@ -51,7 +51,7 @@ CFG::~CFG() {
             delete bbPTR;
       }
       std::map<std::string, IRVariable*>::iterator it;
-      for(it = symbolTable.begin(); it != symbolTable.end(); it++) {
+      for(it = mapVariable.begin(); it != mapVariable.end(); it++) {
             delete it->second;
       }
 }
@@ -106,7 +106,7 @@ void CFG::gen_asm(std::ostream &o) {
 }
 
 IRVariable* CFG::getVariable(std::string nomVar) {
-      return symbolTable.at(nomVar);
+      return mapVariable.at(nomVar);
 }
 
 Function* CFG::getFunction(std::string nomFunction) {
@@ -188,7 +188,7 @@ int CFG::getOffsetBaseOnType(Type type) {
 std::string CFG::create_new_tempvar(Type type) {
       std::string varName = "!tmp" + std::to_string(nextTempVarNumber);
       this->sizeAllocated += getOffsetBaseOnType(type);
-      symbolTable.insert(std::pair<std::string, IRVariable*>(varName, new IRVariable(varName, type, this->sizeAllocated)));
+      mapVariable.insert(std::pair<std::string, IRVariable*>(varName, new IRVariable(varName, type, this->sizeAllocated)));
       nextTempVarNumber++;
 
       return varName;

@@ -65,7 +65,11 @@ std::string Appel::buildIR(CFG* cfg) {
 	return "";
 }
 
-void Appel::printInstruction(std::ostream &o) {
-      o << "\t\tAppel of " << nomFunction <<"dans variable" << nomVar << std::endl;
+void Appel::printInstruction(std::ostream &o, int shift) {
+      o << std::string(shift, '\t') + "Appel of " << nomFunction <<"dans variable" << nomVar << std::endl;
     
+}
+
+void Appel::checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) {
+
 }

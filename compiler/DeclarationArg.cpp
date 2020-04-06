@@ -41,10 +41,14 @@ std::string DeclarationArg::buildIR(CFG* cfg) {
       return "";
 }
 
-void DeclarationArg::printInstruction(std::ostream &o) {
-      o << "\t\tDeclaration of Arguments " << varsDeclared.size() << " variables" << std::endl;
+void DeclarationArg::printInstruction(std::ostream &o, int shift) {
+      o << std::string(shift, '\t') + "Declaration of Arguments " << varsDeclared.size() << " variables" << std::endl;
       for(int i = 0; i < varsDeclared.size(); i++) {
-            o << "\t\t\t";
-            varsDeclared.at(i)->printInstruction(o);
+            o << std::string(shift+1, '\t');
+            varsDeclared.at(i)->printInstruction(o, shift+1);
       }
+}
+
+void DeclarationArg::checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) {
+
 }

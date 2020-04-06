@@ -21,7 +21,7 @@
 /**
  * Class that represent a function
  */
-class Function : public Instruction {
+class Function {
 
 public:
       // Constructor
@@ -38,20 +38,20 @@ public:
 
       void setInstructions(std::vector<Instruction*> _vectInstr);
       std::vector<Instruction*> getInstructions() { return this->instructions; };
-	  std::vector<ExprVariable*> getArguments() { return this->arguments; };
+	std::vector<ExprVariable*> getArguments() { return this->arguments; };
 
       // Print the function
       void printFunction(std::ostream &o, int shift);
 
       void checkVariables(std::map<std::string, int>* mapVariableNames);
 
-	  std::string buildIR(CFG *cfg);
+	std::string buildIR(CFG *cfg);
 
-	  void printInstruction(std::ostream &o);
+	void printInstruction(std::ostream &o);
 
 private:
       std::string name;
       std::string returnType;
       std::vector<Instruction*> instructions;
-	  std::vector<ExprVariable*> arguments;
+	std::vector<ExprVariable*> arguments;
 };
