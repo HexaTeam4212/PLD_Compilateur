@@ -25,7 +25,7 @@ public:
       ~IfInstr();
 
       std::string buildIR(CFG *cfg) override;
-      void printInstruction(std::ostream &o) override;
+      void printInstruction(std::ostream &o, int shift) override;
       virtual void checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) override;
 
       void addInstructionIf(Instruction* newInstruction);

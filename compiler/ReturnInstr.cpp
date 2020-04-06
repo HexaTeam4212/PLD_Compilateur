@@ -38,7 +38,8 @@ void ReturnInstr::checkVariableUsage(std::map<std::string, int>* mapVariableName
       exprReturned->checkVariableUsage(mapVariableNames, functionName);
 }
 
-void ReturnInstr::printInstruction(std::ostream &o) {
-      o << "\t\tReturn instruction" << std::endl << "\t\tValue returned : ";
-      exprReturned->printInstruction(o);
+void ReturnInstr::printInstruction(std::ostream &o, int shift) {
+      o << std::string(shift, '\t') + "Return instruction" << std::endl;
+      o << std::string(shift, '\t') + "Value returned : ";
+      exprReturned->printInstruction(o, shift+1);
 }

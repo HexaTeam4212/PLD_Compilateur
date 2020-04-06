@@ -10,6 +10,7 @@ instr :
 | type NAME (',' NAME)* ';'                             #declaration
 | NAME '=' expr ';'                                     #affectation
 | 'if' '(' expr ')' '{' (instr )* '}' (elseStatement )? #ifstatement
+| 'while' '(' expr ')' '{' (instr )* '}' #whilestatement
 ;
 
 elseStatement : 'else' '{' (instr )* '}';

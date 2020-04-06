@@ -25,7 +25,10 @@ void Program::checkFunctions() {
       std::map<std::string, int>::iterator it;
       for(it = mapVariableNames->begin(); it != mapVariableNames->end(); it++) {
             if(it->second == 0) {
-                  std::cerr << "Warning : variable \"" + it->first + "\" is not used" << std::endl;
+                  std::string functionName = it->first.substr(0, it->first.find("!"));
+                  std::string varName = it->first.substr(it->first.find("!")+1, it->first.size());
+
+                  std::cerr << "Warning : variable \"" + varName + "\" is not used in function \"" + functionName + "\" !"  << std::endl;
             }
       }
 }
@@ -38,7 +41,7 @@ void Program::printProgram(std::ostream &o) {
       o << "#####################################" << std::endl;
       o << "Program" << std::endl << "Functions :" << std::endl;
       for(int i = 0; i < functions.size(); i++) {
-            functions.at(i)->printFunction(o);
+            functions.at(i)->printFunction(o, 1);
       }
       o << "#####################################" << std::endl;
 }

@@ -40,11 +40,11 @@ void Addition::checkVariableUsage(std::map<std::string, int>* mapVariableNames, 
 	exprRAdded->checkVariableUsage(mapVariableNames, functionName);
 }
 
-void Addition::printInstruction(std::ostream &o) {
+void Addition::printInstruction(std::ostream &o, int shift) {
 	o << "Addition of two expression" << std::endl;
-	o << "\t\t\t\tExpr 1 : ";
-	exprGAdded->printInstruction(o);
-	o << "\t\t\t\tExpr 2 : ";
-	exprRAdded->printInstruction(o);
+	o << std::string(shift, '\t') + "Expr 1 : ";
+	exprGAdded->printInstruction(o, shift+1);
+	o << std::string(shift, '\t') + "Expr 2 : ";
+	exprRAdded->printInstruction(o, shift+1);
 
 }

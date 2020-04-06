@@ -1,15 +1,24 @@
-#include "IfInstr.h"
+#include "WhileInstr.h"
 
-IfInstr::IfInstr()
-: elseIntruction(nullptr)
+WhileInstr::WhileInstr()
 {}
 
-IfInstr::~IfInstr()
+WhileInstr::~WhileInstr()
 {}
 
-std::string IfInstr::buildIR(CFG *cfg) {
+std::string WhileInstr::buildIR(CFG *cfg) {
+      // Create new block which will be used to jump to at the end of while loop
+      std::string testBBName = cfg->new_BB_name();
+      BasicBlock* testBB = new BasicBlock(cfg, testBBName);
+      cfg->add_basicblock(testBB);
+
+      testBB->exit_true = cfg->current_bb->exit_true;
+      testBB->exit_false = cfg->current_bb->exit_false;
+      cfg->current_bb->exit_true = testBB;
+      cfg->current_bb->exit_false = nullptr;
+      cfg->current_bb = testBB;
+
       std::string conditionVarName = condition->buildIR(cfg);
-      BasicBlock* testBB = cfg->current_bb;
 
       if (!condition->getIsBooleanExpr()){
             testBB->test_var_name = conditionVarName;
@@ -29,22 +38,22 @@ std::string IfInstr::buildIR(CFG *cfg) {
             cfg->current_bb->add_IRInstr(IRInstr::Operation::compare, params);
       }
       else {
-            if (strcmp(conditionVarName.c_str(), "?jne") == 0) {
+            if (strcmp(conditionVarName.c_str(), "jne") == 0) {
                   cfg->current_bb->jumpType = BasicBlock::JumpType::JNE;
             }
-            else if (strcmp(conditionVarName.c_str(), "?jle") == 0) {
+            else if (strcmp(conditionVarName.c_str(), "jle") == 0) {
                   cfg->current_bb->jumpType = BasicBlock::JumpType::JLE;
             }
-            else if (strcmp(conditionVarName.c_str(), "?jge") == 0) {
+            else if (strcmp(conditionVarName.c_str(), "jge") == 0) {
                   cfg->current_bb->jumpType = BasicBlock::JumpType::JGE;
             }
-            else if (strcmp(conditionVarName.c_str(), "?jg") == 0) {
+            else if (strcmp(conditionVarName.c_str(), "jg") == 0) {
                   cfg->current_bb->jumpType = BasicBlock::JumpType::JG;
             }
-            else if (strcmp(conditionVarName.c_str(), "?jl") == 0) {
+            else if (strcmp(conditionVarName.c_str(), "jl") == 0) {
                   cfg->current_bb->jumpType = BasicBlock::JumpType::JL;
             }
-            else if (strcmp(conditionVarName.c_str(), "?je") == 0) {
+            else if (strcmp(conditionVarName.c_str(), "je") == 0) {
                   cfg->current_bb->jumpType = BasicBlock::JumpType::JE;
             }
             // les autres comparaisons
@@ -54,61 +63,44 @@ std::string IfInstr::buildIR(CFG *cfg) {
       BasicBlock* thenBB = new BasicBlock(cfg, thenBBName);
       cfg->add_basicblock(thenBB);
 
-      std::string afterIfBBName = cfg->new_BB_name();
-      BasicBlock* afterIfBB = new BasicBlock(cfg, afterIfBBName);
-      cfg->add_basicblock(afterIfBB);
+      std::string afterWhileBBName = cfg->new_BB_name();
+      BasicBlock* afterWhileBB = new BasicBlock(cfg, afterWhileBBName);
+      cfg->add_basicblock(afterWhileBB);
       
-      afterIfBB->exit_true = testBB->exit_true;
-      afterIfBB->exit_false = testBB->exit_false;
+      afterWhileBB->exit_true = testBB->exit_true;
+      afterWhileBB->exit_false = testBB->exit_false;
 
-      // We assign pointers without considering existence of else
       testBB->exit_true = thenBB;
-      testBB->exit_false = afterIfBB;
-      thenBB->exit_true = afterIfBB;
+      testBB->exit_false = afterWhileBB;
+      thenBB->exit_true = testBB;
 
       cfg->current_bb = thenBB;
-      for(Instruction* instr : vectorInstructionIf) {
+      for(Instruction* instr : vectorInstruction) {
             instr->buildIR(cfg);
       }
-
-      // If we have a else statement, we overwrite the exit false of testBB
-      if(elseIntruction != nullptr) {
-            std::string elseBBName = cfg->new_BB_name();
-            BasicBlock* elseBB = new BasicBlock(cfg, elseBBName);
-            cfg->add_basicblock(elseBB);
-
-            testBB->exit_false = elseBB;
-            elseBB->exit_true = afterIfBB;
-            cfg->current_bb = elseBB;
-            elseIntruction->buildIR(cfg);
-      }
       
-      cfg->current_bb = afterIfBB;
+      cfg->current_bb = afterWhileBB;
 
       return "";
 }
 
-void IfInstr::printInstruction(std::ostream &o, int shift) {
-      o << std::string(shift, '\t') + "If statement" << std::endl;
+void WhileInstr::printInstruction(std::ostream &o, int shift) {
+      o << std::string(shift, '\t') + "While statement" << std::endl;
       o << std::string(shift, '\t') + "Condition : ";
       condition->printInstruction(o, shift+1);
       o << std::string(shift, '\t') + "Instructions : " << std::endl;
-      for(Instruction* instr : vectorInstructionIf) {
+      for(Instruction* instr : vectorInstruction) {
             instr->printInstruction(o, shift+1);
-      }
-      if(elseIntruction != nullptr) {
-            elseIntruction->printInstruction(o, shift);
       }
 }
 
-void IfInstr::checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) {
+void WhileInstr::checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) {
       condition->checkVariableUsage(mapVariableNames, functionName);
-      for(Instruction* instrPTR : vectorInstructionIf) {
+      for(Instruction* instrPTR : vectorInstruction) {
             instrPTR->checkVariableUsage(mapVariableNames, functionName);
       }
 }
 
-void IfInstr::addInstructionIf(Instruction* newInstruction) {
-      vectorInstructionIf.push_back(newInstruction);
+void WhileInstr::addInstruction(Instruction* newInstruction) {
+      vectorInstruction.push_back(newInstruction);
 }
-

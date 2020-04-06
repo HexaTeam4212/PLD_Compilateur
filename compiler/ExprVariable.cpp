@@ -34,6 +34,6 @@ void ExprVariable::checkVariableUsage(std::map<std::string, int>* mapVariableNam
 
 }
 
-void ExprVariable::printInstruction(std::ostream &o) {
+void ExprVariable::printInstruction(std::ostream &o, int shift) {
       o << "variable " << this->name << std::endl;
 }

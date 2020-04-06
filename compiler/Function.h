@@ -39,7 +39,7 @@ public:
       std::vector<Instruction*> getInstructions() { return this->instructions; };
 
       // Print the function
-      void printFunction(std::ostream &o);
+      void printFunction(std::ostream &o, int shift);
 
       void checkVariables(std::map<std::string, int>* mapVariableNames);
 

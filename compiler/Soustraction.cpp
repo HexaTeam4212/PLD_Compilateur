@@ -40,10 +40,10 @@ void Soustraction::checkVariableUsage(std::map<std::string, int>* mapVariableNam
 	exprRDiff->checkVariableUsage(mapVariableNames, functionName);
 }
 
-void Soustraction::printInstruction(std::ostream &o) {
+void Soustraction::printInstruction(std::ostream &o, int shift) {
 	o << "Soustraction of two expression" << std::endl;
-	o << "\t\t\t\tExpr 1 : ";
-	exprGDiff->printInstruction(o);
-	o << "\t\t\t\tExpr 2 : ";
-	exprRDiff->printInstruction(o);
+	o << std::string(shift+1, '\t') + "Expr 1 : ";
+	exprGDiff->printInstruction(o, shift+1);
+	o << std::string(shift+1, '\t') + "Expr 2 : ";
+	exprRDiff->printInstruction(o, shift+1);
 }
