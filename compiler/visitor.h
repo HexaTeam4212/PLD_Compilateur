@@ -34,6 +34,7 @@
 #include "Difference.h"
 #include "Not.h"
 #include "WhileInstr.h"
+#include "Invert.h"
 
 
 class Visitor : public ifccVisitor {
@@ -263,5 +264,13 @@ public:
             }
 
             return (Instruction*) whileInstr;
+      }
+
+      virtual antlrcpp::Any visitInvert(ifccParser::InvertContext *ctx) override {
+            Expression* exprMember;
+		  
+		exprMember = (Expression*) visit(ctx->exprLvl3());
+
+		return (Expression*) new Invert(exprMember);
       }
 };
