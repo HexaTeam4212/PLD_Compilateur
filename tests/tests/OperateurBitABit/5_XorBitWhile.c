@@ -3,6 +3,7 @@ int main() {
       a = 20;
       b = 0;
       i = 0;
+      c = 0;
       while(i < 10) {
             if(a^b) {
                   c = c + 1;
