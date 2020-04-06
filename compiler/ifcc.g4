@@ -9,7 +9,7 @@ instr :
   'return' expr ';'           #return
 | type NAME (',' NAME)* ';'   #declaration
 | NAME '=' expr ';'           #affectation
-| NAME '=' NAME '(' (NAME ',')* (NAME)* ')' ';'	  #calling
+| NAME '=' NAME '(' ( | NAME  | NAME ',' NAME | NAME  ',' NAME ',' NAME |NAME  ','  NAME  ',' NAME ',' NAME | NAME  ',' NAME  ','  NAME  ',' NAME ',' NAME | NAME ',' NAME  ',' NAME  ','  NAME  ',' NAME ',' NAME  ) ')' ';'	  #calling
 ;
 
 expr : 
@@ -30,7 +30,7 @@ exprLvl2 :
 | '(' expr ')'          #parenthese
 ;
 
-definitionFunction : type NAME '('(type NAME ',')* (type NAME)* ')' '{' (instr )* '}';
+definitionFunction : type NAME '('( | type NAME  | type NAME ',' type NAME | type NAME  ',' type NAME ',' type NAME | type NAME  ',' type NAME  ',' type NAME ',' type NAME | type NAME  ',' type NAME  ',' type NAME  ',' type NAME ',' type NAME | type NAME ',' type NAME  ',' type NAME  ','  type NAME  ',' type NAME ',' type NAME  ) ')' '{' (instr )* '}';
 
 INTEGER : 'int' ;
 NAME : [a-zA-Z]+[a-zA-Z0-9]* ;

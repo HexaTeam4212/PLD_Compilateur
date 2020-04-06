@@ -18,7 +18,7 @@
 #include "ExprVariable.h"
 
 /**
- * Subclass of the class Instruction which represents declaration
+ * Subclass of the class Instruction which represents Appel
  */
 class Appel : public Instruction {
 
@@ -28,10 +28,6 @@ public:
       // Destructor
       ~Appel();
 
-      // Getter of declaration type
-      //std::string getType() { return type; };
-      // Getter of declared variables
-      //std::vector<ExprVariable*> getVarsDeclared() { return varsDeclared; };
       /**
        * Method that build an IR (Intermediate Representation)
        * for a CFG (Control Flow Graph)

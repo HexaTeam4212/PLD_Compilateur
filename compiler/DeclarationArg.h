@@ -28,9 +28,9 @@ public:
       // Destructor
       ~DeclarationArg();
 
-      // Getter of declaration type
+      // Getter of declarationArg type
 	  std::vector<std::string >  getVarsType() { return varsType; };
-      // Getter of declared variables
+      // Getter of argument declared variables
       std::vector<ExprVariable*> getVarsDeclared() { return varsDeclared; };
       /**
        * Method that build an IR (Intermediate Representation)

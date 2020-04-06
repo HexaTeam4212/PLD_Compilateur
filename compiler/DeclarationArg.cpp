@@ -10,7 +10,7 @@
 #include "DeclarationArg.h"
 #include "CFG.h"
 
-std::vector<std::string> DeclarationArg::registres = { "%rdi","%rsi","%rdx","%rcx","%r8d","r9d" };
+std::vector<std::string> DeclarationArg::registres = { "%rdi","%rsi","%rdx","%rcx","%r8","%r9" };
 
 DeclarationArg::DeclarationArg(std::vector<ExprVariable*> varsDeclared, std::vector<std::string> varsType)
 : varsDeclared(varsDeclared), varsType(varsType)
