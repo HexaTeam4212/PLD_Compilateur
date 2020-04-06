@@ -56,29 +56,32 @@ public:
       }
 
       virtual antlrcpp::Any visitDefinitionFunction(ifccParser::DefinitionFunctionContext *ctx) override {
-		  std::string returnType = visit(ctx->type(0));
-		  std::string functionName =ctx->NAME(0)->getText();
-		  //parameters parsing
-		  std::vector<ExprVariable*> varArgument;
-		  std::vector<std::string> varType;
+		std::string returnType = visit(ctx->type(0));
+		std::string functionName =ctx->NAME(0)->getText();
 
-		  for (int i = 1; i < ctx->NAME().size(); i++) {
-			  ExprVariable* newArgument = new ExprVariable(ctx->NAME().at(i)->getText());
-			  std::string type = visit(ctx->type().at(i));
-			  varArgument.push_back(newArgument);
-			  varType.push_back(type);
-		  }
-		  //Handle instructions of functions
-		  Function* function = new Function(returnType, functionName, varArgument);
-		  std::vector<Instruction*> instructions;
-		  Instruction* argInstr = (Instruction*) new DeclarationArg(varArgument, varType);
+		//parameters parsing
+		std::vector<ExprVariable*> varArgument;
+		std::vector<std::string> varType;
 
-		  instructions.push_back(argInstr);
+		for (int i = 1; i < ctx->NAME().size(); i++) {
+			ExprVariable* newArgument = new ExprVariable(ctx->NAME().at(i)->getText());
+			std::string type = visit(ctx->type().at(i));
+			varArgument.push_back(newArgument);
+			varType.push_back(type);
+		}
+		
+		//Handle instructions of functions
+		Declaration* declationArgs = new Declaration(varArgument, "int");
+		Function* function = new Function(returnType, functionName, declationArgs);
+		std::vector<Instruction*> instructions;
+		Instruction* argInstr = (Instruction*) new DeclarationArg(varArgument, varType);
 
-		  for (int i = 0; i < ctx->instr().size(); i++) {
-			  instructions.push_back((Instruction*)visit(ctx->instr(i)));
-		  }
-		  function->setInstructions(instructions); 
+		instructions.push_back(argInstr);
+
+		for (int i = 0; i < ctx->instr().size(); i++) {
+			instructions.push_back((Instruction*)visit(ctx->instr(i)));
+		}
+		function->setInstructions(instructions); 
             return function;
       }
 	  

@@ -44,6 +44,6 @@ public:
 
 private:
       std::vector<ExprVariable*> varsDeclared;
-	  std::vector<std::string >  varsType;
-	  static std::vector<std::string> registres;
+	std::vector<std::string >  varsType;
+	static std::vector<std::string> registres;
 };

@@ -10,7 +10,7 @@
 #include "Function.h"
 #include "CFG.h"
 
-Function::Function(std::string returnType, std::string name, std::vector<ExprVariable*> arguments):
+Function::Function(std::string returnType, std::string name, Declaration* arguments):
 returnType(returnType), name(name), arguments(arguments)
 {}
 
@@ -45,6 +45,7 @@ void Function::printFunction(std::ostream &o, int shift) {
 }
 
 void Function::checkVariables(std::map<std::string, int>* mapVariableNames) {
+      arguments->checkVariableUsage(mapVariableNames, this->name);
       for(int i = 0; i < instructions.size(); i++) {
             instructions.at(i)->checkVariableUsage(mapVariableNames, this->name);
       }

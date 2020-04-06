@@ -17,6 +17,7 @@
 
 #include "Instruction.h"
 #include "ExprVariable.h"
+#include "Declaration.h"
 
 /**
  * Class that represent a function
@@ -25,7 +26,7 @@ class Function {
 
 public:
       // Constructor
-      Function(std::string returnType, std::string name, std::vector<ExprVariable*> arguments);
+      Function(std::string returnType, std::string name, Declaration* arguments);
       // Destructor
       ~Function();
 
@@ -38,7 +39,7 @@ public:
 
       void setInstructions(std::vector<Instruction*> _vectInstr);
       std::vector<Instruction*> getInstructions() { return this->instructions; };
-	std::vector<ExprVariable*> getArguments() { return this->arguments; };
+	Declaration* getArguments() { return this->arguments; };
 
       // Print the function
       void printFunction(std::ostream &o, int shift);
@@ -53,5 +54,5 @@ private:
       std::string name;
       std::string returnType;
       std::vector<Instruction*> instructions;
-	std::vector<ExprVariable*> arguments;
+	Declaration* arguments;
 };
