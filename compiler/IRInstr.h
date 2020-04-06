@@ -40,7 +40,8 @@ class IRInstr {
 		diff,
 		div,
 		compare,
-		non
+		non,
+		invert
 	} Operation;
 
 	//  Constructors

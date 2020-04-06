@@ -38,7 +38,8 @@ exprLvl2 :
 ;
 
 exprLvl3 :
- '!' exprLvl3          #not
+  '-' exprLvl3         #invert
+| '!' exprLvl3         #not
 | '(' expr ')'         #parenthese
 | CONST                #const
 | NAME                 #var
