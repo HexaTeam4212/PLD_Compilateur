@@ -35,6 +35,7 @@
 #include "Not.h"
 #include "WhileInstr.h"
 #include "Invert.h"
+#include "EtBit.h"
 
 
 class Visitor : public ifccVisitor {
@@ -104,8 +105,8 @@ public:
 		Expression* exprGAdded;
 		Expression* exprRAdded;
 		  
-		exprGAdded = (Expression*) visit(ctx->expr(0));
-		exprRAdded = (Expression*) visit(ctx->expr(1));
+		exprGAdded = (Expression*) visit(ctx->exprLvl0(0));
+		exprRAdded = (Expression*) visit(ctx->exprLvl0(1));
 
 		return (Expression*) new Addition(exprGAdded,exprRAdded);
 	}
@@ -189,8 +190,8 @@ public:
 		Expression* exprGMember;
 		Expression* exprRMember;
 		  
-		exprGMember = (Expression*) visit(ctx->expr(0));
-		exprRMember = (Expression*) visit(ctx->expr(1));
+		exprGMember = (Expression*) visit(ctx->exprLvl0(0));
+		exprRMember = (Expression*) visit(ctx->exprLvl0(1));
 
 		return (Expression*) new Egalite(exprGMember,exprRMember);
 	}
@@ -199,8 +200,8 @@ public:
 		Expression* exprGMember;
 		Expression* exprRMember;
 		  
-		exprGMember = (Expression*) visit(ctx->expr(0));
-		exprRMember = (Expression*) visit(ctx->expr(1));
+		exprGMember = (Expression*) visit(ctx->exprLvl0(0));
+		exprRMember = (Expression*) visit(ctx->exprLvl0(1));
 
 		return (Expression*) new Superiorite(exprGMember,exprRMember);
 	}
@@ -209,8 +210,8 @@ public:
 	      Expression* exprGMember;
 		Expression* exprRMember;
 		  
-		exprGMember = (Expression*) visit(ctx->expr(0));
-		exprRMember = (Expression*) visit(ctx->expr(1));
+		exprGMember = (Expression*) visit(ctx->exprLvl0(0));
+		exprRMember = (Expression*) visit(ctx->exprLvl0(1));
 
 		return (Expression*) new Inferiorite(exprGMember,exprRMember);
 	}
@@ -219,8 +220,8 @@ public:
 		Expression* exprGMember;
 		Expression* exprRMember;
 		  
-		exprGMember = (Expression*) visit(ctx->expr(0));
-		exprRMember = (Expression*) visit(ctx->expr(1));
+		exprGMember = (Expression*) visit(ctx->exprLvl0(0));
+		exprRMember = (Expression*) visit(ctx->exprLvl0(1));
 
 		return (Expression*) new SupOuEgalite(exprGMember,exprRMember);
 	}
@@ -229,8 +230,8 @@ public:
 	      Expression* exprGMember;
 		Expression* exprRMember;
 		  
-		exprGMember = (Expression*) visit(ctx->expr(0));
-		exprRMember = (Expression*) visit(ctx->expr(1));
+		exprGMember = (Expression*) visit(ctx->exprLvl0(0));
+		exprRMember = (Expression*) visit(ctx->exprLvl0(1));
 
 		return (Expression*) new InfOuEgalite(exprGMember,exprRMember);
 	}
@@ -239,8 +240,8 @@ public:
 		Expression* exprGMember;
 		Expression* exprRMember;
 		  
-		exprGMember = (Expression*) visit(ctx->expr(0));
-		exprRMember = (Expression*) visit(ctx->expr(1));
+		exprGMember = (Expression*) visit(ctx->exprLvl0(0));
+		exprRMember = (Expression*) visit(ctx->exprLvl0(1));
 
 		return (Expression*) new Difference(exprGMember,exprRMember);
 	}
@@ -272,5 +273,24 @@ public:
 		exprMember = (Expression*) visit(ctx->exprLvl3());
 
 		return (Expression*) new Invert(exprMember);
+      }
+
+      virtual antlrcpp::Any visitEtBit(ifccParser::EtBitContext *ctx) override {
+            Expression* exprG = (Expression*) visit(ctx->expr(0));
+            Expression* exprR = (Expression*) visit(ctx->expr(1));
+
+            return (Expression*) new EtBit(exprG, exprR);
+      }
+
+      virtual antlrcpp::Any visitXorBit(ifccParser::XorBitContext *ctx) override {
+
+      }
+
+      virtual antlrcpp::Any visitOuBit(ifccParser::OuBitContext *ctx) override {
+
+      }
+
+      virtual antlrcpp::Any visitCasStandardLvl0(ifccParser::CasStandardLvl0Context *ctx) override {
+            return (Expression*)visit(ctx->exprLvl0());
       }
 };

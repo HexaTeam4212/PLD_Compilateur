@@ -15,15 +15,22 @@ instr :
 
 elseStatement : 'else' '{' (instr )* '}';
 
-expr : 
- expr '+' expr    #addition
-| exprLvl1        #casStandardLvl1
-| expr '==' expr  #egalite
-| expr '>' expr   #superiorite
-| expr '<' expr   #inferiorite
-| expr '!=' expr  #difference
-| expr '>=' expr  #supOuEgalite
-| expr '<=' expr  #infOuEgalite
+expr :
+  expr '&' expr  #EtBit
+| expr '^' expr  #XorBit
+| expr '|' expr  #OuBit
+| exprLvl0       #casStandardLvl0
+;
+
+exprLvl0 : 
+  exprLvl0 '+' exprLvl0   #addition
+| exprLvl1                #casStandardLvl1
+| exprLvl0 '==' exprLvl0  #egalite
+| exprLvl0 '>' exprLvl0   #superiorite
+| exprLvl0 '<' exprLvl0   #inferiorite
+| exprLvl0 '!=' exprLvl0  #difference
+| exprLvl0 '>=' exprLvl0  #supOuEgalite
+| exprLvl0 '<=' exprLvl0  #infOuEgalite
 ;
 
 exprLvl1 :

@@ -89,6 +89,12 @@ void IRInstr::gen_asm(std::ostream &o) {
             o << "\tnegq %rax" << std::endl;
             o << "\tmovq %rax, -" + params.at(0) + "(%rbp)" << std::endl;
             break;
+
+      case andbit:
+            o << "\tmovq -" + params.at(0) + "(%rbp), %rax" << std::endl;
+            o << "\tandq -" + params.at(1) + "(%rbp), %rax" << std::endl;
+            o << "\tmovq %rax, -" + params.at(2) + "(%rbp)" << std::endl;
+            break;
             
       default:
             break;

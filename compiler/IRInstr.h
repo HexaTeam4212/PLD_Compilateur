@@ -41,7 +41,8 @@ class IRInstr {
 		div,
 		compare,
 		non,
-		invert
+		invert,
+		andbit
 	} Operation;
 
 	//  Constructors
