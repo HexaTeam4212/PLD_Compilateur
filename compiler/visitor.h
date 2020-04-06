@@ -146,6 +146,10 @@ public:
             return (Expression*)visit(ctx->exprLvl2());
       }
 
+      virtual antlrcpp::Any visitCasStandardLvl3(ifccParser::CasStandardLvl3Context *ctx) override {
+            return (Expression*)visit(ctx->exprLvl3());
+      }
+
       virtual antlrcpp::Any visitParenthese(ifccParser::ParentheseContext *ctx) override {
             return (Expression*)visit(ctx->expr());
       }
@@ -241,7 +245,7 @@ public:
       virtual antlrcpp::Any visitNot(ifccParser::NotContext *ctx) override {
 		Expression* exprMember;
 		  
-		exprMember = (Expression*) visit(ctx->expr());
+		exprMember = (Expression*) visit(ctx->exprLvl3());
 
 		return (Expression*) new Not(exprMember);
 	}
