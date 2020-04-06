@@ -6,9 +6,11 @@ type : INTEGER #integer
 ;
 
 instr : 
-  'return' expr ';'                                     #return
-| type NAME (',' NAME)* ';'                             #declaration
-| NAME '=' expr ';'                                     #affectation
+  'return' expr ';'           #return
+| type NAME (',' NAME)* ';'   #declaration
+| NAME '=' expr ';'           #affectation
+| NAME '=' NAME '(' ( | NAME  | NAME ',' NAME | NAME  ',' NAME ',' NAME |NAME  ','  NAME  ',' NAME ',' NAME | NAME  ',' NAME  ','  NAME  ',' NAME ',' NAME | NAME ',' NAME  ',' NAME  ','  NAME  ',' NAME ',' NAME  ) ')' ';'	  #calling
+| NAME '(' ( | NAME  | NAME ',' NAME | NAME  ',' NAME ',' NAME |NAME  ','  NAME  ',' NAME ',' NAME | NAME  ',' NAME  ','  NAME  ',' NAME ',' NAME | NAME ',' NAME  ',' NAME  ','  NAME  ',' NAME ',' NAME  ) ')' ';'	  #calling2
 | 'if' '(' expr ')' '{' (instr )* '}' (elseStatement )? #ifstatement
 | 'while' '(' expr ')' '{' (instr )* '}' #whilestatement
 ;
@@ -52,7 +54,7 @@ exprLvl3 :
 | NAME                 #var
 ;
 
-definitionFunction : type NAME '(' ')' '{' (instr )* '}';
+definitionFunction : type NAME '('( | type NAME  | type NAME ',' type NAME | type NAME  ',' type NAME ',' type NAME | type NAME  ',' type NAME  ',' type NAME ',' type NAME | type NAME  ',' type NAME  ',' type NAME  ',' type NAME ',' type NAME | type NAME ',' type NAME  ',' type NAME  ','  type NAME  ',' type NAME ',' type NAME  ) ')' '{' (instr )* '}';
 
 INTEGER : 'int' ;
 NAME : [a-zA-Z]+[a-zA-Z0-9]* ;

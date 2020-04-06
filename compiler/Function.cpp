@@ -8,14 +8,16 @@
 //
 
 #include "Function.h"
+#include "CFG.h"
 
-Function::Function()
+Function::Function(std::string returnType, std::string name, std::vector<ExprVariable*> arguments):
+returnType(returnType), name(name), arguments(arguments)
 {}
 
-Function::~Function() {
-      for (Instruction* instrPTR : instructions) {
-            delete instrPTR;
-      }
+Function::~Function() { 
+	for (Instruction* instrPTR : instructions) {
+		delete instrPTR;
+	}
 }
 
 void Function::setName(std::string _name) {
@@ -28,6 +30,9 @@ void Function::setReturnType(std::string _returnType) {
 
 void Function::setInstructions(std::vector<Instruction*> _vectInstr) {
       this->instructions = _vectInstr;
+}
+std::string Function::buildIR(CFG *cfg) {
+	return "";
 }
 
 void Function::printFunction(std::ostream &o, int shift) {

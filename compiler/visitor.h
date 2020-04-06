@@ -25,6 +25,7 @@
 #include "Multiplication.h"
 #include "Soustraction.h"
 #include "Division.h"
+#include "Appel.h"
 #include "IfInstr.h"
 #include "Egalite.h"
 #include "Superiorite.h"
@@ -38,7 +39,6 @@
 #include "EtBit.h"
 #include "XorBit.h"
 #include "OuBit.h"
-
 
 class Visitor : public ifccVisitor {
 
@@ -56,20 +56,55 @@ public:
       }
 
       virtual antlrcpp::Any visitDefinitionFunction(ifccParser::DefinitionFunctionContext *ctx) override {
-            Function* function = new Function();
-            function->setReturnType(visit(ctx->type()));
-            function->setName(ctx->NAME()->getText());
-            //to add in the future : parameters parsing
+		  std::string returnType = visit(ctx->type(0));
+		  std::string functionName =ctx->NAME(0)->getText();
+		  //parameters parsing
+		  std::vector<ExprVariable*> varArgument;
+		  std::vector<std::string> varType;
 
-            //Handle instructions of functions
-            std::vector<Instruction*> instructions;
-            for(int i = 0; i < ctx->instr().size(); i++) {
-                  instructions.push_back((Instruction*)visit(ctx->instr(i)));
-            }
-            function->setInstructions(instructions);
+		  for (int i = 1; i < ctx->NAME().size(); i++) {
+			  ExprVariable* newArgument = new ExprVariable(ctx->NAME().at(i)->getText());
+			  std::string type = visit(ctx->type().at(i));
+			  varArgument.push_back(newArgument);
+			  varType.push_back(type);
+		  }
+		  //Handle instructions of functions
+		  Function* function = new Function(returnType, functionName, varArgument);
+		  std::vector<Instruction*> instructions;
+		  Instruction* argInstr = (Instruction*) new DeclarationArg(varArgument, varType);
 
+		  instructions.push_back(argInstr);
+
+		  for (int i = 0; i < ctx->instr().size(); i++) {
+			  instructions.push_back((Instruction*)visit(ctx->instr(i)));
+		  }
+		  function->setInstructions(instructions); 
             return function;
       }
+	  
+	  virtual antlrcpp::Any visitCalling(ifccParser::CallingContext *ctx) override {
+		  std::string varName =  ctx->NAME(0)->getText();
+		  std::string functionName = ctx->NAME(1)->getText();
+		  std::vector<ExprVariable*> varArgumentAppel;
+		  for (int i = 2; i < ctx->NAME().size(); i++) {
+			  ExprVariable* newArgument = new ExprVariable(ctx->NAME().at(i)->getText());
+			  varArgumentAppel.push_back(newArgument);
+		  }
+		  return (Instruction*) new Appel(functionName,varName,  varArgumentAppel,true);
+
+	  }
+
+	  virtual antlrcpp::Any visitCalling2(ifccParser::Calling2Context *ctx) override {
+		  std::string functionName = ctx->NAME(0)->getText();
+		  std::string varName;
+		  std::vector<ExprVariable*> varArgumentAppel;
+		  for (int i = 1; i < ctx->NAME().size(); i++) {
+			  ExprVariable* newArgument = new ExprVariable(ctx->NAME().at(i)->getText());
+			  varArgumentAppel.push_back(newArgument);
+		  }
+		  return (Instruction*) new Appel(functionName, varName,  varArgumentAppel,false);
+
+	  }
 
       virtual antlrcpp::Any visitReturn(ifccParser::ReturnContext *ctx) override {
             return (Instruction*) new ReturnInstr((Expression*)visit(ctx->expr()));
@@ -82,7 +117,7 @@ public:
       virtual antlrcpp::Any visitConst(ifccParser::ConstContext *ctx) override {
             return (Expression*) new ExprConstante(ctx->CONST()->getText());
       }
- 
+	
       virtual antlrcpp::Any visitVar(ifccParser::VarContext *ctx) override {
             return (Expression*) new ExprVariable(ctx->NAME()->getText());
       }

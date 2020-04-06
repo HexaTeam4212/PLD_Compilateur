@@ -12,10 +12,13 @@
 #include <iostream>
 #include <fstream>
 
+int CFG::nextBBnumber = 0;
+std::map<std::string, Function*> CFG::mapFunction = {};
+
 CFG::CFG(Function* ast)
 : ast(ast)
 {
-      nextBBnumber = 0;
+	add_Function(ast);
       nextTempVarNumber = 1;
       initSymbolTable();
       BasicBlock* prologue = gen_prologue(ast->getName());
@@ -24,6 +27,7 @@ CFG::CFG(Function* ast)
       add_basicblock(base);
       BasicBlock* epilogue = gen_epilogue(ast->getName());
       prologue->exit_true = base;
+	  
       base->exit_true = epilogue;
       current_bb = base;
       CFGEnd = epilogue;
@@ -31,6 +35,12 @@ CFG::CFG(Function* ast)
       for(auto instr : ast->getInstructions()) {
             instr->buildIR(this);
       }
+	  
+      std::vector<std::string> params;
+      params.push_back(std::to_string(sizeAllocated));
+      prologue->add_IRInstr(IRInstr::Operation::jpdeb, params);
+      epilogue= gen_epilogue(ast->getName());
+      base->exit_true = epilogue;
 
       add_basicblock(epilogue);
 }
@@ -53,8 +63,8 @@ std::string CFG::new_BB_name() {
 }
 
 BasicBlock* CFG::gen_prologue(std::string functionName) {
-      BasicBlock* prologue = new BasicBlock(this, functionName);
-      
+
+	BasicBlock* prologue = new BasicBlock(this, functionName);
       std::vector<std::string> paramsPushRbp;
       paramsPushRbp.push_back("%rbp");
       prologue->add_IRInstr(IRInstr::Operation::push, paramsPushRbp);
@@ -69,6 +79,11 @@ BasicBlock* CFG::gen_prologue(std::string functionName) {
 
 BasicBlock* CFG::gen_epilogue(std::string functionName) {
       BasicBlock* epilogue = new BasicBlock(this, "end"+functionName);
+
+	  
+	  std::vector<std::string> params;
+	  params.push_back(std::to_string(sizeAllocated));
+	  epilogue->add_IRInstr(IRInstr::Operation::jpfin, params);
 
       std::vector<std::string> paramsPopRbp;
       paramsPopRbp.push_back("%rbp");
@@ -94,6 +109,10 @@ IRVariable* CFG::getVariable(std::string nomVar) {
       return symbolTable.at(nomVar);
 }
 
+Function* CFG::getFunction(std::string nomFunction) {
+	return mapFunction.at(nomFunction);
+}
+
 /**
  * Next, allocate local variables by making space on the stack. Recall, the stack grows down, 
  * so to make space on the top of the stack, the stack pointer should be decremented. 
@@ -103,29 +122,48 @@ IRVariable* CFG::getVariable(std::string nomVar) {
  * As with parameters, local variables will be located at known offsets from the base pointer.
  */
 // Here we used 64 bits integer so offset is 8 bytes instead of 4
-int CFG::initSymbolTable() {
-      int sizeAllocate = 0;
+int CFG::initTableVariable() {
+	int sizeAllocate = 0;
 
-      std::vector<Instruction*> instructions = ast->getInstructions();
-      for(Instruction* instr : instructions) {
+	std::vector<Instruction*> instructions = ast->getInstructions();
+	for (Instruction* instr : instructions) {
 
-            //check if current instruction is a declaration
-            if(dynamic_cast<Declaration*>(instr)) {
-                  Declaration* dec = (Declaration*)instr;
-                  Type type;
-                  
-                  if(dec->getType() == "int"){ type = Type::int64;}
+		//check if current instruction is a declaration
+		if (dynamic_cast<Declaration*>(instr)) {
+			Declaration* dec = (Declaration*)instr;
+			Type type;
 
-                  for(ExprVariable* exprVar : dec->getVarsDeclared()) {
-                        sizeAllocate += getOffsetBaseOnType(type);
-                        IRVariable *var = new IRVariable(exprVar->getName(), type, sizeAllocate);
-                        this->symbolTable.insert(std::pair<std::string, IRVariable*>(exprVar->getName(), var));
-                  }
-            }
-            else {
-                  break; //all declaration are put before any other instructions
-            }
-      }
+			if (dec->getType() == "int") { type = Type::int64; }
+
+			for (ExprVariable* exprVar : dec->getVarsDeclared()) {
+				sizeAllocate += getOffsetBaseOnType(type);
+				IRVariable *var = new IRVariable(exprVar->getName(), type, sizeAllocate);
+				this->mapVariable.insert(std::pair<std::string, IRVariable*>(exprVar->getName(), var));
+			}
+		}
+		else if (dynamic_cast<DeclarationArg*>(instr)) {
+
+			DeclarationArg* decArg = (DeclarationArg*)instr;
+			Type type;
+			std::vector<std::string> varsType=decArg->getVarsType();
+			std::vector<std::string>::iterator it= varsType.begin();
+			type = Type::int64;
+
+			for (ExprVariable* exprVar : decArg->getVarsDeclared()) {
+				if (*it == "int") { type = Type::int64; }
+				sizeAllocate += getOffsetBaseOnType(type);
+				IRVariable *var = new IRVariable(exprVar->getName(), type, sizeAllocate);
+				this->mapVariable.insert(std::pair<std::string, IRVariable*>(exprVar->getName(), var));
+				if (it != varsType.end()) {
+					++it;
+				}
+			}
+		}
+		else
+		{
+			break; //all declaration are put before any other instructions
+		}
+	}
 
       this->sizeAllocated = sizeAllocate;
 
@@ -154,6 +192,11 @@ std::string CFG::create_new_tempvar(Type type) {
       nextTempVarNumber++;
 
       return varName;
+}
+
+std::string CFG::add_Function(Function* function) {
+	mapFunction.insert(std::pair<std::string, Function*>(function->getName(), function));
+	return function->getName();
 }
 
 void CFG::add_basicblock(BasicBlock* newBB) {
