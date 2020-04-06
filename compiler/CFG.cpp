@@ -152,7 +152,6 @@ int CFG::initTableVariable() {
 			Type type;
 			std::vector<std::string> varsType=decArg->getVarsType();
 			std::vector<std::string>::iterator it= varsType.begin();
-
 			type = Type::int64;
 
 			for (ExprVariable* exprVar : decArg->getVarsDeclared()) {

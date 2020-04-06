@@ -42,7 +42,7 @@ std::string DeclarationArg::buildIR(CFG* cfg) {
 }
 
 void DeclarationArg::printInstruction(std::ostream &o) {
-      o << "\t\tDeclaration of " << varsDeclared.size() << " variables" << std::endl;
+      o << "\t\tDeclaration of Arguments " << varsDeclared.size() << " variables" << std::endl;
       for(int i = 0; i < varsDeclared.size(); i++) {
             o << "\t\t\t";
             varsDeclared.at(i)->printInstruction(o);
