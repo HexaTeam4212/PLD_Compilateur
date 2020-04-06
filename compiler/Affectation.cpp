@@ -20,6 +20,12 @@ Affectation::~Affectation() {
 std::string Affectation::buildIR(CFG* cfg) {
       IRVariable* varDest = cfg->getVariable(varName);
       std::string exprVarName = expr->buildIR(cfg);
+
+      if(expr->getIsBooleanExpr()) {
+            std::cerr << "Warning : affectation of boolean expression is not handled !" << std::endl;
+            exit(-76);
+      }
+
       IRVariable* varOrigin = cfg->getVariable(exprVarName);
 
       std::vector<std::string> params;

@@ -32,7 +32,9 @@
 #include "SupOuEgalite.h"
 #include "InfOuEgalite.h"
 #include "Difference.h"
+#include "Not.h"
 #include "WhileInstr.h"
+
 
 class Visitor : public ifccVisitor {
 
@@ -137,11 +139,17 @@ public:
 
 		return (Expression*) new Division(exprGDiv, exprRDiv);
 	}
+
 	virtual antlrcpp::Any visitCasStandardLvl1(ifccParser::CasStandardLvl1Context *ctx) override {
 		return (Expression*)visit(ctx->exprLvl1());
 	}
+      
       virtual antlrcpp::Any visitCasStandardLvl2(ifccParser::CasStandardLvl2Context *ctx) override {
             return (Expression*)visit(ctx->exprLvl2());
+      }
+
+      virtual antlrcpp::Any visitCasStandardLvl3(ifccParser::CasStandardLvl3Context *ctx) override {
+            return (Expression*)visit(ctx->exprLvl3());
       }
 
       virtual antlrcpp::Any visitParenthese(ifccParser::ParentheseContext *ctx) override {
@@ -234,6 +242,15 @@ public:
 		exprRMember = (Expression*) visit(ctx->expr(1));
 
 		return (Expression*) new Difference(exprGMember,exprRMember);
+	}
+
+
+      virtual antlrcpp::Any visitNot(ifccParser::NotContext *ctx) override {
+		Expression* exprMember;
+		  
+		exprMember = (Expression*) visit(ctx->exprLvl3());
+
+		return (Expression*) new Not(exprMember);
 	}
 
       virtual antlrcpp::Any visitWhilestatement(ifccParser::WhilestatementContext *ctx) override {
