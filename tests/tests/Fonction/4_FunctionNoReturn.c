@@ -1,4 +1,4 @@
-void fonction1(int a, int b, int c, int d, int e, int f) {
+int fonction1(int a, int b, int c, int d, int e, int f) {
 	a=2;
     b=3;
     c=4;
