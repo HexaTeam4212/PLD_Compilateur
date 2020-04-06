@@ -36,6 +36,8 @@
 #include "WhileInstr.h"
 #include "Invert.h"
 #include "EtBit.h"
+#include "XorBit.h"
+#include "OuBit.h"
 
 
 class Visitor : public ifccVisitor {
@@ -283,11 +285,17 @@ public:
       }
 
       virtual antlrcpp::Any visitXorBit(ifccParser::XorBitContext *ctx) override {
+            Expression* exprG = (Expression*) visit(ctx->expr(0));
+            Expression* exprR = (Expression*) visit(ctx->expr(1));
 
+            return (Expression*) new XorBit(exprG, exprR);
       }
 
       virtual antlrcpp::Any visitOuBit(ifccParser::OuBitContext *ctx) override {
+            Expression* exprG = (Expression*) visit(ctx->expr(0));
+            Expression* exprR = (Expression*) visit(ctx->expr(1));
 
+            return (Expression*) new OuBit(exprG, exprR);
       }
 
       virtual antlrcpp::Any visitCasStandardLvl0(ifccParser::CasStandardLvl0Context *ctx) override {

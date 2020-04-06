@@ -95,6 +95,18 @@ void IRInstr::gen_asm(std::ostream &o) {
             o << "\tandq -" + params.at(1) + "(%rbp), %rax" << std::endl;
             o << "\tmovq %rax, -" + params.at(2) + "(%rbp)" << std::endl;
             break;
+
+      case xorbit:
+            o << "\tmovq -" + params.at(0) + "(%rbp), %rax" << std::endl;
+            o << "\txorq -" + params.at(1) + "(%rbp), %rax" << std::endl;
+            o << "\tmovq %rax, -" + params.at(2) + "(%rbp)" << std::endl;
+            break;
+
+      case orbit:
+            o << "\tmovq -" + params.at(0) + "(%rbp), %rax" << std::endl;
+            o << "\torq -" + params.at(1) + "(%rbp), %rax" << std::endl;
+            o << "\tmovq %rax, -" + params.at(2) + "(%rbp)" << std::endl;
+            break;
             
       default:
             break;

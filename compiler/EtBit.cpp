@@ -27,9 +27,14 @@ std::string EtBit::buildIR(CFG* cfg) {
 }
 
 void EtBit::printInstruction(std::ostream &o, int shift) {
-
+      o << "Bitwise AND operation between two expressions :" << std::endl;
+      o << std::string(shift+1, '\t') + "Expr 1 : ";
+	exprGEt->printInstruction(o, shift+1);
+	o << std::string(shift+1, '\t') + "Expr 2 : ";
+	exprREt->printInstruction(o, shift+1);
 }
 
 void EtBit::checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) {
-
+      exprGEt->checkVariableUsage(mapVariableNames, functionName);
+      exprREt->checkVariableUsage(mapVariableNames, functionName);
 }

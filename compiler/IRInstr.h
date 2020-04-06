@@ -42,7 +42,9 @@ class IRInstr {
 		compare,
 		non,
 		invert,
-		andbit
+		andbit,
+		xorbit,
+		orbit
 	} Operation;
 
 	//  Constructors
