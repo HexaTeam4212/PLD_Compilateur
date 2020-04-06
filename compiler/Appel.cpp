@@ -12,15 +12,14 @@
 
 std::vector<std::string> Appel::registres = { "%rdi","%rsi","%rdx","%rcx","%r8","%r9" };
 
-Appel::Appel(std::string nomFunction, std::string nomVar, std::vector<ExprVariable*> argumentsAppel) :
-	nomFunction(nomFunction),nomVar(nomVar), argumentsAppel(argumentsAppel)
+Appel::Appel(std::string nomFunction, std::string nomVar, std::vector<ExprVariable*> argumentsAppel, bool hasVar) :
+	nomFunction(nomFunction),nomVar(nomVar), argumentsAppel(argumentsAppel), hasVar(hasVar)
 {}
 
 Appel::~Appel() {
 }
 
 std::string Appel::buildIR(CFG* cfg) {
-	IRVariable* laVar = cfg->getVariable(nomVar);
 
 	// when there is function arguments
 	//we move them into the corresponding register
@@ -41,7 +40,6 @@ std::string Appel::buildIR(CFG* cfg) {
 		}
 
 	}
-	
 	// function call
 	std::vector<std::string> params1;
 	params1.push_back("0");
@@ -50,11 +48,16 @@ std::string Appel::buildIR(CFG* cfg) {
 	params.push_back(nomFunction);
 	cfg->current_bb->add_IRInstr(IRInstr::Operation::call, params);
 
-	// c'est ici si on veut enlever le retour
-	std::vector<std::string> params2;
-	params2.push_back("%rax");
-	params2.push_back("-" + std::to_string(laVar->getOffset()) + "(%rbp)");
-	cfg->current_bb->add_IRInstr(IRInstr::Operation::movq, params2);
+	// if there is a variable to put the return value
+	if (hasVar)
+	{
+		IRVariable* laVar = cfg->getVariable(nomVar);
+		std::vector<std::string> params2;
+		params2.push_back("%rax");
+		params2.push_back("-" + std::to_string(laVar->getOffset()) + "(%rbp)");
+		cfg->current_bb->add_IRInstr(IRInstr::Operation::movq, params2);
+	}
+
 
 	return "";
 }

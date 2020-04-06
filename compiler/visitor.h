@@ -70,14 +70,26 @@ public:
       }
 	  
 	  virtual antlrcpp::Any visitCalling(ifccParser::CallingContext *ctx) override {
-		  std::string functionName = ctx->NAME(0)->getText();
-		  std::string varName =  ctx->NAME(1)->getText();
+		  std::string varName =  ctx->NAME(0)->getText();
+		  std::string functionName = ctx->NAME(1)->getText();
 		  std::vector<ExprVariable*> varArgumentAppel;
 		  for (int i = 2; i < ctx->NAME().size(); i++) {
 			  ExprVariable* newArgument = new ExprVariable(ctx->NAME().at(i)->getText());
 			  varArgumentAppel.push_back(newArgument);
 		  }
-		  return (Instruction*) new Appel(varName, functionName, varArgumentAppel);
+		  return (Instruction*) new Appel(functionName,varName,  varArgumentAppel,true);
+
+	  }
+
+	  virtual antlrcpp::Any visitCalling2(ifccParser::Calling2Context *ctx) override {
+		  std::string functionName = ctx->NAME(0)->getText();
+		  std::string varName;
+		  std::vector<ExprVariable*> varArgumentAppel;
+		  for (int i = 1; i < ctx->NAME().size(); i++) {
+			  ExprVariable* newArgument = new ExprVariable(ctx->NAME().at(i)->getText());
+			  varArgumentAppel.push_back(newArgument);
+		  }
+		  return (Instruction*) new Appel(functionName, varName,  varArgumentAppel,false);
 
 	  }
 

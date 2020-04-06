@@ -10,6 +10,8 @@ instr :
 | type NAME (',' NAME)* ';'   #declaration
 | NAME '=' expr ';'           #affectation
 | NAME '=' NAME '(' ( | NAME  | NAME ',' NAME | NAME  ',' NAME ',' NAME |NAME  ','  NAME  ',' NAME ',' NAME | NAME  ',' NAME  ','  NAME  ',' NAME ',' NAME | NAME ',' NAME  ',' NAME  ','  NAME  ',' NAME ',' NAME  ) ')' ';'	  #calling
+| NAME '(' ( | NAME  | NAME ',' NAME | NAME  ',' NAME ',' NAME |NAME  ','  NAME  ',' NAME ',' NAME | NAME  ',' NAME  ','  NAME  ',' NAME ',' NAME | NAME ',' NAME  ',' NAME  ','  NAME  ',' NAME ',' NAME  ) ')' ';'	  #calling2
+
 ;
 
 expr : 

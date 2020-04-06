@@ -150,14 +150,19 @@ int CFG::initTableVariable() {
 
 			DeclarationArg* decArg = (DeclarationArg*)instr;
 			Type type;
+			std::vector<std::string> varsType=decArg->getVarsType();
+			std::vector<std::string>::iterator it= varsType.begin();
 
-			std::vector<std::string> varsType;
-			
 			type = Type::int64;
+
 			for (ExprVariable* exprVar : decArg->getVarsDeclared()) {
+				if (*it == "int") { type = Type::int64; }
 				sizeAllocate += getOffsetBaseOnType(type);
 				IRVariable *var = new IRVariable(exprVar->getName(), type, sizeAllocate);
 				this->mapVariable.insert(std::pair<std::string, IRVariable*>(exprVar->getName(), var));
+				if (it != varsType.end()) {
+					++it;
+				}
 			}
 		}
 		else
