@@ -68,8 +68,8 @@ void Not::checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::
     exprMember->checkVariableUsage(mapVariableNames, functionName);
 }
 
-void Not::printInstruction(std::ostream &o) {
+void Not::printInstruction(std::ostream &o, int shift) {
 	o << "Not of an expression" << std::endl;
-	o << "\t\t\t\tExpr : ";
-	exprMember->printInstruction(o);
+	o << std::string(shift+1, '\t') + "Expr : ";
+	exprMember->printInstruction(o, shift+1);
 }
