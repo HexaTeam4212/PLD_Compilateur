@@ -11,7 +11,7 @@
 
 Program::Program() 
 {
-      mapVariableNames = new std::map<std::string, int>();
+      symbolTableNames = new std::map<std::string, int>();
 }
 
 Program::~Program() 
@@ -19,11 +19,11 @@ Program::~Program()
 
 void Program::checkFunctions() {
       for(Function* fPTR : functions) {
-            fPTR->checkVariables(mapVariableNames);
+            fPTR->checkVariables(symbolTableNames);
       }
 
       std::map<std::string, int>::iterator it;
-      for(it = mapVariableNames->begin(); it != mapVariableNames->end(); it++) {
+      for(it = symbolTableNames->begin(); it != symbolTableNames->end(); it++) {
             if(it->second == 0) {
                   std::string functionName = it->first.substr(0, it->first.find("!"));
                   std::string varName = it->first.substr(it->first.find("!")+1, it->first.size());

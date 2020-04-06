@@ -44,7 +44,7 @@ public:
       // Print the function
       void printFunction(std::ostream &o, int shift);
 
-      void checkVariables(std::map<std::string, int>* mapVariableNames);
+      void checkVariables(std::map<std::string, int>* symbolTableNames);
 
 	std::string buildIR(CFG *cfg);
 

@@ -43,7 +43,7 @@ public:
       BasicBlock* current_bb;
       BasicBlock* CFGEnd;
       
-      int initTableVariable();
+      int initSymbolTable();
       std::string create_new_tempvar(Type type);
       IRVariable* getVariable(std::string nomVar);
 
@@ -53,7 +53,7 @@ public:
 	  std::string add_Function(Function* Function);
 
 protected:
-      std::map<std::string, IRVariable*> mapVariable;
+      std::map<std::string, IRVariable*> symbolTable;
       int nextFreeSymbolIndex; 
 	static std::map<std::string, Function*> mapFunction;
       static int nextBBnumber;

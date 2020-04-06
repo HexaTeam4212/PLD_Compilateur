@@ -34,7 +34,7 @@ void EtBit::printInstruction(std::ostream &o, int shift) {
 	exprREt->printInstruction(o, shift+1);
 }
 
-void EtBit::checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) {
-      exprGEt->checkVariableUsage(mapVariableNames, functionName);
-      exprREt->checkVariableUsage(mapVariableNames, functionName);
+void EtBit::checkVariableUsage(std::map<std::string, int>* symbolTableNames, std::string functionName) {
+      exprGEt->checkVariableUsage(symbolTableNames, functionName);
+      exprREt->checkVariableUsage(symbolTableNames, functionName);
 }

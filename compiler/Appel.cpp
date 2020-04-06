@@ -70,6 +70,6 @@ void Appel::printInstruction(std::ostream &o, int shift) {
     
 }
 
-void Appel::checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) {
+void Appel::checkVariableUsage(std::map<std::string, int>* symbolTableNames, std::string functionName) {
 
 }

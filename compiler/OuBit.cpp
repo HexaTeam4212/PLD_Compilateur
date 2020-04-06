@@ -34,7 +34,7 @@ void OuBit::printInstruction(std::ostream &o, int shift) {
 	exprROu->printInstruction(o, shift+1);
 }
 
-void OuBit::checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) {
-      exprGOu->checkVariableUsage(mapVariableNames, functionName);
-      exprROu->checkVariableUsage(mapVariableNames, functionName);
+void OuBit::checkVariableUsage(std::map<std::string, int>* symbolTableNames, std::string functionName) {
+      exprGOu->checkVariableUsage(symbolTableNames, functionName);
+      exprROu->checkVariableUsage(symbolTableNames, functionName);
 }

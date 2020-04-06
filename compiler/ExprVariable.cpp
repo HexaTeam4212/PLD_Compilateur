@@ -21,9 +21,9 @@ std::string ExprVariable::buildIR(CFG *cfg) {
       return cfg->getVariable(this->name)->getName();
 }
 
-void ExprVariable::checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) {
-      auto it = mapVariableNames->find(functionName + "!" + this->name);
-      if(it == mapVariableNames->end()) {
+void ExprVariable::checkVariableUsage(std::map<std::string, int>* symbolTableNames, std::string functionName) {
+      auto it = symbolTableNames->find(functionName + "!" + this->name);
+      if(it == symbolTableNames->end()) {
             //Error use of not declared variable
             std::cerr << "Error : variable \"" + this->name + "\" in the function " + functionName + " has not been declared !" << std::endl;
             exit(6);

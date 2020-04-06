@@ -28,6 +28,6 @@ void Invert::printInstruction(std::ostream &o, int shift) {
 	exprMember->printInstruction(o, shift+1);
 }
 
-void Invert::checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) {
-      exprMember->checkVariableUsage(mapVariableNames, functionName);
+void Invert::checkVariableUsage(std::map<std::string, int>* symbolTableNames, std::string functionName) {
+      exprMember->checkVariableUsage(symbolTableNames, functionName);
 }

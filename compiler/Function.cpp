@@ -44,9 +44,9 @@ void Function::printFunction(std::ostream &o, int shift) {
       }
 }
 
-void Function::checkVariables(std::map<std::string, int>* mapVariableNames) {
-      arguments->checkVariableUsage(mapVariableNames, this->name);
+void Function::checkVariables(std::map<std::string, int>* symbolTableNames) {
+      arguments->checkVariableUsage(symbolTableNames, this->name);
       for(int i = 0; i < instructions.size(); i++) {
-            instructions.at(i)->checkVariableUsage(mapVariableNames, this->name);
+            instructions.at(i)->checkVariableUsage(symbolTableNames, this->name);
       }
 }

@@ -27,9 +27,9 @@ std::string SupOuEgalite::buildIR(CFG* cfg) {
 	return jumpCmd;
 }
 
-void SupOuEgalite::checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) {
-    exprRMember->checkVariableUsage(mapVariableNames, functionName);
-    exprGMember->checkVariableUsage(mapVariableNames, functionName);
+void SupOuEgalite::checkVariableUsage(std::map<std::string, int>* symbolTableNames, std::string functionName) {
+    exprRMember->checkVariableUsage(symbolTableNames, functionName);
+    exprGMember->checkVariableUsage(symbolTableNames, functionName);
 }
 
 void SupOuEgalite::printInstruction(std::ostream &o, int shift) {

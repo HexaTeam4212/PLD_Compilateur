@@ -49,6 +49,6 @@ void DeclarationArg::printInstruction(std::ostream &o, int shift) {
       }
 }
 
-void DeclarationArg::checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) {
+void DeclarationArg::checkVariableUsage(std::map<std::string, int>* symbolTableNames, std::string functionName) {
 	
 }

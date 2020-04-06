@@ -34,7 +34,7 @@ void XorBit::printInstruction(std::ostream &o, int shift) {
 	exprRXor->printInstruction(o, shift+1);
 }
 
-void XorBit::checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) {
-      exprGXor->checkVariableUsage(mapVariableNames, functionName);
-      exprRXor->checkVariableUsage(mapVariableNames, functionName);
+void XorBit::checkVariableUsage(std::map<std::string, int>* symbolTableNames, std::string functionName) {
+      exprGXor->checkVariableUsage(symbolTableNames, functionName);
+      exprRXor->checkVariableUsage(symbolTableNames, functionName);
 }

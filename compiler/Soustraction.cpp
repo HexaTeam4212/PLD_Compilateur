@@ -35,9 +35,9 @@ std::string Soustraction::buildIR(CFG* cfg) {
 	return varReturnName->getName();
 }
 
-void Soustraction::checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) {
-	exprGDiff->checkVariableUsage(mapVariableNames, functionName);
-	exprRDiff->checkVariableUsage(mapVariableNames, functionName);
+void Soustraction::checkVariableUsage(std::map<std::string, int>* symbolTableNames, std::string functionName) {
+	exprGDiff->checkVariableUsage(symbolTableNames, functionName);
+	exprRDiff->checkVariableUsage(symbolTableNames, functionName);
 }
 
 void Soustraction::printInstruction(std::ostream &o, int shift) {

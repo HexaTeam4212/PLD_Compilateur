@@ -22,9 +22,9 @@ void ElseInstr::printInstruction(std::ostream &o, int shift) {
       }
 }
 
-void ElseInstr::checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) {
+void ElseInstr::checkVariableUsage(std::map<std::string, int>* symbolTableNames, std::string functionName) {
       for(Instruction* instrPTR : vectorInstruction) {
-            instrPTR->checkVariableUsage(mapVariableNames, functionName);
+            instrPTR->checkVariableUsage(symbolTableNames, functionName);
       }
 }
 

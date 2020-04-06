@@ -34,8 +34,8 @@ std::string ReturnInstr::buildIR(CFG *cfg) {
       return retVar->getName();
 }
 
-void ReturnInstr::checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) {
-      exprReturned->checkVariableUsage(mapVariableNames, functionName);
+void ReturnInstr::checkVariableUsage(std::map<std::string, int>* symbolTableNames, std::string functionName) {
+      exprReturned->checkVariableUsage(symbolTableNames, functionName);
 }
 
 void ReturnInstr::printInstruction(std::ostream &o, int shift) {

@@ -36,7 +36,7 @@ public:
       // Method that print the instruction
       void printInstruction(std::ostream &o, int shift) override;
 
-      virtual void checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) override;
+      virtual void checkVariableUsage(std::map<std::string, int>* symbolTableNames, std::string functionName) override;
 
 private:
 	Expression* exprGDiff;

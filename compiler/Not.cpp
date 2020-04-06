@@ -64,8 +64,8 @@ std::string Not::buildIR(CFG* cfg) {
 	return returnName;
 }
 
-void Not::checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) {
-    exprMember->checkVariableUsage(mapVariableNames, functionName);
+void Not::checkVariableUsage(std::map<std::string, int>* symbolTableNames, std::string functionName) {
+    exprMember->checkVariableUsage(symbolTableNames, functionName);
 }
 
 void Not::printInstruction(std::ostream &o, int shift) {

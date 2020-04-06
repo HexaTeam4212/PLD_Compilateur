@@ -20,7 +20,7 @@ CFG::CFG(Function* ast)
 {
 	add_Function(ast);
       nextTempVarNumber = 1;
-      initTableVariable();
+      initSymbolTable();
       BasicBlock* prologue = gen_prologue(ast->getName());
       add_basicblock(prologue);
       BasicBlock* base = new BasicBlock(this, new_BB_name());
@@ -51,7 +51,7 @@ CFG::~CFG() {
             delete bbPTR;
       }
       std::map<std::string, IRVariable*>::iterator it;
-      for(it = mapVariable.begin(); it != mapVariable.end(); it++) {
+      for(it = symbolTable.begin(); it != symbolTable.end(); it++) {
             delete it->second;
       }
 }
@@ -106,7 +106,7 @@ void CFG::gen_asm(std::ostream &o) {
 }
 
 IRVariable* CFG::getVariable(std::string nomVar) {
-      return mapVariable.at(nomVar);
+      return symbolTable.at(nomVar);
 }
 
 Function* CFG::getFunction(std::string nomFunction) {
@@ -122,7 +122,7 @@ Function* CFG::getFunction(std::string nomFunction) {
  * As with parameters, local variables will be located at known offsets from the base pointer.
  */
 // Here we used 64 bits integer so offset is 8 bytes instead of 4
-int CFG::initTableVariable() {
+int CFG::initSymbolTable() {
 	int sizeAllocate = 0;
 
 	std::vector<Instruction*> instructions = ast->getInstructions();
@@ -138,7 +138,7 @@ int CFG::initTableVariable() {
 			for (ExprVariable* exprVar : dec->getVarsDeclared()) {
 				sizeAllocate += getOffsetBaseOnType(type);
 				IRVariable *var = new IRVariable(exprVar->getName(), type, sizeAllocate);
-				this->mapVariable.insert(std::pair<std::string, IRVariable*>(exprVar->getName(), var));
+				this->symbolTable.insert(std::pair<std::string, IRVariable*>(exprVar->getName(), var));
 			}
 		}
 		else if (dynamic_cast<DeclarationArg*>(instr)) {
@@ -153,7 +153,7 @@ int CFG::initTableVariable() {
 				if (*it == "int") { type = Type::int64; }
 				sizeAllocate += getOffsetBaseOnType(type);
 				IRVariable *var = new IRVariable(exprVar->getName(), type, sizeAllocate);
-				this->mapVariable.insert(std::pair<std::string, IRVariable*>(exprVar->getName(), var));
+				this->symbolTable.insert(std::pair<std::string, IRVariable*>(exprVar->getName(), var));
 				if (it != varsType.end()) {
 					++it;
 				}
@@ -188,7 +188,7 @@ int CFG::getOffsetBaseOnType(Type type) {
 std::string CFG::create_new_tempvar(Type type) {
       std::string varName = "!tmp" + std::to_string(nextTempVarNumber);
       this->sizeAllocated += getOffsetBaseOnType(type);
-      mapVariable.insert(std::pair<std::string, IRVariable*>(varName, new IRVariable(varName, type, this->sizeAllocated)));
+      symbolTable.insert(std::pair<std::string, IRVariable*>(varName, new IRVariable(varName, type, this->sizeAllocated)));
       nextTempVarNumber++;
 
       return varName;

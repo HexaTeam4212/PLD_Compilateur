@@ -27,9 +27,9 @@ std::string Superiorite::buildIR(CFG* cfg) {
 	return jumpCmd;
 }
 
-void Superiorite::checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) {
-    exprRMember->checkVariableUsage(mapVariableNames, functionName);
-    exprGMember->checkVariableUsage(mapVariableNames, functionName);
+void Superiorite::checkVariableUsage(std::map<std::string, int>* symbolTableNames, std::string functionName) {
+    exprRMember->checkVariableUsage(symbolTableNames, functionName);
+    exprGMember->checkVariableUsage(symbolTableNames, functionName);
 }
 
 void Superiorite::printInstruction(std::ostream &o, int shift) {

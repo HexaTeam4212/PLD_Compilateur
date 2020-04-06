@@ -27,9 +27,9 @@ std::string Difference::buildIR(CFG* cfg) {
 	return jumpCmd;
 }
 
-void Difference::checkVariableUsage(std::map<std::string, int>* mapVariableNames, std::string functionName) {
-    exprRMember->checkVariableUsage(mapVariableNames, functionName);
-    exprGMember->checkVariableUsage(mapVariableNames, functionName);
+void Difference::checkVariableUsage(std::map<std::string, int>* symbolTableNames, std::string functionName) {
+    exprRMember->checkVariableUsage(symbolTableNames, functionName);
+    exprGMember->checkVariableUsage(symbolTableNames, functionName);
 }
 
 void Difference::printInstruction(std::ostream &o, int shift) {
