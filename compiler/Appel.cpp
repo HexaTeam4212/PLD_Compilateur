@@ -17,6 +17,9 @@ Appel::Appel(std::string nomFunction, std::string nomVar, std::vector<ExprVariab
 {}
 
 Appel::~Appel() {
+	for (ExprVariable* argPTR : argumentsAppel) {
+		delete argPTR;
+	}
 }
 
 std::string Appel::buildIR(CFG* cfg) {

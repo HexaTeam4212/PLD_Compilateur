@@ -14,10 +14,10 @@ Function::Function(std::string returnType, std::string name, std::vector<ExprVar
 returnType(returnType), name(name), arguments(arguments)
 {}
 
-Function::~Function() {
-      for (Instruction* instrPTR : instructions) {
-            delete instrPTR;
-      }
+Function::~Function() { 
+	for (Instruction* instrPTR : instructions) {
+		delete instrPTR;
+	}
 }
 
 void Function::setName(std::string _name) {
