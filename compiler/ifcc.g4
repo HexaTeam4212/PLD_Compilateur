@@ -23,6 +23,7 @@ expr :
 | expr '!=' expr #difference
 | expr '>=' expr #supOuEgalite
 | expr '<=' expr #infOuEgalite
+| '!' expr #not
 ;
 
 exprLvl1 :
