@@ -3,8 +3,12 @@
 WhileInstr::WhileInstr()
 {}
 
-WhileInstr::~WhileInstr()
-{}
+WhileInstr::~WhileInstr() {
+      delete condition;
+      for(Instruction* instrPTR : vectorInstruction) {
+            delete instrPTR;
+      }
+}
 
 std::string WhileInstr::buildIR(CFG *cfg) {
       // Create new block which will be used to jump to at the end of while loop

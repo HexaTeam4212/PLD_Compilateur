@@ -4,8 +4,10 @@ XorBit::XorBit(Expression* exprGXor, Expression* exprRXor)
 : exprGXor(exprGXor), exprRXor(exprRXor)
 {}
 
-XorBit::~XorBit()
-{}
+XorBit::~XorBit() {
+      delete exprGXor;
+      delete exprRXor;
+}
 
 std::string XorBit::buildIR(CFG* cfg) {
       std::string exprGName = exprGXor->buildIR(cfg);

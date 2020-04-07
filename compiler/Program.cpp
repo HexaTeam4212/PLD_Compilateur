@@ -14,8 +14,9 @@ Program::Program()
       symbolTableNames = new std::map<std::string, int>();
 }
 
-Program::~Program() 
-{}
+Program::~Program() {
+      delete symbolTableNames;
+}
 
 void Program::checkFunctions() {
       for(Function* fPTR : functions) {

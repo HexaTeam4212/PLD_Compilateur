@@ -18,6 +18,7 @@ Function::~Function() {
 	for (Instruction* instrPTR : instructions) {
 		delete instrPTR;
 	}
+      delete arguments;
 }
 
 void Function::setName(std::string _name) {

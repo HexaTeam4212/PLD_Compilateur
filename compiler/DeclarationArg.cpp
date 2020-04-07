@@ -16,11 +16,7 @@ DeclarationArg::DeclarationArg(std::vector<ExprVariable*> varsDeclared, std::vec
 : varsDeclared(varsDeclared), varsType(varsType)
 {}
 
-DeclarationArg::~DeclarationArg() {
-      for (ExprVariable* varPTR : varsDeclared) {
-            delete varPTR;
-      }
-}
+DeclarationArg::~DeclarationArg() {}
 
 std::string DeclarationArg::buildIR(CFG* cfg) {
 

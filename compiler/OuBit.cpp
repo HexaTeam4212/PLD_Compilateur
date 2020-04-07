@@ -4,8 +4,10 @@ OuBit::OuBit(Expression* exprGOu, Expression* exprROu)
 : exprGOu(exprGOu), exprROu(exprROu)
 {}
 
-OuBit::~OuBit()
-{}
+OuBit::~OuBit() {
+      delete exprGOu;
+      delete exprROu;
+}
 
 std::string OuBit::buildIR(CFG* cfg) {
       std::string exprGName = exprGOu->buildIR(cfg);

@@ -39,6 +39,8 @@ CFG::CFG(Function* ast)
       std::vector<std::string> params;
       params.push_back(std::to_string(sizeAllocated));
       prologue->add_IRInstr(IRInstr::Operation::jpdeb, params);
+
+      delete epilogue;
       epilogue = gen_epilogue(ast->getName());
       current_bb->exit_true = epilogue;
 

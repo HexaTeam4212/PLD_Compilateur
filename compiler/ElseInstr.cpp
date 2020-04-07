@@ -3,8 +3,11 @@
 ElseInstr::ElseInstr() 
 {}
 
-ElseInstr::~ElseInstr() 
-{}
+ElseInstr::~ElseInstr() {
+      for(Instruction* instrPTR : vectorInstruction) {
+            delete instrPTR;
+      }
+}
 
 std::string ElseInstr::buildIR(CFG *cfg) {
 	for(Instruction* instr : vectorInstruction) {

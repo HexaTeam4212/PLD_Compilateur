@@ -4,8 +4,9 @@ Invert::Invert(Expression* exprMember)
 : exprMember(exprMember)
 {}
 
-Invert::~Invert()
-{}
+Invert::~Invert() {
+      delete exprMember;
+}
 
 std::string Invert::buildIR(CFG* cfg) {
       std::string returnName = cfg->create_new_tempvar(Type::int64);

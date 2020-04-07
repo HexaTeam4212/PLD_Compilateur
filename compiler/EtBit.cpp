@@ -4,8 +4,10 @@ EtBit::EtBit(Expression* exprGEt, Expression* exprREt)
 : exprGEt(exprGEt), exprREt(exprREt)
 {}
 
-EtBit::~EtBit()
-{}
+EtBit::~EtBit() {
+      delete exprGEt;
+      delete exprREt;
+}
 
 std::string EtBit::buildIR(CFG* cfg) {
       std::string exprGName = exprGEt->buildIR(cfg);

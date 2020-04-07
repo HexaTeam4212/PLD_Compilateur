@@ -4,8 +4,13 @@ IfInstr::IfInstr()
 : elseIntruction(nullptr)
 {}
 
-IfInstr::~IfInstr()
-{}
+IfInstr::~IfInstr() {
+      delete condition;
+      delete elseIntruction;
+      for(Instruction* instrPTR : vectorInstructionIf) {
+            delete instrPTR;
+      }
+}
 
 std::string IfInstr::buildIR(CFG *cfg) {
       std::string conditionVarName = condition->buildIR(cfg);
