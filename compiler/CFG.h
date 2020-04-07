@@ -21,6 +21,7 @@
 #include "DeclarationArg.h"
 #include "Appel.h"
 #include "Affectation.h"
+#include "DeclareEtAffecte.h"
 
 /**
  * Class that represent Control flow graph

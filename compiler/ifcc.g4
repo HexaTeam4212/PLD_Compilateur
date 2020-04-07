@@ -9,6 +9,7 @@ instr :
   'return' expr ';'           #return
 | type NAME (',' NAME)* ';'   #declaration
 | NAME '=' expr ';'           #affectation
+| type NAME '=' expr ';'      #declareEtAffecte
 | NAME '=' NAME '(' ( | NAME  | NAME ',' NAME | NAME  ',' NAME ',' NAME |NAME  ','  NAME  ',' NAME ',' NAME | NAME  ',' NAME  ','  NAME  ',' NAME ',' NAME | NAME ',' NAME  ',' NAME  ','  NAME  ',' NAME ',' NAME  ) ')' ';'	  #calling
 | NAME '(' ( | NAME  | NAME ',' NAME | NAME  ',' NAME ',' NAME |NAME  ','  NAME  ',' NAME ',' NAME | NAME  ',' NAME  ','  NAME  ',' NAME ',' NAME | NAME ',' NAME  ',' NAME  ','  NAME  ',' NAME ',' NAME  ) ')' ';'	  #calling2
 | 'if' '(' expr ')' '{' (instr )* '}' (elseStatement )? #ifstatement

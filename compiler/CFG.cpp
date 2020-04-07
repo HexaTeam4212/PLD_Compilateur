@@ -161,7 +161,19 @@ int CFG::initSymbolTable() {
 				}
 			}
 		}
-		else
+            else if (dynamic_cast<DeclareEtAffecte*>(instr)) {
+                  DeclareEtAffecte* decEtAffec = (DeclareEtAffecte*) instr;
+                  Type type;
+
+                  if(decEtAffec->getDeclaration()->getType() == "int") { type = Type::int64; }
+
+                  for (ExprVariable* exprVar : decEtAffec->getDeclaration()->getVarsDeclared()) {
+                        sizeAllocate += getOffsetBaseOnType(type);
+				IRVariable *var = new IRVariable(exprVar->getName(), type, sizeAllocate);
+				this->symbolTable.insert(std::pair<std::string, IRVariable*>(exprVar->getName(), var));
+                  }
+            }
+		else 
 		{
 			break; //all declaration are put before any other instructions
 		}

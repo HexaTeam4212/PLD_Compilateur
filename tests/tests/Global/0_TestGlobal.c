@@ -1,7 +1,6 @@
 int f(int alpha, int beta) {
       int res;
-      int i;
-      i = 0;
+      int i = 0;
       while(i < 27) {
             res = res + (alpha+i) ^ (beta * 5);
             i = i + 1;

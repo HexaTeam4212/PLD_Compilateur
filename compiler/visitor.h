@@ -39,6 +39,7 @@
 #include "EtBit.h"
 #include "XorBit.h"
 #include "OuBit.h"
+#include "DeclareEtAffecte.h"
 
 class Visitor : public ifccVisitor {
 
@@ -339,4 +340,14 @@ public:
       virtual antlrcpp::Any visitCasStandardLvl0(ifccParser::CasStandardLvl0Context *ctx) override {
             return (Expression*)visit(ctx->exprLvl0());
       }
+
+	virtual antlrcpp::Any visitDeclareEtAffecte(ifccParser::DeclareEtAffecteContext *ctx) override {
+		ExprVariable* var = new ExprVariable(ctx->NAME()->getText());
+		std::vector<ExprVariable*> vars;
+		vars.push_back(var);
+		Declaration* dec = new Declaration(vars, visit(ctx->type()));
+		Affectation* affec = new Affectation(ctx->NAME()->getText(), visit(ctx->expr()));
+
+		return (Instruction*) new DeclareEtAffecte(dec, affec);
+	}
 };
