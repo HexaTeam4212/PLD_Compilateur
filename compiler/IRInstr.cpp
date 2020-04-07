@@ -19,6 +19,10 @@ void IRInstr::gen_asm(std::ostream &o) {
       case ldconst:
             o << "\tmovq $" + params.at(0) + ", -" + params.at(1) + "(%rbp)" << std::endl;
             break;
+
+	  case ldconstrax:
+		  o << "\tmovq $" + params.at(0) + ", %rax" << std::endl;
+		  break;
             
       case push:
             o << "\tpushq "+ params.at(0) << std::endl;
@@ -48,30 +52,75 @@ void IRInstr::gen_asm(std::ostream &o) {
    	case add :
             o << "\tmovq -" + params.at(0)+ "(%rbp), %rdx" << std::endl;
             o << "\tmovq -" + params.at(1)+ "(%rbp), %rax" << std::endl;
-		o << "\taddq %rdx, %rax" << std::endl;
+		        o << "\taddq %rdx, %rax" << std::endl;
             o << "\tmovq  %rax, -" + params.at(2)+ "(%rbp)" << std::endl;
             break;
 
-	case mult :
-		o << "\tmovq -" + params.at(0) + "(%rbp), %rdx" << std::endl;
-		o << "\tmovq -" + params.at(1) + "(%rbp), %rax" << std::endl;
-		o << "\timulq %rdx, %rax" << std::endl;
-		o << "\tmovq  %rax, -" + params.at(2) + "(%rbp)" << std::endl;
-		break;
+    case mult :
+            o << "\tmovq -" + params.at(0) + "(%rbp), %rdx" << std::endl;
+            o << "\tmovq -" + params.at(1) + "(%rbp), %rax" << std::endl;
+            o << "\timulq %rdx, %rax" << std::endl;
+            o << "\tmovq  %rax, -" + params.at(2) + "(%rbp)" << std::endl;
+            break;
 
-	case diff:
-		o << "\tmovq -" + params.at(0) + "(%rbp), %rax" << std::endl;
-		o << "\tmovq -" + params.at(1) + "(%rbp), %rdx" << std::endl;
-		o << "\tsubq %rdx, %rax" << std::endl;
-		o << "\tmovq  %rax, -" + params.at(2) + "(%rbp)" << std::endl;
-		break;
+    case diff:
+            o << "\tmovq -" + params.at(0) + "(%rbp), %rax" << std::endl;
+            o << "\tmovq -" + params.at(1) + "(%rbp), %rdx" << std::endl;
+            o << "\tsubq %rdx, %rax" << std::endl;
+            o << "\tmovq  %rax, -" + params.at(2) + "(%rbp)" << std::endl;
+            break;
 
-	case div:
-		o << "\tmovq -" + params.at(0) + "(%rbp), %rax" << std::endl;
-		o << "\tcqto" << std::endl;
-		o << "\tidivq -" + params.at(1) + "(%rbp)" << std::endl;
-		o << "\tmovq  %rax, -" + params.at(2) + "(%rbp)" << std::endl;
-		break;
+    case div:
+            o << "\tmovq -" + params.at(0) + "(%rbp), %rax" << std::endl;
+            o << "\tcqto" << std::endl;
+            o << "\tidivq -" + params.at(1) + "(%rbp)" << std::endl;
+            o << "\tmovq  %rax, -" + params.at(2) + "(%rbp)" << std::endl;
+            break;
+
+    case jpdeb:
+            o << "\tsubq  $"+ params.at(0) +", %rsp" << std::endl;
+            break;
+    case jpfin:
+            o << "\taddq  $" + params.at(0) + ", %rsp" << std::endl;
+            break;
+    case call:
+            o << "\tcall  " + params.at(0) + "" << std::endl;
+            break;
+      
+      case compare:
+            o << "\tmovq -" + params.at(0) + "(%rbp), %rax" << std::endl;
+            o << "\tcmpq -" + params.at(1) + "(%rbp), %rax" << std::endl;
+            break;
+
+      case non:
+            o << "\tsete %al" << std::endl;
+            o << "\tmovzbq %al, %rax" << std::endl;
+            o << "\tmovq %rax, -" + params.at(0) + "(%rbp)" <<std::endl;
+            break;
+
+      case invert:
+            o << "\tmovq -" + params.at(1) + "(%rbp), %rax" << std::endl;
+            o << "\tnegq %rax" << std::endl;
+            o << "\tmovq %rax, -" + params.at(0) + "(%rbp)" << std::endl;
+            break;
+
+      case andbit:
+            o << "\tmovq -" + params.at(0) + "(%rbp), %rax" << std::endl;
+            o << "\tandq -" + params.at(1) + "(%rbp), %rax" << std::endl;
+            o << "\tmovq %rax, -" + params.at(2) + "(%rbp)" << std::endl;
+            break;
+
+      case xorbit:
+            o << "\tmovq -" + params.at(0) + "(%rbp), %rax" << std::endl;
+            o << "\txorq -" + params.at(1) + "(%rbp), %rax" << std::endl;
+            o << "\tmovq %rax, -" + params.at(2) + "(%rbp)" << std::endl;
+            break;
+
+      case orbit:
+            o << "\tmovq -" + params.at(0) + "(%rbp), %rax" << std::endl;
+            o << "\torq -" + params.at(1) + "(%rbp), %rax" << std::endl;
+            o << "\tmovq %rax, -" + params.at(2) + "(%rbp)" << std::endl;
+            break;
             
       default:
             break;

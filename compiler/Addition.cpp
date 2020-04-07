@@ -13,8 +13,10 @@ Addition::Addition(Expression* exprGAdded, Expression* exprRAdded)
 :exprGAdded(exprGAdded), exprRAdded(exprRAdded)
 {}
 
-Addition::~Addition()
-{}
+Addition::~Addition() {
+	delete exprGAdded;
+	delete exprRAdded;
+}
 
 std::string Addition::buildIR(CFG* cfg) {
 	std::string returnName = cfg->create_new_tempvar(Type::int64);
@@ -33,11 +35,16 @@ std::string Addition::buildIR(CFG* cfg) {
 	return varReturnName->getName();
 }
 
-void Addition::printInstruction(std::ostream &o) {
+void Addition::checkVariableUsage(std::map<std::string, int>* symbolTableNames, std::string functionName) {
+	exprGAdded->checkVariableUsage(symbolTableNames, functionName);
+	exprRAdded->checkVariableUsage(symbolTableNames, functionName);
+}
+
+void Addition::printInstruction(std::ostream &o, int shift) {
 	o << "Addition of two expression" << std::endl;
-	o << "\t\t\t\tExpr 1 : ";
-	exprGAdded->printInstruction(o);
-	o << "\t\t\t\tExpr 2 : ";
-	exprRAdded->printInstruction(o);
+	o << std::string(shift, '\t') + "Expr 1 : ";
+	exprGAdded->printInstruction(o, shift+1);
+	o << std::string(shift, '\t') + "Expr 2 : ";
+	exprRAdded->printInstruction(o, shift+1);
 
 }

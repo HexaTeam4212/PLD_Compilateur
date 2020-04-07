@@ -13,12 +13,19 @@ Affectation::Affectation(std::string varName, Expression* expr)
 : varName(varName), expr(expr)
 {}
 
-Affectation::~Affectation()
-{}
+Affectation::~Affectation() {
+      delete expr;
+}
 
 std::string Affectation::buildIR(CFG* cfg) {
       IRVariable* varDest = cfg->getVariable(varName);
       std::string exprVarName = expr->buildIR(cfg);
+
+      if(expr->getIsBooleanExpr()) {
+            std::cerr << "Warning : affectation of boolean expression is not handled !" << std::endl;
+            exit(-76);
+      }
+
       IRVariable* varOrigin = cfg->getVariable(exprVarName);
 
       std::vector<std::string> params;
@@ -29,9 +36,13 @@ std::string Affectation::buildIR(CFG* cfg) {
       return varDest->getName();
 }
 
-void Affectation::printInstruction(std::ostream &o) {
-      o << "\t\tAffectation of origin into dest" << std::endl;
-      o << "\t\t\tOrigin : ";
-      expr->printInstruction(o);
-      o << "\t\t\tDest : " << varName << std::endl;
+void Affectation::checkVariableUsage(std::map<std::string, int>* symbolTableNames, std::string functionName) {
+      expr->checkVariableUsage(symbolTableNames, functionName);
+}
+
+void Affectation::printInstruction(std::ostream &o, int shift) {
+      o << std::string(shift, '\t') + "Affectation of origin into dest" << std::endl;
+      o << std::string(shift+1, '\t') + "Origin : ";
+      expr->printInstruction(o, shift+2);
+      o << std::string(shift+1, '\t') + "Dest : " << varName << std::endl;
 }

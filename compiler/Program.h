@@ -37,6 +37,9 @@ public:
       // Method to print the program
       void printProgram(std::ostream &o);
 
+      void checkFunctions();
+
 private:
       std::vector<Function*> functions;
+      std::map<std::string, int>* symbolTableNames;
 };

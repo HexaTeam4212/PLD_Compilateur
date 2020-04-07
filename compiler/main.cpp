@@ -73,6 +73,8 @@ int main(int argn, const char **argv) {
             Visitor visitor;
             Program* ast = (Program*) visitor.visit(tree);
 
+            ast->checkFunctions();
+
             if(printAST) {
                   ast->printProgram(std::cout);
             }
@@ -85,7 +87,7 @@ int main(int argn, const char **argv) {
                   listeCFG.push_back(newCfg);
             }
 
-            //Select output stream based on passed params
+            //Select output stream based son passed params
             std::streambuf* buffer;
             std::ofstream outputFile;
             if(strcmp(fileName.c_str(), "") != 0) {
@@ -101,7 +103,11 @@ int main(int argn, const char **argv) {
             for(auto pCFG : listeCFG) {
                   pCFG->gen_asm(out);
             }
-			
+		
+            delete ast;
+            for(auto pCFG : listeCFG) {
+                  delete pCFG;
+            }
       }
       catch (std::invalid_argument e) {
             std::cout << "Error during file parsing" << std::endl;

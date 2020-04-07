@@ -13,8 +13,10 @@ Multiplication::Multiplication(Expression* exprGMult, Expression* exprRMult)
 :exprGMult(exprGMult), exprRMult(exprRMult)
 {}
 
-Multiplication::~Multiplication()
-{}
+Multiplication::~Multiplication() {
+	delete exprGMult;
+	delete exprRMult;
+}
 
 std::string Multiplication::buildIR(CFG* cfg) {
 	std::string returnName = cfg->create_new_tempvar(Type::int64);
@@ -33,10 +35,15 @@ std::string Multiplication::buildIR(CFG* cfg) {
 	return varReturnName->getName();
 }
 
-void Multiplication::printInstruction(std::ostream &o) {
+void Multiplication::checkVariableUsage(std::map<std::string, int>* symbolTableNames, std::string functionName) {
+	exprGMult->checkVariableUsage(symbolTableNames, functionName);
+	exprRMult->checkVariableUsage(symbolTableNames, functionName);
+}
+
+void Multiplication::printInstruction(std::ostream &o, int shift) {
 	o << "Multiplication of two expression" << std::endl;
-	o << "\t\t\t\tExpr 1 : ";
-	exprGMult->printInstruction(o);
-	o << "\t\t\t\tExpr 2 : ";
-	exprRMult->printInstruction(o);
+	o << std::string(shift+1, '\t') + "Expr 1 : ";
+	exprGMult->printInstruction(o, shift+1);
+	o << std::string(shift+1, '\t') + "Expr 2 : ";
+	exprRMult->printInstruction(o, shift+1);
 }

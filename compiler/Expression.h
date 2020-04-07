@@ -24,7 +24,7 @@ public:
       // Constructor
       Expression();
       // Destructor
-      ~Expression();
+      virtual ~Expression();
 
       /**
        * Abstract method that build an IR (Intermediate Representation)
@@ -32,8 +32,12 @@ public:
        */
       std::string buildIR(CFG* cfg) = 0;
       // Abstract method that print the instruction
-      void printInstruction(std::ostream &o) = 0;
+      void printInstruction(std::ostream &o, int shift) = 0;
 
-private:
-      std::string returnType;
+      virtual void checkVariableUsage(std::map<std::string, int>* symbolTableNames, std::string functionName) = 0;
+
+      bool getIsBooleanExpr() { return isBooleanExpr; }
+
+protected:
+      bool isBooleanExpr;
 };

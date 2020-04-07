@@ -14,17 +14,34 @@ Declaration::Declaration(std::vector<ExprVariable*> varsDeclared, std::string ty
 : varsDeclared(varsDeclared), type(type)
 {}
 
-Declaration::~Declaration()
-{}
+Declaration::~Declaration() {
+      for (ExprVariable* varPTR : varsDeclared) {
+            delete varPTR;
+      }
+}
 
 std::string Declaration::buildIR(CFG* cfg) {
       return "";
 }
 
-void Declaration::printInstruction(std::ostream &o) {
-      o << "\t\tDeclaration of " << varsDeclared.size() << " variables" << std::endl;
+void Declaration::checkVariableUsage(std::map<std::string, int>* symbolTableNames, std::string functionName) {
+      for(ExprVariable* varPTR : varsDeclared) {
+            std::string currentVarName = functionName + "!" + varPTR->getName();
+            if(symbolTableNames->find(currentVarName) != symbolTableNames->end()) {
+                  //Error var declared twice
+                  std::cerr << "Error : variable \"" + varPTR->getName() +"\" is declared twice in "+ functionName +" !" << std::endl;
+                  exit(7); 
+            }
+            else {
+                  symbolTableNames->insert(std::make_pair(currentVarName, 0));
+            }
+      }
+}
+
+void Declaration::printInstruction(std::ostream &o, int shift) {
+      o << std::string(shift, '\t') + "Declaration of " << varsDeclared.size() << " variables" << std::endl;
       for(int i = 0; i < varsDeclared.size(); i++) {
-            o << "\t\t\t";
-            varsDeclared.at(i)->printInstruction(o);
+            o << std::string(shift+1, '\t');
+            varsDeclared.at(i)->printInstruction(o, shift+1);
       }
 }

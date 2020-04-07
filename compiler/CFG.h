@@ -18,6 +18,9 @@
 #include "BasicBlock.h"
 #include "IRVariable.h"
 #include "Declaration.h"
+#include "DeclarationArg.h"
+#include "Appel.h"
+#include "Affectation.h"
 
 /**
  * Class that represent Control flow graph
@@ -31,30 +34,35 @@ public:
       ~CFG();
 
       // Method to generate a new name for basic block
-      std::string new_BB_name();
+      static std::string new_BB_name();
       // Method to generate a prologue
       BasicBlock* gen_prologue(std::string functionName);
       // Method to generate an epilogue
       BasicBlock* gen_epilogue(std::string functionName);
+      void add_basicblock(BasicBlock* newBB);
       BasicBlock* current_bb;
+      BasicBlock* CFGEnd;
       
-      int initTableVariable();
+      int initSymbolTable();
       std::string create_new_tempvar(Type type);
-
       IRVariable* getVariable(std::string nomVar);
 
+	  static Function* getFunction(std::string nomFunction);
+
       void gen_asm(std::ostream &o);
+	  std::string add_Function(Function* Function);
 
 protected:
-      std::map<std::string, IRVariable*> mapVariable;
-      int nextFreeSymbolIndex;
-      int nextBBnumber;
+      std::map<std::string, IRVariable*> symbolTable;
+      int nextFreeSymbolIndex; 
+	static std::map<std::string, Function*> mapFunction;
+      static int nextBBnumber;
       int nextTempVarNumber;
 
 private:
       int getOffsetBaseOnType(Type type);
 
       Function* ast;
-      BasicBlock* CFGStart;
       int sizeAllocated;
+      std::vector<BasicBlock*> allBBs;
 };

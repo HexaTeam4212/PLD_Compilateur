@@ -8,12 +8,17 @@
 //
 
 #include "Function.h"
+#include "CFG.h"
 
-Function::Function()
+Function::Function(std::string returnType, std::string name, Declaration* arguments):
+returnType(returnType), name(name), arguments(arguments)
 {}
 
-Function::~Function()
-{}
+Function::~Function() { 
+	for (Instruction* instrPTR : instructions) {
+		delete instrPTR;
+	}
+}
 
 void Function::setName(std::string _name) {
       this->name = _name;
@@ -26,12 +31,22 @@ void Function::setReturnType(std::string _returnType) {
 void Function::setInstructions(std::vector<Instruction*> _vectInstr) {
       this->instructions = _vectInstr;
 }
+std::string Function::buildIR(CFG *cfg) {
+	return "";
+}
 
-void Function::printFunction(std::ostream &o) {
-      o << "\tFunction " << name << std::endl;
-      o << "\tReturn : " << returnType << std::endl;
-      o << "\tInstructions :" << std::endl;
+void Function::printFunction(std::ostream &o, int shift) {
+      o << std::string(shift, '\t') + "Function " << name << std::endl;
+      o << std::string(shift, '\t') + "Return : " << returnType << std::endl;
+      o << std::string(shift, '\t') + "Instructions :" << std::endl;
       for(int i = 0; i < instructions.size(); i++) {
-            instructions.at(i)->printInstruction(o);
+            instructions.at(i)->printInstruction(o, shift+1);
+      }
+}
+
+void Function::checkVariables(std::map<std::string, int>* symbolTableNames) {
+      arguments->checkVariableUsage(symbolTableNames, this->name);
+      for(int i = 0; i < instructions.size(); i++) {
+            instructions.at(i)->checkVariableUsage(symbolTableNames, this->name);
       }
 }

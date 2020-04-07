@@ -27,18 +27,28 @@ class IRInstr {
  
    public:
 	/** The instructions themselves -- feel free to subclass instead */
-	typedef enum {
+	   typedef enum {
 		push,
 		pop,
 		movq,
 		exit,
 		ldconst,
+		ldconstrax,
 		ret,
 		copy,
 		add,
 		mult,
 		diff,
-		div
+		div,
+		jpdeb,
+		jpfin,
+		call,
+		compare,
+		non,
+		invert,
+		andbit,
+		xorbit,
+		orbit
 	} Operation;
 
 	//  Constructors

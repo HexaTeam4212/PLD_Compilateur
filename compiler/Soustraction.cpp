@@ -13,8 +13,10 @@ Soustraction::Soustraction(Expression* exprGDiff, Expression* exprRDiff)
 :exprGDiff(exprGDiff), exprRDiff(exprRDiff)
 {}
 
-Soustraction::~Soustraction()
-{}
+Soustraction::~Soustraction() {
+	delete exprGDiff;
+	delete exprRDiff;
+}
 
 std::string Soustraction::buildIR(CFG* cfg) {
 	std::string returnName = cfg->create_new_tempvar(Type::int64);
@@ -33,10 +35,15 @@ std::string Soustraction::buildIR(CFG* cfg) {
 	return varReturnName->getName();
 }
 
-void Soustraction::printInstruction(std::ostream &o) {
+void Soustraction::checkVariableUsage(std::map<std::string, int>* symbolTableNames, std::string functionName) {
+	exprGDiff->checkVariableUsage(symbolTableNames, functionName);
+	exprRDiff->checkVariableUsage(symbolTableNames, functionName);
+}
+
+void Soustraction::printInstruction(std::ostream &o, int shift) {
 	o << "Soustraction of two expression" << std::endl;
-	o << "\t\t\t\tExpr 1 : ";
-	exprGDiff->printInstruction(o);
-	o << "\t\t\t\tExpr 2 : ";
-	exprRDiff->printInstruction(o);
+	o << std::string(shift+1, '\t') + "Expr 1 : ";
+	exprGDiff->printInstruction(o, shift+1);
+	o << std::string(shift+1, '\t') + "Expr 2 : ";
+	exprRDiff->printInstruction(o, shift+1);
 }

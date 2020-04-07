@@ -12,9 +12,12 @@
 // Interfaces used
 #include <string>
 #include <vector>
+#include <map>
 #include <iostream>
 
 #include "Instruction.h"
+#include "ExprVariable.h"
+#include "Declaration.h"
 
 /**
  * Class that represent a function
@@ -23,7 +26,7 @@ class Function {
 
 public:
       // Constructor
-      Function();
+      Function(std::string returnType, std::string name, Declaration* arguments);
       // Destructor
       ~Function();
 
@@ -36,13 +39,20 @@ public:
 
       void setInstructions(std::vector<Instruction*> _vectInstr);
       std::vector<Instruction*> getInstructions() { return this->instructions; };
+	Declaration* getArguments() { return this->arguments; };
 
       // Print the function
-      void printFunction(std::ostream &o);
+      void printFunction(std::ostream &o, int shift);
+
+      void checkVariables(std::map<std::string, int>* symbolTableNames);
+
+	std::string buildIR(CFG *cfg);
+
+	void printInstruction(std::ostream &o);
 
 private:
       std::string name;
       std::string returnType;
-      //std::vector<Declaration*> arguments;
       std::vector<Instruction*> instructions;
+	Declaration* arguments;
 };
