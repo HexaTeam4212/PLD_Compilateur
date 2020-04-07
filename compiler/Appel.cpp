@@ -71,5 +71,7 @@ void Appel::printInstruction(std::ostream &o, int shift) {
 }
 
 void Appel::checkVariableUsage(std::map<std::string, int>* symbolTableNames, std::string functionName) {
-
+	for(ExprVariable* varPTR : argumentsAppel) {
+		varPTR->checkVariableUsage(symbolTableNames, functionName);
+	}
 }
