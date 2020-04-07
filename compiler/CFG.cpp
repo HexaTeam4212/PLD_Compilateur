@@ -99,7 +99,7 @@ BasicBlock* CFG::gen_epilogue(std::string functionName) {
 
 void CFG::gen_asm(std::ostream &o) {
       o << ".text\n";
-      o << ".global main\n";
+      o << ".global " + ast->getName() + "\n";
 
       for(BasicBlock* bbPTR : allBBs) {
             bbPTR->gen_asm(o);
