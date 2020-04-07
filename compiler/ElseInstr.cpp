@@ -1,3 +1,12 @@
+//
+//  ElseInstr.cpp
+//  PLD-COMP
+//
+//  Created by H4212 on 01/04/2020.
+//  Copyright © 2020 Andrea Croc, Baptiste Lotigier, Emmy Lerandy, Fatoumata Wade,
+//                   Louis Ung, Lucie Bovo, Shuyao Shen. All rights reserved.
+//
+
 #include "ElseInstr.h"
 
 ElseInstr::ElseInstr() 
@@ -7,11 +16,11 @@ ElseInstr::~ElseInstr()
 {}
 
 std::string ElseInstr::buildIR(CFG *cfg) {
-	for(Instruction* instr : vectorInstruction) {
+      for(Instruction* instr : vectorInstruction) {
             instr->buildIR(cfg);
       }
 	  
-    return "";
+      return "";
 }
 
 void ElseInstr::printInstruction(std::ostream &o, int shift) {

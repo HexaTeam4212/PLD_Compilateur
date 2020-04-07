@@ -1,8 +1,8 @@
 //
-//  Declaration.cpp
+//  Appel.cpp
 //  PLD-COMP
 //
-//  Created by H4212 on 16/03/2020.
+//  Created by H4212 on 02/04/2020.
 //  Copyright © 2020 Andrea Croc, Baptiste Lotigier, Emmy Lerandy, Fatoumata Wade,
 //                   Louis Ung, Lucie Bovo, Shuyao Shen. All rights reserved.
 //
@@ -13,7 +13,7 @@
 std::vector<std::string> Appel::registres = { "%rdi","%rsi","%rdx","%rcx","%r8","%r9" };
 
 Appel::Appel(std::string nomFunction, std::string nomVar, std::vector<ExprVariable*> argumentsAppel, bool hasVar) :
-	nomFunction(nomFunction),nomVar(nomVar), argumentsAppel(argumentsAppel), hasVar(hasVar)
+	nomFunction(nomFunction), nomVar(nomVar), argumentsAppel(argumentsAppel), hasVar(hasVar)
 {}
 
 Appel::~Appel() {

@@ -1,3 +1,12 @@
+//
+//  WhileInstr.cpp
+//  PLD-COMP
+//
+//  Created by H4212 on 01/04/2020.
+//  Copyright © 2020 Andrea Croc, Baptiste Lotigier, Emmy Lerandy, Fatoumata Wade,
+//                   Louis Ung, Lucie Bovo, Shuyao Shen. All rights reserved.
+//
+
 #include "WhileInstr.h"
 
 WhileInstr::WhileInstr()
@@ -75,7 +84,7 @@ std::string WhileInstr::buildIR(CFG *cfg) {
       thenBB->exit_true = testBB;
 
       cfg->current_bb = thenBB;
-      for(Instruction* instr : vectorInstruction) {
+      for (Instruction* instr : vectorInstruction) {
             instr->buildIR(cfg);
       }
       
@@ -89,14 +98,14 @@ void WhileInstr::printInstruction(std::ostream &o, int shift) {
       o << std::string(shift, '\t') + "Condition : ";
       condition->printInstruction(o, shift+1);
       o << std::string(shift, '\t') + "Instructions : " << std::endl;
-      for(Instruction* instr : vectorInstruction) {
+      for (Instruction* instr : vectorInstruction) {
             instr->printInstruction(o, shift+1);
       }
 }
 
 void WhileInstr::checkVariableUsage(std::map<std::string, int>* symbolTableNames, std::string functionName) {
       condition->checkVariableUsage(symbolTableNames, functionName);
-      for(Instruction* instrPTR : vectorInstruction) {
+      for (Instruction* instrPTR : vectorInstruction) {
             instrPTR->checkVariableUsage(symbolTableNames, functionName);
       }
 }

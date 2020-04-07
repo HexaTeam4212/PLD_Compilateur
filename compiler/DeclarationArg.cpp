@@ -1,8 +1,8 @@
 //
-//  Declaration.cpp
+//  DeclarationArg.cpp
 //  PLD-COMP
 //
-//  Created by H4212 on 16/03/2020.
+//  Created by H4212 on 04/04/2020.
 //  Copyright © 2020 Andrea Croc, Baptiste Lotigier, Emmy Lerandy, Fatoumata Wade,
 //                   Louis Ung, Lucie Bovo, Shuyao Shen. All rights reserved.
 //
@@ -17,9 +17,9 @@ DeclarationArg::DeclarationArg(std::vector<ExprVariable*> varsDeclared, std::vec
 {}
 
 DeclarationArg::~DeclarationArg() {
-      for (ExprVariable* varPTR : varsDeclared) {
-            delete varPTR;
-      }
+	for (ExprVariable* varPTR : varsDeclared) {
+		delete varPTR;
+	}
 }
 
 std::string DeclarationArg::buildIR(CFG* cfg) {
@@ -38,15 +38,15 @@ std::string DeclarationArg::buildIR(CFG* cfg) {
 		cfg->current_bb->add_IRInstr(IRInstr::Operation::movq, paramsArg);
 	}
 
-      return "";
+	return "";
 }
 
 void DeclarationArg::printInstruction(std::ostream &o, int shift) {
-      o << std::string(shift, '\t') + "Declaration of Arguments " << varsDeclared.size() << " variables" << std::endl;
-      for(int i = 0; i < varsDeclared.size(); i++) {
-            o << std::string(shift+1, '\t');
-            varsDeclared.at(i)->printInstruction(o, shift+1);
-      }
+	o << std::string(shift, '\t') + "Declaration of Arguments " << varsDeclared.size() << " variables" << std::endl;
+	for (int i = 0; i < varsDeclared.size(); i++) {
+		o << std::string(shift+1, '\t');
+		varsDeclared.at(i)->printInstruction(o, shift+1);
+	}
 }
 
 void DeclarationArg::checkVariableUsage(std::map<std::string, int>* symbolTableNames, std::string functionName) {

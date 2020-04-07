@@ -1,3 +1,12 @@
+//
+//  Invert.cpp
+//  PLD-COMP
+//
+//  Created by H4212 on 06/04/2020.
+//  Copyright © 2020 Andrea Croc, Baptiste Lotigier, Emmy Lerandy, Fatoumata Wade,
+//                   Louis Ung, Lucie Bovo, Shuyao Shen. All rights reserved.
+//
+
 #include "Invert.h"
 
 Invert::Invert(Expression* exprMember)

@@ -81,9 +81,9 @@ BasicBlock* CFG::gen_epilogue(std::string functionName) {
       BasicBlock* epilogue = new BasicBlock(this, "end"+functionName);
 
 	  
-	  std::vector<std::string> params;
-	  params.push_back(std::to_string(sizeAllocated));
-	  epilogue->add_IRInstr(IRInstr::Operation::jpfin, params);
+      std::vector<std::string> params;
+      params.push_back(std::to_string(sizeAllocated));
+      epilogue->add_IRInstr(IRInstr::Operation::jpfin, params);
 
       std::vector<std::string> paramsPopRbp;
       paramsPopRbp.push_back("%rbp");
