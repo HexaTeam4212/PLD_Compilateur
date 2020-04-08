@@ -12,12 +12,12 @@
 
 std::vector<std::string> Appel::registres = { "%rdi","%rsi","%rdx","%rcx","%r8","%r9" };
 
-Appel::Appel(std::string nomFunction, std::string nomVar, std::vector<ExprVariable*> argumentsAppel, bool hasVar) :
-	nomFunction(nomFunction),nomVar(nomVar), argumentsAppel(argumentsAppel), hasVar(hasVar)
+Appel::Appel(std::string nomFunction, std::vector<Expression*> argumentsAppel) 
+: nomFunction(nomFunction), argumentsAppel(argumentsAppel)
 {}
 
 Appel::~Appel() {
-	for (ExprVariable* argPTR : argumentsAppel) {
+	for (Expression* argPTR : argumentsAppel) {
 		delete argPTR;
 	}
 }
@@ -30,7 +30,7 @@ std::string Appel::buildIR(CFG* cfg) {
 	{
 		std::vector<std::string>::iterator it = registres.begin();
 
-		for (ExprVariable* exprVar : argumentsAppel) {
+		for (Expression* exprVar : argumentsAppel) {
 			std::string expr = exprVar->buildIR(cfg);
 			IRVariable* var = cfg->getVariable(expr);
 			std::vector<std::string> params;
@@ -43,6 +43,7 @@ std::string Appel::buildIR(CFG* cfg) {
 		}
 
 	}
+
 	// function call
 	std::vector<std::string> params1;
 	params1.push_back("0");
@@ -51,27 +52,24 @@ std::string Appel::buildIR(CFG* cfg) {
 	params.push_back(nomFunction);
 	cfg->current_bb->add_IRInstr(IRInstr::Operation::call, params);
 
-	// if there is a variable to put the return value
-	if (hasVar)
-	{
-		IRVariable* laVar = cfg->getVariable(nomVar);
-		std::vector<std::string> params2;
-		params2.push_back("%rax");
-		params2.push_back("-" + std::to_string(laVar->getOffset()) + "(%rbp)");
-		cfg->current_bb->add_IRInstr(IRInstr::Operation::movq, params2);
-	}
+	// put the return value in a temp var
+	std::string tmpVarName = cfg->create_new_tempvar(Type::int64);
+	IRVariable* tmpVar = cfg->getVariable(tmpVarName);
+	std::vector<std::string> params2;
+	params2.push_back("%rax");
+	params2.push_back("-" + std::to_string(tmpVar->getOffset()) + "(%rbp)");
+	cfg->current_bb->add_IRInstr(IRInstr::Operation::movq, params2);
 
-
-	return "";
+	return tmpVarName;
 }
 
 void Appel::printInstruction(std::ostream &o, int shift) {
-      o << std::string(shift, '\t') + "Appel of " << nomFunction <<"dans variable" << nomVar << std::endl;
+      o << std::string(shift, '\t') + "Call of " << nomFunction << std::endl;
     
 }
 
 void Appel::checkVariableUsage(std::map<std::string, int>* symbolTableNames, std::string functionName) {
-	for(ExprVariable* varPTR : argumentsAppel) {
+	for(Expression* varPTR : argumentsAppel) {
 		varPTR->checkVariableUsage(symbolTableNames, functionName);
 	}
 }

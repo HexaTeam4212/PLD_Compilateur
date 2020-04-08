@@ -14,17 +14,17 @@
 #include <iostream>
 #include <vector>
 
-#include "Instruction.h"
+#include "Expression.h"
 #include "ExprVariable.h"
 
 /**
  * Subclass of the class Instruction which represents Appel
  */
-class Appel : public Instruction {
+class Appel : public Expression {
 
 public:
       // Constructor
-      Appel(std::string nomFunction, std::string nomVar, std::vector<ExprVariable*> argumentsAppel, bool hasVar);
+      Appel(std::string nomFunction, std::vector<Expression*> argumentsAppel);
       // Destructor
       ~Appel();
 
@@ -40,8 +40,6 @@ public:
 
 private:
 	std::string nomFunction;
-	std::string nomVar;
-	std::vector<ExprVariable*> argumentsAppel;
-	bool hasVar;
+	std::vector<Expression*> argumentsAppel;
 	static std::vector<std::string> registres;
 };

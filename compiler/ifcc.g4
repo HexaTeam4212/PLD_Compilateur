@@ -6,14 +6,13 @@ type : INTEGER #integer
 ;
 
 instr : 
-  'return' expr ';'           #return
-| type NAME (',' NAME)* ';'   #declaration
-| NAME '=' expr ';'           #affectation
-| type NAME '=' expr ';'      #declareEtAffecte
-| NAME '=' NAME '(' ( | NAME  | NAME ',' NAME | NAME  ',' NAME ',' NAME |NAME  ','  NAME  ',' NAME ',' NAME | NAME  ',' NAME  ','  NAME  ',' NAME ',' NAME | NAME ',' NAME  ',' NAME  ','  NAME  ',' NAME ',' NAME  ) ')' ';'	  #calling
-| NAME '(' ( | NAME  | NAME ',' NAME | NAME  ',' NAME ',' NAME |NAME  ','  NAME  ',' NAME ',' NAME | NAME  ',' NAME  ','  NAME  ',' NAME ',' NAME | NAME ',' NAME  ',' NAME  ','  NAME  ',' NAME ',' NAME  ) ')' ';'	  #calling2
+  'return' expr ';'                                     #return
+| type NAME (',' NAME)* ';'                             #declaration
+| NAME '=' expr ';'                                     #affectation
+| type NAME '=' expr ';'                                #declareEtAffecte 
+| NAME '(' ((expr ',')* expr)? ')' ';'	                #calling2
 | 'if' '(' expr ')' '{' (instr )* '}' (elseStatement )? #ifstatement
-| 'while' '(' expr ')' '{' (instr )* '}' #whilestatement
+| 'while' '(' expr ')' '{' (instr )* '}'                #whilestatement
 ;
 
 elseStatement : 'else' '{' (instr )* '}';
@@ -51,11 +50,12 @@ exprLvl3 :
   '-' exprLvl3         #invert
 | '!' exprLvl3         #not
 | '(' expr ')'         #parenthese
+| NAME '(' ((expr ',')* expr)? ')' #calling
 | CONST                #const
 | NAME                 #var
 ;
 
-definitionFunction : type NAME '('( | type NAME  | type NAME ',' type NAME | type NAME  ',' type NAME ',' type NAME | type NAME  ',' type NAME  ',' type NAME ',' type NAME | type NAME  ',' type NAME  ',' type NAME  ',' type NAME ',' type NAME | type NAME ',' type NAME  ',' type NAME  ','  type NAME  ',' type NAME ',' type NAME  ) ')' '{' (instr )* '}';
+definitionFunction : type NAME '(' ((type NAME ',')* type NAME)? ')' '{' (instr )* '}';
 
 INTEGER : 'int' ;
 NAME : [a-zA-Z]+[a-zA-Z0-9]* ;
