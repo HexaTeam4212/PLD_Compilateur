@@ -1,19 +1,16 @@
 int fact(int a) {
-      int res,resF,tmp;
+      int res,tmp;
       if(a <= 1) {
             return 1;
       }
       else {
-            tmp = a - 1;
-            resF = fact(tmp);
-            res =  a * resF;
+            res =  a * fact(a-1);
             return res;
       }
 }
 
 int main() {
-      int res;
       int a = 3;
-      res = fact(a);
+      int res = fact(a);
       return res;
 }

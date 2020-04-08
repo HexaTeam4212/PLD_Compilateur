@@ -20,7 +20,7 @@
 #include "Declaration.h"
 
 /**
- * Class that represent a function
+ * Class that represents a function
  */
 class Function {
 

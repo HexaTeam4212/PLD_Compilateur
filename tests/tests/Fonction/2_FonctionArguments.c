@@ -7,12 +7,7 @@ int fonction1(int a, int b, int c, int d) {
 }
 
 
-int main() {
-    int a, b, c, d, ans;
-    a = 1;
-    b = 2;
-    c = 3;
-    d = 4;
-    ans = fonction1(a, b, c, d);
+int main() { 
+    int ans = fonction1(1, 2, 3, 4);
     return ans;
 }

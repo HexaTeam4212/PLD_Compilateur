@@ -94,11 +94,11 @@ public:
 			exit(-8);
 		}
 
-		for (int i = 2; i < ctx->expr().size(); i++) {
+		for (int i = 0; i < ctx->expr().size(); i++) {
 			Expression* newArgument = visit(ctx->expr().at(i));
 			varArgumentAppel.push_back(newArgument);
 		}
-		return (Instruction*) new Appel(functionName, varArgumentAppel);
+		return (Expression*) new Appel(functionName, varArgumentAppel);
 
 	}
 
@@ -111,7 +111,7 @@ public:
 			exit(-8);
 		}
 
-		for (int i = 1; i < ctx->expr().size(); i++) {
+		for (int i = 0; i < ctx->expr().size(); i++) {
 			Expression* newArgument = visit(ctx->expr().at(i));
 			varArgumentAppel.push_back(newArgument);
 		}
